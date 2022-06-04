@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Triangulo
+comment1.params=base\ altura
+comment1.target=Triangulo(float,\ float)
+comment2.params=
+comment2.target=float\ calcularArea()
+comment3.params=
+comment3.target=float\ calcularPerimetro()
+comment4.params=
+comment4.target=void\ imprimir()
+comment5.params=b\ a
+comment5.target=void\ setBaseEAltura(float,\ float)
+numComments=6

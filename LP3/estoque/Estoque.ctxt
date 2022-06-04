@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Estoque
+comment1.params=
+comment1.target=Estoque()
+comment2.params=p
+comment2.target=void\ entrada(Produto)
+comment3.params=p
+comment3.target=void\ retirada(Produto)
+comment4.params=cat
+comment4.target=void\ mostraCat(java.lang.String)
+numComments=5

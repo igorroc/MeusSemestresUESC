@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Retangulo
+comment1.params=
+comment1.target=Retangulo()
+comment2.params=a\ b
+comment2.target=void\ setBaseEAltura(float,\ float)
+comment3.params=
+comment3.target=float\ area()
+numComments=4
