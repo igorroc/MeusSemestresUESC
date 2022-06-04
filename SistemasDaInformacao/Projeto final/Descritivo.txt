@@ -1,0 +1,17 @@
+SISTEMA DISTRIBUÍDO PARA GESTÃO DE FROTA DE CAMINHÕES DE CARGA:
+
+O sistema de gestão de frota de caminhões de carga será hospedado em um servidor Web.
+Apresenta artefatos sistêmicos para inclusão e atualização de registros,
+
+--------
+O sistema de gestão de uma fábrica de software ficará num servidor Web, em intranet, distribuição
+cliente-servidor, desenvolvido com frameworks de persistências e geração de páginas dinâmicas, API’s
+do SO em uso, no padrão MVC, com objetos relacionais. Apresenta artefatos sistêmicos para conexão de
+BD, cadastros, consultas parametrizadas, relatórios em pdf, gestor de e-mails. A gestão de segurança será
+através de serviço proxy, com níveis de acesso e permissão por nível funcional e backups pré-agendados.
+Nos registros, os funcionários são alocados às tarefas. As tarefas são vinculadas aos setores, como:
+elicitação de requisitos, documentação de requisitos, especificação de software – setor de engenharia de
+requisitos; projeto de sistema, arquitetura de sistema, implementação, prototipação – setor de projeto;
+testes de integração, testes funcionais, evolução e manutenção - setor de qualidade. Cada funcionário
+poderá elaborar várias tarefas em projetos diversos. No momento da alocação do funcionário às tarefas,
+também será alocado uma estação de trabalho para auxiliar nas tarefas.

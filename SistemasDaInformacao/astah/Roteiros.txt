@@ -1,0 +1,23 @@
+Roteiro A: Venda à Vista
+1. Cliente solicita Produto
+2. Vendedor retorna o status do Produto solicitado
+3. Cliente escolhe quais produtos ele quer
+4. Vendedor registra a venda com os produtos escolhidos
+5. Caixa informa o valor da venda ao Cliente
+6. Cliente efetua pagamento
+7. Caixa verifica pagamento e retorna nota fiscal ao Cliente
+8. Operador realiza baixa no estoque
+9. No fim do mês o Sistema calcula as comissões dos Vendedores
+
+Roteiro B: Venda à Prazo
+1. Cliente solicita Produto
+2. Vendedor retorna o status do Produto solicitado
+3. Cliente escolhe quais produtos ele quer
+4. Vendedor registra a venda com os produtos escolhidos
+5. Caixa informa o valor da venda ao Cliente
+6. Cliente escolhe a quantidade de parcelas
+7. Caixa informa o valor das parcelas ao Cliente
+8. Cliente efetua pagamento da primeira parcela
+9. Caixa verifica pagamento e retorna nota fiscal ao Cliente
+10. Operador realiza baixa no estoque
+11. No fim do mês o Sistema calcula as comissões dos Vendedores

@@ -1,0 +1,1 @@
+abrir uma imagem usando python
