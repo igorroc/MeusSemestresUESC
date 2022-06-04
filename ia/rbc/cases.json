@@ -1,0 +1,14 @@
+{
+	"descricao": {
+		"localizacao": "salvador",
+		"quartos": 2,
+		"cozinha": "pequena",
+		"ar_condicionado": 1
+	},
+	"solucao": {
+		"preco": 123000
+	},
+	"avaliacao": {
+		"vendido": false
+	}
+}

@@ -1,0 +1,11 @@
+id,local,quartos,tamCozinha,qtdArCondicionado,preco,foiVendido
+0,Ilheus,7,Pequena,1,8328,0
+1,Ilheus,6,Pequena,2,6406,0
+2,Salvador,1,Pequena,1,19293,0
+3,Salvador,4,Media,2,1910,0
+4,Ilheus,4,Media,2,22266,1
+5,Ilheus,2,Media,2,4669,1
+6,Salvador,3,Media,2,24450,0
+7,Ilheus,8,Media,2,33201,0
+8,Salvador,9,Media,2,6104,0
+9,Salvador,3,Pequena,1,33029,1
