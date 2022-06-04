@@ -1,0 +1,109 @@
+GT3) 
+
+T1) 
+
+g(x, y, z) = 4x²+y²+5z²   e pi  = 2x + 3y + 4z − 12 = 0, 
+
+ 
+
+Temos como restricao o PI  
+
+ 
+
+ 
+
+Primeiro vamos obter as derivadas parciais da funcao g(x,y,z) em relacao a x: 
+
+g(x, y, z) = 4x²+y²+5z²  = > 8x. 
+
+Segundo vamos obter as derivadas parciais da funcao g(x,y,z) em relacao a y: 
+
+g(x, y, z) = 4x²+y²+5z²  = > 2y. 
+
+Terceiro  vamos obter as derivadas parciais da funcao g(x,y,z) em relacao a z: 
+
+g(x, y, z) = 4x²+y²+5z²  = > 10z. 
+
+<8x,2y,10z> é o gradiente da funcao g(x,y,z) 
+
+ 
+
+Agora vamos calcular as derivadas parciais da restrição: 
+
+Primeiro vamos obter as derivadas parciais da superficie pi(x,y,z) em relacao a x: 
+
+ 2x + 3y + 4z − 12 =pi(x,y,z) 
+
+O resultado da derivada parcial de pi(x,y,z)em relacao a x da 2 
+
+ 
+
+Segundo vamos obter as derivadas parciais da superficie pi(x,y,z) em relacao a y: 
+
+2x + 3y + 4z − 12 =pi(x,y,z) 
+
+O resultado da derivada parcial de pi(x,y,z)em relacao a y da 3 
+
+ 
+
+ 
+
+Terceiro  vamos obter as derivadas parciais da superficie pi(x,y,z) em relacao a z: 
+
+2x + 3y + 4z − 12 =pi(x,y,z) 
+
+O resultado da derivada parcial de pi(x,y,z)em relacao a z da 4 
+
+<2,3,4> é o nosso gradiente  
+
+Assumindo que L = lambda 
+
+Gradiente da função  =  a lambda vezes o gradiente da restrição. 
+
+<8x,2y,10z> = L*(<2,3,4>) 
+
+E resolvemos o sistema de equações. 
+
+ 1)8x = L*2 
+
+2)2y = L*3 
+
+3) 10z= L*4 
+
+Vamos isolar o L  o que vai dar : L=8x/2 
+
+                        L=2y/3 
+
+                        L=10z/4 
+
+ 
+
+Iguala a 1 e 2   : 8x/2 = 2y/3 
+
+3*(8x) = 2*(2y)  => 24x = 4y => x = 4y/24 => x=y/6 = >y=6x 
+
+Usando o valor de x e  
+
+Iguala 1 e 3: 8x/2= 10z/4 
+
+        4*(8x) = 2*(10z) =>16x = 20z => x = 20z/16=>x=10z/8=>x=5z/4 =>z = 4x/5=z 
+
+Temos então as relações   
+
+Z=4x/5 
+
+Y=6x 
+
+X=X 
+
+Substituindo na restrição temos que: 
+
+2x + 3y + 4z =12  => 2x+18x+16x/5=12=>20x+16x/5=12 => (100x/5)+16x=12=>116x/5 =60 =>x=(60*5)/116=>x=300/116 
+
+Descobrimos o X , agora vamos descobrir o Y e o Z 
+
+Y=6*(300/116)=>1800/116 
+
+Z=4*(300/116)/5=>(1200/116)/5 
+
+Descobrimos um ponto critico , que é o (300/116, 1800/116,(1200/116)/5)

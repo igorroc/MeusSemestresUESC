@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "ponto.h": "c",
-        "node.c": "cpp",
-        "stdio.h": "c"
-    }
-}
