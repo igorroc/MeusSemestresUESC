@@ -2,7 +2,7 @@
 
 Navegue pelas branches dos semestres
 
--   [Semestre 1](https://github.com/igorroc/MeusSemestresUESC/tree/semestre-1)
+-   → **Semestre 1** ←
 -   [Semestre 2](https://github.com/igorroc/MeusSemestresUESC/tree/semestre-2)
 -   [Semestre 3](https://github.com/igorroc/MeusSemestresUESC/tree/semestre-3)
 -   [Semestre 4](https://github.com/igorroc/MeusSemestresUESC/tree/semestre-4)

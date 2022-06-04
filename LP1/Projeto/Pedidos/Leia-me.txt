@@ -1,0 +1,10 @@
+= > Projeto de LP 1 feito por Fernanda Leite e Igor Rocha.
+
+= > Utiliza:
+- Arquivos.
+- Funções.
+- Ponteiros.
+- Strings.
+
+
+OBS: Para funcionar completamente, é necessário rodar o programa em uma plataforma Windows, pois utilizamos a biblioteca windows.h para algumas funções.

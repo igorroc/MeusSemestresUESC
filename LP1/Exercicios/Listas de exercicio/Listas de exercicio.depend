@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1553864740 source:c:\users\igor_\documents\1 - uesc\semestre 1\programação\exercicios\listas de exercicio\main.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<math.h>
+
