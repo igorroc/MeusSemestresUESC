@@ -13,10 +13,11 @@
 	
 	li $v0, 5 # scanf
 	syscall
+
 	move $t0, $v0 # contador
 	
-	la $a0, printPedeValor
 	li $v0, 4 # printf
+	la $a0, printPedeValor
 	syscall
 	
 
@@ -25,7 +26,7 @@
 	move $s0, $v0 # pega o primeiro valor
 	subi $t0, $t0, 1
 	
-	loop: 
+	loop:
 		blez $t0, fimLoop
 		li $v0, 5 # scanf
 		syscall
@@ -39,10 +40,10 @@
 		
 	fimLoop:
 	la $a0, printFim
-	li $v0, 4 # printf
+	li $v0, 4 # printf string
 	syscall
 	
 	move $a0, $s0
-	li $v0, 1
+	li $v0, 1 # printf int
 	syscall
 	
