@@ -1,0 +1,18 @@
+1.- Parte02-Cap15-Programacao-Logica.pdf
+Slide25 - Slide42 - exemplo p.296 4 ramos
+Slide43 - Slide49 - exemplo p.298 arvore-SLD infinito: REGRA DE COMPUTACAO
+Slide50 - Slide69 fatorial de um numero
+
+2.- Fatorial-v0-possible-non-terminating.txt
+
+3.- Fatorial-v1-Fat(5).txt
+
+4.- Fibonacci-Fib(5).txt
+
+5.- Listas:
+p01-pl.txt
+p02-pl.txt
+p03-pl.txt
+p05-pl.txt
+p07-pl.txt
+p09-pl.txt
