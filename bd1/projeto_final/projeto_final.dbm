@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.4" use-changelog="false" last-position="385,490" last-zoom="0.75" max-obj-count="16"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="tbl_departamento" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="580" y="280"/>
+	<column name="id_departamento" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nome_departamento" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<column name="email_departamento" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="sigla_departamento" not-null="true">
+		<type name="varchar" length="10"/>
+	</column>
+	<constraint name="tbl_departamento_pk" type="pk-constr" table="public.tbl_departamento">
+		<columns names="id_departamento" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="sigla_departamento" type="uq-constr" table="public.tbl_departamento">
+		<columns names="sigla_departamento" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tbl_telefone_departamento" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="20" y="260"/>
+	<column name="id_telefone" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ddd_telefone" not-null="true">
+		<type name="varchar" length="3"/>
+	</column>
+	<column name="numero_telefone" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="tbl_telefone_pk" type="pk-constr" table="public.tbl_telefone_departamento">
+		<columns names="id_telefone" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_departamento_tbl_departamento" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="tbl_departamento_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="tbl_docente" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="520" y="600"/>
+	<column name="id_docente" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nome_docente" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="titulo_docente" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="email_docente" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="area_atuacao" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="tbl_docente_pk" type="pk-constr" table="public.tbl_docente">
+		<columns names="id_docente" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="email_docente" type="uq-constr" table="public.tbl_docente">
+		<columns names="email_docente" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_departamento_tbl_departamento" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="tbl_departamento_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="tbl_departamento_has_many_tbl_telefone" type="rel1n" layers="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#d1513f"
+	 src-table="public.tbl_departamento"
+	 dst-table="public.tbl_telefone_departamento"
+	 src-required="false" dst-required="false"/>
+
+<table name="tbl_telefone_docente" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="60" y="500"/>
+	<column name="id_telefone_docente" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="tipo_telefone_docente" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="numero_telefone_docente" not-null="true">
+		<type name="varchar" length="20"/>
+	</column>
+	<column name="ddd_telefone_docente" not-null="true">
+		<type name="varchar" length="3"/>
+	</column>
+	<constraint name="tbl_telefone_docente_pk" type="pk-constr" table="public.tbl_telefone_docente">
+		<columns names="id_telefone_docente" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_docente_tbl_docente" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="tbl_docente_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="tbl_docente_has_many_tbl_telefone_docente" type="rel1n" layers="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#2585ec"
+	 src-table="public.tbl_docente"
+	 dst-table="public.tbl_telefone_docente"
+	 src-required="false" dst-required="false"/>
+
+<table name="tbl_colegiado" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1080" y="300"/>
+	<column name="id_colegiado" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nome_colegiado" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="email_colegiado" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="telefone_colegiado" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="tbl_colegiado_pk" type="pk-constr" table="public.tbl_colegiado">
+		<columns names="id_colegiado" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_departamento_tbl_departamento" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="tbl_departamento_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="tbl_departamento_has_many_tbl_docente" type="rel1n" layers="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#26064e"
+	 src-table="public.tbl_departamento"
+	 dst-table="public.tbl_docente"
+	 src-required="false" dst-required="false"/>
+
+<table name="tbl_disciplina" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1600" y="240"/>
+	<column name="id_disciplina" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nome_disciplina" not-null="true">
+		<type name="varchar" length="100"/>
+	</column>
+	<column name="carga_horaria_disciplina" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="credito_disciplina" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="codigo_disciplina" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="semestre_disciplina" not-null="true">
+		<type name="smallint" length="10"/>
+	</column>
+	<constraint name="tbl_disciplina_pk" type="pk-constr" table="public.tbl_disciplina">
+		<columns names="id_disciplina" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="codigo_disciplina" type="uq-constr" table="public.tbl_disciplina">
+		<columns names="codigo_disciplina" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_colegiado_tbl_colegiado" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="tbl_colegiado_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="tbl_departamento_has_many_tbl_colegiado" type="rel1n" layers="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#48ec09"
+	 src-table="public.tbl_departamento"
+	 dst-table="public.tbl_colegiado"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="tbl_colegiado_has_many_tbl_disciplina" type="rel1n" layers="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#7db598"
+	 src-table="public.tbl_colegiado"
+	 dst-table="public.tbl_disciplina"
+	 src-required="false" dst-required="false"/>
+
+<table name="tbl_historico_disciplina_docente" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2000" y="760"/>
+	<column name="id_historico_docente" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="semestre_ministrado" not-null="true">
+		<type name="varchar" length="10"/>
+	</column>
+	<column name="id_docente">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="id_disciplina">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="historico_disciplina_docente_pk" type="pk-constr" table="public.tbl_historico_disciplina_docente">
+		<columns names="id_historico_docente" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tbl_interesse_docente" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2100" y="280"/>
+	<column name="id_interesse_docente" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="docente_interessado_1">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="docente_interessado_2">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="docente_interessado_3">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="docente_interessado_4">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="id_disciplina" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="tbl_interesse_docente_pk" type="pk-constr" table="public.tbl_interesse_docente">
+		<columns names="id_interesse_docente" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tbl_indicacao_docente" layers="0" collapse-mode="2" max-obj-count="13" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1080" y="1100"/>
+	<column name="id_indicacao_docente" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="semestre_indicacao" not-null="true">
+		<type name="varchar" length="10"/>
+	</column>
+	<column name="turma_formandos" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="observacao_indicacao">
+		<type name="text" length="0"/>
+	</column>
+	<column name="turma_indicacao_docente" not-null="true">
+		<type name="varchar" length="2"/>
+	</column>
+	<column name="tipo_disciplina_indicacao_docente" not-null="true">
+		<type name="varchar" length="20"/>
+	</column>
+	<column name="prioridade_docente">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="docente_indicado" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="disciplina_indicacao" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="id_colegiado" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="id_interesse">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="indicacao_docente_pk" type="pk-constr" table="public.tbl_indicacao_docente">
+		<columns names="id_indicacao_docente" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tbl_horarios" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1700" y="1040"/>
+	<column name="id_horarios" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="id_disciplina">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="id_docente">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="dia_semana">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="horario_inicio" not-null="true">
+		<type name="time" length="20"/>
+	</column>
+	<column name="horario_final" not-null="true">
+		<type name="time" length="20"/>
+	</column>
+	<column name="cod_disciplina" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="turma_disciplina" not-null="true">
+		<type name="varchar" length="5"/>
+	</column>
+	<constraint name="tbl_horarios_pk" type="pk-constr" table="public.tbl_horarios">
+		<columns names="id_horarios" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="id_docente" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_historico_disciplina_docente">
+	<columns names="id_docente" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_disciplina" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_disciplina" table="public.tbl_historico_disciplina_docente">
+	<columns names="id_disciplina" ref-type="src-columns"/>
+	<columns names="id_disciplina" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="docente_interessado_1" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_interesse_docente">
+	<columns names="docente_interessado_1" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="docente_interessado_2" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_interesse_docente">
+	<columns names="docente_interessado_2" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="docente_interessado_3" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_interesse_docente">
+	<columns names="docente_interessado_3" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="docente_interessado_4" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_interesse_docente">
+	<columns names="docente_interessado_4" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_disciplina" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_disciplina" table="public.tbl_interesse_docente">
+	<columns names="id_disciplina" ref-type="src-columns"/>
+	<columns names="id_disciplina" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="prioridade_docente" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_indicacao_docente">
+	<columns names="prioridade_docente" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="docente_indicado" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_indicacao_docente">
+	<columns names="docente_indicado" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="disciplina_indicacao" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.tbl_disciplina" table="public.tbl_indicacao_docente">
+	<columns names="disciplina_indicacao" ref-type="src-columns"/>
+	<columns names="id_disciplina" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_colegiado" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_colegiado" table="public.tbl_indicacao_docente">
+	<columns names="id_colegiado" ref-type="src-columns"/>
+	<columns names="id_colegiado" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_interesse" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_interesse_docente" table="public.tbl_indicacao_docente">
+	<columns names="id_interesse" ref-type="src-columns"/>
+	<columns names="id_interesse_docente" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_disciplina" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_disciplina" table="public.tbl_horarios">
+	<columns names="id_disciplina" ref-type="src-columns"/>
+	<columns names="id_disciplina" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="id_docente" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="SET NULL" ref-table="public.tbl_docente" table="public.tbl_horarios">
+	<columns names="id_docente" ref-type="src-columns"/>
+	<columns names="id_docente" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_tbl_interesse_docente_tbl_docente" type="relfk" layers="0"
+	 src-table="public.tbl_interesse_docente"
+	 dst-table="public.tbl_docente" reference-fk="docente_interessado_1"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tbl_interesse_docente_tbl_docente1" type="relfk" layers="0"
+	 src-table="public.tbl_interesse_docente"
+	 dst-table="public.tbl_docente" reference-fk="docente_interessado_2"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tbl_interesse_docente_tbl_docente2" type="relfk" layers="0"
+	 src-table="public.tbl_interesse_docente"
+	 dst-table="public.tbl_docente" reference-fk="docente_interessado_3"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tbl_interesse_docente_tbl_docente3" type="relfk" layers="0"
+	 src-table="public.tbl_interesse_docente"
+	 dst-table="public.tbl_docente" reference-fk="docente_interessado_4"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_indicacao_docente_tbl_docente" type="relfk" layers="0"
+	 src-table="public.tbl_indicacao_docente"
+	 dst-table="public.tbl_docente" reference-fk="prioridade_docente"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_indicacao_docente_tbl_docente1" type="relfk" layers="0"
+	 src-table="public.tbl_indicacao_docente"
+	 dst-table="public.tbl_docente" reference-fk="docente_indicado"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_indicacao_docente_tbl_disciplina" type="relfk" layers="0"
+	 src-table="public.tbl_indicacao_docente"
+	 dst-table="public.tbl_disciplina" reference-fk="disciplina_indicacao"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_indicacao_docente_tbl_colegiado" type="relfk" layers="0"
+	 src-table="public.tbl_indicacao_docente"
+	 dst-table="public.tbl_colegiado" reference-fk="id_colegiado"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_tbl_interesse_docente_tbl_disciplina" type="relfk" layers="0"
+	 src-table="public.tbl_interesse_docente"
+	 dst-table="public.tbl_disciplina" reference-fk="id_disciplina"
+	 src-required="false" dst-required="true"/>
+
+<relationship name="rel_tbl_horarios_tbl_disciplina" type="relfk" layers="0"
+	 src-table="public.tbl_horarios"
+	 dst-table="public.tbl_disciplina" reference-fk="id_disciplina"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tbl_horarios_tbl_docente" type="relfk" layers="0"
+	 src-table="public.tbl_horarios"
+	 dst-table="public.tbl_docente" reference-fk="id_docente"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_historico_disciplina_docente_tbl_docente" type="relfk" layers="0"
+	 src-table="public.tbl_historico_disciplina_docente"
+	 dst-table="public.tbl_docente" reference-fk="id_docente"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_historico_disciplina_docente_tbl_disciplina" type="relfk" layers="0"
+	 src-table="public.tbl_historico_disciplina_docente"
+	 dst-table="public.tbl_disciplina" reference-fk="id_disciplina"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_tbl_indicacao_docente_tbl_interesse_docente" type="relfk" layers="0"
+	 src-table="public.tbl_indicacao_docente"
+	 dst-table="public.tbl_interesse_docente" reference-fk="id_interesse"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
