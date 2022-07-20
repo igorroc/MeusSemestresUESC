@@ -1,0 +1,9 @@
+Come  Vegetariano Idade Diabetes Classe
+Pouco    Sim      Velho   Sim    Magro
+Medio    Sim      Velho   Não    Magro
+Muito    Não      Velho   Sim    Gordo
+Pouco    Não      Velho   Não    Magro
+Medio    Não      Jovem   Sim    Gordo
+Pouco    Sim      Jovem   Não    Magro
+Muito    Não      Velho   Não    Gordo
+Medio    Não      Jovem   Sim    Gordo

@@ -1,0 +1,15 @@
+﻿Idade   Renda Estudante Credito Compra
+Jovem   Alto  Não       Bom     Não
+Jovem   Alto  Não       Ótimo   Não
+Adulto  Alto  Não       Bom     Sim
+Senior  Médio Não       Bom     Sim
+Senior  Baixo Sim       Bom     Sim
+Senior  Baixo Sim       Ótimo   Não
+Adulto  Baixo Sim       Ótimo   Sim
+Jovem   Médio Não       Bom     Não
+Jovem   Baixo Sim       Bom     Sim
+Senior  Médio Sim       Bom     Sim
+Jovem   Médio Sim       Ótimo   Sim
+Adulto  Médio Não       Ótimo   Sim
+Adulto  Alto  Sim       Bom     Sim
+Senior  Médio Não       Ótimo   Não

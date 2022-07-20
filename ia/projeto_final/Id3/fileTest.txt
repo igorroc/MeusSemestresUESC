@@ -1,0 +1,12 @@
+Gender CarsOwn TrvCost Income Transportation
+Male      0    Cheap   Low    Bus
+Male      1    Cheap   Medium Bus
+Female    1    Cheap   Medium Train
+Female    0    Cheap   Low    Bus
+Male      1    Cheap   Medium Bus
+Male      0    Stand   Medium Train
+Female    1    Stand   Medium Train
+Female    1    Expens  High   Car
+Male      2    Expens  Medium Car
+Female    2    Expens  High   Car
+
