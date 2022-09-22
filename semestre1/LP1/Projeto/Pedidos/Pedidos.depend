@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1566738686 source:c:\users\igor_\documents\1 - uesc\semestre 1\programação\projeto\pedidos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+

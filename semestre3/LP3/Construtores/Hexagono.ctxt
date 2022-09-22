@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Hexagono
+comment1.params=l
+comment1.target=Hexagono(float)
+comment2.params=
+comment2.target=float\ calcularArea()
+comment3.params=
+comment3.target=float\ calcularPerimetro()
+comment4.params=
+comment4.target=void\ imprimir()
+comment5.params=l
+comment5.target=void\ setLado(float)
+numComments=6

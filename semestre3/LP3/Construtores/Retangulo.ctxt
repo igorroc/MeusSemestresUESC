@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Retangulo
+comment1.params=b\ a
+comment1.target=Retangulo(float,\ float)
+comment2.params=
+comment2.target=float\ calcularArea()
+comment3.params=
+comment3.target=float\ calcularPerimetro()
+comment4.params=
+comment4.target=void\ imprimir()
+comment5.params=b\ a
+comment5.target=void\ setBaseEAltura(float,\ float)
+numComments=6

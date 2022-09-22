@@ -1,0 +1,158 @@
+
+\documentclass[12pt]{article} 
+
+\usepackage[utf8]{inputenc} 
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry} 
+\geometry{a4paper} 
+
+\usepackage{amsmath, amsfonts, amssymb}
+
+\begin{document}
+	\begin{center}
+		Atividade 1
+	\end{center}
+	\begin{flushright}
+		Disciplina: Álgebra e Geometria Analítica.\\
+		Professor: Claudemir Mota.\\
+		Aluno: Igor Lima Rocha.
+	\end{flushright}
+	
+
+	\begin{center}
+		Considerando as matrizes
+		$$M \cdot C = \begin{bmatrix}
+			1+26a+11c & 11+26b & 26 \\
+			20+32b+12c & 12+32b & 32 \\
+			14+31a+4c & 4+31b & 31
+		\end{bmatrix} e$$
+		$$C = \begin{bmatrix}
+			a & b & 1\\
+			a+c & b+1 & 1\\
+			a+1 & b & 1
+		\end{bmatrix},$$
+		onde $a = 2$, $b = 8$ e $c = 2$, e \\
+		utilizando as operações elementares em $C$:
+		$$\begin{bmatrix}
+			2 & 8 & 1 & \vdots & 1 & 0 & 0 \\
+			4 & 9 & 1 & \vdots & 0 & 1 & 0 \\
+			3 & 8 & 1 & \vdots & 0 & 0 & 1
+		\end{bmatrix} L_1 \Rightarrow \frac{L_1}{2} \begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			4 & 9 & 1 & \vdots & 0 & 1 & 0 \\
+			3 & 8 & 1 & \vdots & 0 & 0 & 1
+		\end{bmatrix}$$
+		$$\begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			4 & 9 & 1 & \vdots & 0 & 1 & 0 \\
+			3 & 8 & 1 & \vdots & 0 & 0 & 1
+		\end{bmatrix} L_2 \Rightarrow L_2-(4\cdot L_1) \begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			0 & -7 & -1 & \vdots & -2 & 1 & 0 \\
+			3 & 8 & 1 & \vdots & 0 & 0 & 1
+		\end{bmatrix}$$
+		$$\begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			4 & 9 & 1 & \vdots & 0 & 1 & 0 \\
+			3 & 8 & 1 & \vdots & 0 & 0 & 1
+		\end{bmatrix} L_2 \Rightarrow L_2-(4\cdot L_1) \begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			0 & -7 & -1 & \vdots & -2 & 1 & 0 \\
+			3 & 8 & 1 & \vdots & 0 & 0 & 1
+		\end{bmatrix}$$
+		$$\begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			0 & -7 & -1 & \vdots & -2 & 1 & 0 \\
+			3 & 8 & 1 & \vdots & 0 & 0 & 1
+		\end{bmatrix} L_3 \Rightarrow L_3-(3\cdot L_1) \begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			0 & -7 & -1 & \vdots & -2 & 1 & 0 \\
+			0 & -4 & -\frac{1}{2} & \vdots & -\frac{3}{2} & 0 & 1
+		\end{bmatrix}$$	
+		$$\begin{bmatrix}
+			1 & 4 & \frac{1}{2} & \vdots & \frac{1}{2} & 0 & 0 \\
+			0 & -7 & -1 & \vdots & -2 & 1 & 0 \\
+			0 & -4 & -\frac{1}{2} & \vdots & -\frac{3}{2} & 0 & 1
+		\end{bmatrix} L_1 \Rightarrow L_1+L_3 \begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & -7 & -1 & \vdots & -2 & 1 & 0 \\
+			0 & -4 & -\frac{1}{2} & \vdots & -\frac{3}{2} & 0 & 1
+		\end{bmatrix}$$		
+		$$\begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & -7 & -1 & \vdots & -2 & 1 & 0 \\
+			0 & -4 & -\frac{1}{2} & \vdots & -\frac{3}{2} & 0 & 1
+		\end{bmatrix} L_2 \Rightarrow \frac{L_2}{-7} \begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & 1 & \frac{1}{7} & \vdots & \frac{2}{7} & -\frac{1}{7} & 0 \\
+			0 & -4 & -\frac{1}{2} & \vdots & -\frac{3}{2} & 0 & 1
+		\end{bmatrix}$$	
+		$$\begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & 1 & \frac{1}{7} & \vdots & \frac{2}{7} & -\frac{1}{7} & 0 \\
+			0 & -4 & -\frac{1}{2} & \vdots & -\frac{3}{2} & 0 & 1
+		\end{bmatrix} L_3 \Rightarrow L_3+4\cdot L_2 \begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & 1 & \frac{1}{7} & \vdots & \frac{2}{7} & -\frac{1}{7} & 0 \\
+			0 & 0 & \frac{1}{14} & \vdots & -\frac{5}{14} & -\frac{4}{7} & 1
+		\end{bmatrix}$$	
+		$$\begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & 1 & \frac{1}{7} & \vdots & \frac{2}{7} & -\frac{1}{7} & 0 \\
+			0 & 0 & \frac{1}{14} & \vdots & -\frac{5}{14} & -\frac{4}{7} & 1
+		\end{bmatrix} L_2 \Rightarrow L_2-2\cdot L_3 \begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & 1 & 0 & \vdots & 1 & 1 & -2 \\
+			0 & 0 & \frac{1}{14} & \vdots & -\frac{5}{14} & -\frac{4}{7} & 1
+		\end{bmatrix}$$	
+		$$\begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & 1 & 0 & \vdots & 1 & 1 & -2 \\
+			0 & 0 & \frac{1}{14} & \vdots & -\frac{5}{14} & -\frac{4}{7} & 1
+		\end{bmatrix} L_3 \Rightarrow L_3\cdot 14 \begin{bmatrix}
+			1 & 0 & 0 & \vdots & -1 & 0 & 1 \\
+			0 & 1 & 0 & \vdots & 1 & 1 & -2 \\
+			0 & 0 & 1 & \vdots & -5 & -8 & 14
+		\end{bmatrix}$$	
+		
+		
+		onde
+		$$\begin{bmatrix}
+			-1 & 0 & 1 \\
+			1 & 1 & -2 \\
+			-5 & -8 & 14
+		\end{bmatrix} = C^{-1}$$
+		Fazendo a multiplicação 
+		$$(M\cdot C) \hspace{0.9cm}\cdot \hspace{1cm}C^{-1} \hspace{0.5cm}$$
+		$$\begin{bmatrix}
+			75 & 219 & 26 \\
+			108 & 268 & 32 \\
+			84 & 252 & 31
+		\end{bmatrix} \cdot \begin{bmatrix}
+			-1 & 0 & 1 \\
+			1 & 1 & -2 \\
+			-5 & -8 & 14
+		\end{bmatrix}$$
+		obtem-se:
+		$$\begin{bmatrix}
+			-75+219-130 & 0+219-208 & 75-438+364 \\
+			-108+268-160 & 0+268-256 & 108-536+448 \\
+			-84+252-155 & 0+252-248 & 84-504+434
+		\end{bmatrix}$$ 
+		$\Downarrow$ \\
+		$$\begin{bmatrix}
+			14 & 11 & 1 \\
+			0 & 12 & 20 \\
+			13 & 4 & 14 
+		\end{bmatrix}$$
+		$\Downarrow$ \\
+		$$\begin{bmatrix}
+			O & L & A \\
+			- & M & U \\
+			N & D & O
+		\end{bmatrix}$$
+		
+	\end{center}
+	
+
+
+\end{document}

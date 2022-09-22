@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Circulo
+comment1.params=r
+comment1.target=Circulo(float)
+comment2.params=
+comment2.target=float\ calcularArea()
+comment3.params=
+comment3.target=float\ calcularPerimetro()
+comment4.params=
+comment4.target=void\ imprimir()
+comment5.params=r
+comment5.target=void\ setRaio(float)
+numComments=6

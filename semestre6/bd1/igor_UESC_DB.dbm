@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.2" last-position="0,15" last-zoom="1.2" max-obj-count="20"
+	 default-schema="public" default-owner="postgres">
+<database name="UESC DB" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="TBL_Aluno" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="320" y="800"/>
+	<column name="ALU_Matricula" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="ALU_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="ALU_Data_Nascimento" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="ALU_CPF" not-null="true">
+		<type name="varchar" length="11"/>
+	</column>
+	<column name="ALU_Email" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Aluno_pk" type="pk-constr" table="public.&quot;TBL_Aluno&quot;">
+		<columns names="ALU_Matricula" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="TBL_Professor" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="180" y="220"/>
+	<column name="PRO_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="PRO_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="PRO_Lattes">
+		<type name="varchar" length="100"/>
+	</column>
+	<constraint name="TBL_Professor_pk" type="pk-constr" table="public.&quot;TBL_Professor&quot;">
+		<columns names="PRO_ID" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="DEP_ID_TBL_Departamento" index="3"/>
+		<object name="GRA_ID_TBL_Graduacao" index="5"/>
+		<object name="NIV_ID_TBL_Nivel" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="TBL_Departamento_fk" index="1"/>
+		<object name="TBL_Graduacao_fk" index="3"/>
+		<object name="TBL_Nivel_fk" index="2"/>
+	</customidxs>
+</table>
+
+<table name="TBL_Colegiado" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="420" y="580"/>
+	<column name="COL_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="COL_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Colegiado_pk" type="pk-constr" table="public.&quot;TBL_Colegiado&quot;">
+		<columns names="COL_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="TBL_Curso" layer="0" collapse-mode="2" max-obj-count="4">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="800" y="920"/>
+	<column name="CUR_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="CUR_Nome" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<constraint name="TBL_Curso_pk" type="pk-constr" table="public.&quot;TBL_Curso&quot;">
+		<columns names="CUR_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="TBL_Materia" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="80" y="1060"/>
+	<column name="MAT_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="MAT_Nome" not-null="true">
+		<type name="varchar" length="30"/>
+	</column>
+	<column name="MAT_Turma" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="TBL_Materia_pk" type="pk-constr" table="public.&quot;TBL_Materia&quot;">
+		<columns names="MAT_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="many_TBL_Materia_has_many_TBL_Aluno" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#f8dc0d"
+	 src-table="public.&quot;TBL_Materia&quot;"
+	 dst-table="public.&quot;TBL_Aluno&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="many_TBL_Materia_has_many_TBL_Aluno"/>
+
+<relationship name="many_TBL_Professor_has_many_TBL_Materia" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#93822c"
+	 src-table="public.&quot;TBL_Professor&quot;"
+	 dst-table="public.&quot;TBL_Materia&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="many_TBL_Professor_has_many_TBL_Materia"/>
+
+<table name="TBL_Universidade" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1000" y="200"/>
+	<column name="UNI_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="UNI_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="UNI_Cidade" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Universidade_pk" type="pk-constr" table="public.&quot;TBL_Universidade&quot;">
+		<columns names="UNI_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="TBL_Servidor" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="980" y="480"/>
+	<column name="SER_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="SER_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<column name="SER_Data_Inicio" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="SER_Data_Fim">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="TBL_Servidor_pk" type="pk-constr" table="public.&quot;TBL_Servidor&quot;">
+		<columns names="SER_ID" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="SET_ID_TBL_Setor" index="4"/>
+		<object name="UNI_ID_TBL_Universidade" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="TBL_Setor_fk" index="0"/>
+		<object name="TBL_Universidade_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="TBL_Setor" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1580" y="540"/>
+	<column name="SET_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="SET_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Tipo_Servidor_pk" type="pk-constr" table="public.&quot;TBL_Setor&quot;">
+		<columns names="SET_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="TBL_Setor_has_many_TBL_Servidor" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#934515"
+	 src-table="public.&quot;TBL_Setor&quot;"
+	 dst-table="public.&quot;TBL_Servidor&quot;"
+	 src-required="true" dst-required="false">
+	<label ref-type="dst-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<table name="TBL_Tipo_Curso" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1180" y="980"/>
+	<column name="TIC_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="TIC_Nome" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<constraint name="TBL_Tipo_Curso_pk" type="pk-constr" table="public.&quot;TBL_Tipo_Curso&quot;">
+		<columns names="TIC_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="TBL_Tipo_Curso_has_many_TBL_Curso" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#7f5c87"
+	 src-table="public.&quot;TBL_Tipo_Curso&quot;"
+	 dst-table="public.&quot;TBL_Curso&quot;"
+	 src-required="true" dst-required="false">
+	<label ref-type="name-label">
+		<position x="-0.981964" y="9.71434"/>
+	</label>
+</relationship>
+
+<relationship name="TBL_Colegiado_has_many_TBL_Curso" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#af368e"
+	 src-table="public.&quot;TBL_Colegiado&quot;"
+	 dst-table="public.&quot;TBL_Curso&quot;"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="TBL_Universidade_has_many_TBL_Servidor" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#40019b"
+	 src-table="public.&quot;TBL_Universidade&quot;"
+	 dst-table="public.&quot;TBL_Servidor&quot;"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="many_TBL_Curso_has_many_TBL_Materia" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#0be430"
+	 src-table="public.&quot;TBL_Curso&quot;"
+	 dst-table="public.&quot;TBL_Materia&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="many_TBL_Curso_has_many_TBL_Materia">
+	<label ref-type="name-label">
+		<position x="-23.5049" y="-28.4409"/>
+	</label>
+</relationship>
+
+<relationship name="TBL_Colegiado_has_many_TBL_Aluno" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#7e796c"
+	 src-table="public.&quot;TBL_Colegiado&quot;"
+	 dst-table="public.&quot;TBL_Aluno&quot;"
+	 src-required="true" dst-required="false"/>
+
+<table name="TBL_Departamento" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="740" y="400"/>
+	<column name="DEP_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="DEP_Sigla" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Departamento_pk" type="pk-constr" table="public.&quot;TBL_Departamento&quot;">
+		<columns names="DEP_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="TBL_Departamento_has_many_TBL_Colegiado" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#600c20"
+	 src-table="public.&quot;TBL_Departamento&quot;"
+	 dst-table="public.&quot;TBL_Colegiado&quot;"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="many_TBL_Servidor_has_many_TBL_Departamento" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#ab72c1"
+	 src-table="public.&quot;TBL_Servidor&quot;"
+	 dst-table="public.&quot;TBL_Departamento&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="many_TBL_Servidor_has_many_TBL_Departamento"/>
+
+<relationship name="many_TBL_Servidor_has_many_TBL_Colegiado" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#57875b"
+	 src-table="public.&quot;TBL_Servidor&quot;"
+	 dst-table="public.&quot;TBL_Colegiado&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="many_TBL_Servidor_has_many_TBL_Colegiado"/>
+
+<relationship name="many_TBL_Curso_has_many_TBL_Servidor" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#3c3d8d"
+	 src-table="public.&quot;TBL_Curso&quot;"
+	 dst-table="public.&quot;TBL_Servidor&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="many_TBL_Curso_has_many_TBL_Servidor"/>
+
+<relationship name="TBL_Departamento_has_many_TBL_Professor" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#a507cf"
+	 src-table="public.&quot;TBL_Departamento&quot;"
+	 dst-table="public.&quot;TBL_Professor&quot;"
+	 src-required="true" dst-required="false"/>
+
+<relationship name="TBL_Universidade_has_many_TBL_Departamento" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#6d9269"
+	 src-table="public.&quot;TBL_Universidade&quot;"
+	 dst-table="public.&quot;TBL_Departamento&quot;"
+	 src-required="true" dst-required="false"/>
+
+<table name="TBL_Cargo" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1340" y="800"/>
+	<column name="CAR_ID" not-null="true">
+		<type name="uuid" length="0"/>
+	</column>
+	<column name="CAR_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Cargo_pk" type="pk-constr" table="public.&quot;TBL_Cargo&quot;">
+		<columns names="CAR_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="many_TBL_Cargo_has_many_TBL_Servidor" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#1e265e"
+	 src-table="public.&quot;TBL_Cargo&quot;"
+	 dst-table="public.&quot;TBL_Servidor&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="many_TBL_Cargo_has_many_TBL_Servidor"/>
+
+<table name="TBL_Nivel" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="100" y="80"/>
+	<column name="NIV_ID" not-null="true"
+	 identity-type="ALWAYS">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="NIV_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Nivel_pk" type="pk-constr" table="public.&quot;TBL_Nivel&quot;">
+		<columns names="NIV_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="TBL_Graduacao" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="380" y="80"/>
+	<column name="GRA_ID" not-null="true"
+	 identity-type="ALWAYS">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="GRA_Nome" not-null="true">
+		<type name="varchar" length="50"/>
+	</column>
+	<constraint name="TBL_Graduacao_pk" type="pk-constr" table="public.&quot;TBL_Graduacao&quot;">
+		<columns names="GRA_ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="TBL_Nivel_has_many_TBL_Professor" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#ae7dec"
+	 src-table="public.&quot;TBL_Nivel&quot;"
+	 dst-table="public.&quot;TBL_Professor&quot;"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="TBL_Graduacao_has_many_TBL_Professor" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#fefb3f"
+	 src-table="public.&quot;TBL_Graduacao&quot;"
+	 dst-table="public.&quot;TBL_Professor&quot;"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
