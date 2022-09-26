@@ -1,6 +1,8 @@
 const express = require("express")
 const app = express()
 const port = 3000
+const controle = require("./controller/controle")
+const Pessoa = require("./model/Pessoa")
 
 app.set("engine ejs", "ejs")
 
