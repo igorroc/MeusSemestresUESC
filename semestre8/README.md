@@ -1,6 +1,6 @@
-# Bem vindo(a) aos meus semestres
+# Nada por aqui!
 
-Navegue pelas pastas dos semestres
+## Navegue pelas pastas dos semestres
 
 -   [Semestre 1](https://github.com/igorroc/MeusSemestresUESC/tree/master/semestre1)
 -   [Semestre 2](https://github.com/igorroc/MeusSemestresUESC/tree/master/semestre2)
