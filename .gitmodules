@@ -1,0 +1,3 @@
+[submodule "semestre6/redes1/Socket"] 
+  path = semestre6/redes1/Socket 
+  url = git://github.com/igorroc/socket
