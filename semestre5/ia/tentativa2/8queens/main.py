@@ -6,7 +6,7 @@ import utils
 
 steps = 0
 
-utils.QUEENS_QTD = 4
+utils.QUEENS_QTD = 5
 utils.TABLE_SIZE = utils.QUEENS_QTD
 
 utils.TABLE = [[0 for x in range(utils.TABLE_SIZE)] for y in range(utils.TABLE_SIZE)]
@@ -24,7 +24,7 @@ utils.WEIGHTS = [[0 for x in range(utils.TABLE_SIZE)] for y in range(utils.TABLE
 
 
 class config:
-    stepByStep = False  # Se True, o programa irá esperar o usuário apertar enter para continuar
+    stepByStep = True  # Se True, o programa irá esperar o usuário apertar enter para continuar
     printInfo = True  # Se True, o programa irá imprimir informações sobre o processo
 
 
@@ -126,8 +126,6 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
         print()
         utils.printTable(row, i)
 
-        if config.stepByStep:
-            input()
 
         if config.printInfo:
             print("Rainhas atacando posição {} ({}, {}){}: {}".format(utils.bColors.BLUE, row, i, utils.bColors.ENDC, queensAttacking))
@@ -137,15 +135,17 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
 
         if queensAttacking == 0:
             # Se não tem rainhas atacando a posição atual, coloca uma rainha nela
-
             utils.TABLE[row][i] = 'Q'
             utils.WEIGHTS[row][i] = float('inf')
 
             if config.printInfo:
                 print("Coloquei a rainha na posição ({}, {})".format(row, i))
 
+            if config.stepByStep:
+                input()
             # Verifica se todas as N rainhas foram colocadas
             if howManyQueensPlaced() == utils.QUEENS_QTD:
+                print()
                 utils.printTable()
                 print("Todas as rainhas foram colocadas!")
                 return True
@@ -167,11 +167,13 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
             if i == utils.TABLE_SIZE - 1:
                 # Se a rainha não puder ser colocada, coloca a rainha na posição com menor peso,
                 # remove a rainha da posição que está atacando e chama recursivamente para colocar a próxima rainha
+                print('Como não houve posição livre, buscando por posição com menor peso')
+                if config.stepByStep:
+                    input()
 
                 # Pega a posição com menor peso
                 minWeight = float('inf')
                 minWeightCol = 0
-                print('Como não houve posição livre, buscando por posição com menor peso')
 
                 for x in range(utils.TABLE_SIZE):
                     # Posição com menor peso e que não foi atacada pela última rainha colocada
@@ -212,11 +214,12 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
 
 def main():
     if resolve(0) == False:
+        print()
         utils.printTable()
         print("Não posso continuar daqui")
         return False
 
-    print("Steps: ", steps)
+    print("Passos: ", steps)
 # ! ------------------
 
 
