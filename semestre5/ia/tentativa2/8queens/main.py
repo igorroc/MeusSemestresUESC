@@ -1,14 +1,27 @@
 # Algoritmo: 8 Rainhas com pesos
 # Autores: Beatriz Pereira, Igor Rocha, Thalles Cerqueira
+# Link: https://replit.com/@IgorRoc/8queens#main.py
 
 import utils
 
 steps = 0
 
+utils.QUEENS_QTD = 8
+utils.TABLE_SIZE = 8
+utils.TABLE = [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0]]
+
 
 class config:
     stepByStep = False  # Se True, o programa irá esperar o usuário apertar enter para continuar
-    printInfo = False  # Se True, o programa irá imprimir informações sobre o processo
+    printInfo = True  # Se True, o programa irá imprimir informações sobre o processo
 
 
 def printTable(row=-1, col=-1):
@@ -107,6 +120,9 @@ def getPositionQueensBeingAttacked(row, col):
     if config.printInfo:
         print("Posições atacantes: ", positions)
 
+    if len(positions) == 0:
+        return [-1, -1]
+
     return positions[0]
 
 
@@ -188,6 +204,9 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
             while nextRow < utils.TABLE_SIZE and utils.checkIfRowIsSafe(nextRow) != 0:
                 nextRow += 1
 
+            if nextRow == utils.TABLE_SIZE:
+                return False
+
             # Chama recursivamente para colocar a próxima rainha
             if resolve(nextRow) == True:
                 return True
@@ -237,20 +256,6 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
 
 
 def main():
-    utils.TABLE = [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0]]
-
-    utils.WEIGHTS = [
-        [0 for x in range(utils.TABLE_SIZE)]
-        for y in range(utils.TABLE_SIZE)]
-
     if resolve(0) == False:
         printTable()
         print("Não posso continuar daqui")
