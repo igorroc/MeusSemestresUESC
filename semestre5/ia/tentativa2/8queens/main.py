@@ -9,14 +9,14 @@ steps = 0
 utils.QUEENS_QTD = 8
 utils.TABLE_SIZE = 8
 utils.TABLE = [
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]]
+    [0, 0, 0, 0, 0, 0, 'Q', 0],
+    ['Q', 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 'Q', 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 'Q'],
+    [0, 0, 0, 0, 0, 'Q', 0, 0],
+    [0, 0, 0, 'Q', 0, 0, 0, 0],
+    [0, 'Q', 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 'Q', 0, 0, 0]]
 
 
 class config:
@@ -24,19 +24,23 @@ class config:
     printInfo = True  # Se True, o programa irá imprimir informações sobre o processo
 
 
-def printTable(row=-1, col=-1):
+def printTable(currentRow=-1, currentCol=-1):
     for i in range(utils.TABLE_SIZE):
         for j in range(utils.TABLE_SIZE):
+            # Se a posição atual tiver peso 0, ela é da cor verde
             text = utils.bColors.GREEN + '0' + utils.bColors.ENDC
 
+            # Se a posição atual tiver peso maior que 0, ela é da cor vermelha
             if utils.WEIGHTS[i][j] > 0:
                 text = utils.bColors.FAIL + \
                     str(utils.WEIGHTS[i][j]) + utils.bColors.ENDC
 
-            if row == i and col == j:
+            # Se a posição atual estiver sendo analisada, ela é da cor azul
+            if currentRow == i and currentCol == j:
                 text = utils.bColors.BLUE + \
                     str(utils.WEIGHTS[i][j]) + utils.bColors.ENDC
 
+            # Se a posição atual tiver uma rainha, ela é da cor amarela
             if utils.TABLE[i][j] == 'Q':
                 text = utils.bColors.WARNING + utils.bColors.BOLD + \
                     'Q' + utils.bColors.ENDC
@@ -46,28 +50,21 @@ def printTable(row=-1, col=-1):
         print()
 
 
-def isSafe(row, col):
-    # Verifica se a rainha pode ser colocada na tabela
-    if utils.WEIGHTS[row][col] != 0:
-        return False
-
-    return True
-
-
 def cleanWeights(lastQueenPositionX, lastQueenPositionY):
     for i in range(utils.TABLE_SIZE):
         for j in range(utils.TABLE_SIZE):
+            # Se a posição atual for a posição da ultima rainha colocada, ela tem um peso maior
             if i == lastQueenPositionX and j == lastQueenPositionY:
-                utils.WEIGHTS[i][j] = 6
+                utils.WEIGHTS[i][j] = 9
             else:
                 utils.WEIGHTS[i][j] = 0
 
 
 def checkWeight(lastQueenPositionX, lastQueenPositionY):
-    # Verifica todas as posições da tabela, e atribui um peso para cada uma
-    # de acordo com a quantidade de rainhas que atacam aquela posição
     cleanWeights(lastQueenPositionX, lastQueenPositionY)
 
+    # Verifica todas as posições da tabela, e atribui um peso para cada uma
+    # de acordo com a quantidade de rainhas que atacam aquela posição
     for i in range(utils.TABLE_SIZE):
         for j in range(utils.TABLE_SIZE):
             if utils.TABLE[i][j] != 'Q':
@@ -79,11 +76,12 @@ def checkWeight(lastQueenPositionX, lastQueenPositionY):
 
 
 def getPositionQueensBeingAttacked(row, col):
-    # Verifica a posição das rainhas que estão atacando a posição passada
+    # Verifica a posição das rainhas que estão atacando a posição recebida
     positions = []
 
     # Coluna
     for i in range(utils.TABLE_SIZE):
+        # Se a posição atual for a posição da rainha que está sendo analisada, ela não é atacante
         if (i == row and col == col):
             continue
         if utils.TABLE[i][col] == 'Q':
@@ -91,6 +89,7 @@ def getPositionQueensBeingAttacked(row, col):
 
     # Diagonal inferior direita
     for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        # Se a posição atual for a posição da rainha que está sendo analisada, ela não é atacante
         if (i == row and j == col):
             continue
         if utils.TABLE[i][j] == 'Q':
@@ -98,6 +97,7 @@ def getPositionQueensBeingAttacked(row, col):
 
     # Diagonal superior direita
     for i, j in zip(range(row, utils.TABLE_SIZE, 1), range(col, -1, -1)):
+        # Se a posição atual for a posição da rainha que está sendo analisada, ela não é atacante
         if (i == row and j == col):
             continue
         if utils.TABLE[i][j] == 'Q':
@@ -105,6 +105,7 @@ def getPositionQueensBeingAttacked(row, col):
 
     # Diagonal inferior esquerda
     for i, j in zip(range(row, -1, -1), range(col, utils.TABLE_SIZE, 1)):
+        # Se a posição atual for a posição da rainha que está sendo analisada, ela não é atacante
         if (i == row and j == col):
             continue
         if utils.TABLE[i][j] == 'Q':
@@ -112,6 +113,7 @@ def getPositionQueensBeingAttacked(row, col):
 
     # Diagonal superior esquerda
     for i, j in zip(range(row, utils.TABLE_SIZE, 1), range(col, utils.TABLE_SIZE, 1)):
+        # Se a posição atual for a posição da rainha que está sendo analisada, ela não é atacante
         if (i == row and j == col):
             continue
         if utils.TABLE[i][j] == 'Q':
@@ -120,6 +122,7 @@ def getPositionQueensBeingAttacked(row, col):
     if config.printInfo:
         print("Posições atacantes: ", positions)
 
+    # Se não houver posições atacantes, retorna [-1, -1]
     if len(positions) == 0:
         return [-1, -1]
 
@@ -159,21 +162,18 @@ def howManyQueensPlaced():
 
 def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPositionX=-1, lastQueenPutPositionY=-1):
     print()
-    # Todas as rainhas foram colocadas
-    if row >= utils.QUEENS_QTD:
-        return True
 
     # Coloca peso em todas as casas da tabela
     checkWeight(lastQueenPositionX, lastQueenPositionY)
 
     # Tenta colocar uma rainha em todas as colunas
     for i in range(utils.TABLE_SIZE):
+        # Verifica quantas rainhas estão atacando a posição atual
         queensAttacking = utils.WEIGHTS[row][i]
         if config.printInfo:
             print("Rainhas atacando posição (" + str(row) +
                   ", " + str(i) + "): " + str(queensAttacking))
 
-        # Verifica se a rainha pode ser colocada na tabela
         printTable(row, i)
 
         if config.stepByStep:
@@ -185,7 +185,7 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
         steps += 1
 
         if queensAttacking == 0:
-            # Espera pelo enter do usuário
+            # Se não tem rainhas atacando a posição atual, coloca uma rainha nela
 
             utils.TABLE[row][i] = 'Q'
             utils.WEIGHTS[row][i] = float('inf')
@@ -205,6 +205,7 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
                 nextRow += 1
 
             if nextRow == utils.TABLE_SIZE:
+                # Se a próxima linha não existir, significa que não é possível colocar mais rainhas
                 return False
 
             # Chama recursivamente para colocar a próxima rainha
@@ -221,6 +222,7 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
                 minWeightCol = 0
 
                 for x in range(utils.TABLE_SIZE):
+                    # Posição com menor peso e que não foi atacada pela última rainha colocada
                     if utils.WEIGHTS[row][x] < minWeight and not checkIfSpotWasAttacked(row, x, lastQueenPutPositionX, lastQueenPutPositionY):
                         minWeight = utils.WEIGHTS[row][x]
                         minWeightCol = x
@@ -239,13 +241,14 @@ def resolve(row, lastQueenPositionX=-1, lastQueenPositionY=-1, lastQueenPutPosit
                     print("Rainha que está atacando a posição ({}, {}): ({}, {})".format(
                         row, minWeightCol, lastQueenPositionX, lastQueenPositionY))
 
+                # Atualiza a posição da última rainha colocada
                 lastQueenPutPositionX = row
                 lastQueenPutPositionY = minWeightCol
 
                 # Remove a rainha da posição que está atacando aquela posição
                 utils.TABLE[lastQueenPositionX][lastQueenPositionY] = 0
 
-                # Chama recursivamente para colocar a próxima rainha
+                # Chama recursivamente para colocar a próxima rainha, salvando a posição da rainha que está sendo analisada e a posição da última rainha colocada
                 if resolve(lastQueenPositionX,
                            lastQueenPositionX, lastQueenPositionY,
                            lastQueenPutPositionX, lastQueenPutPositionY) == True:
