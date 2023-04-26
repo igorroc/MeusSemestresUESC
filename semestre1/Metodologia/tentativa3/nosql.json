@@ -1,0 +1,20 @@
+{
+	"_id": "ObjectID", // ID Identificador da vacina
+	"name": "String", // Nome da vacina
+	"description": "String", // Nome curto da vacina
+	"abrev": "String", // Abreviação do nome da vacina
+    "tipo": "String", // Se é imunoglobulina, soro ou vacina
+    "uso": "String", // Indica se é rotina, campanha ou especial
+    "periodo": {
+        "inicio": "Date", // Data de início de uma campanha
+        "fim": "Date" // Data de fim de uma campanha
+    },
+    "dose": "Number", // Número de doses a serem aplicadas
+    "faixa_etaria": [
+        {
+            "minimo": { // Idade mínima
+                "meses": "Number", // Idade mínima descrita em meses
+            }
+        }
+    ]
+}

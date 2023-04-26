@@ -1,0 +1,33 @@
+Apresentação Metodologia
+
+1, 3 (divide), 5, 6 (divide)
+
+
+1. Introdução
+
+Nos últimos anos, os avanços computacionais têm causado mudanças significativas na economia, sociedade e cultura em todo o mundo. 
+
+*Muda de slide*
+
+Isso se deve em grande parte à popularização e uso intensivo de dispositivos eletrônicos, incluindo tablets, smartphones, desktops e notebooks, que deixaram de ser apenas uma forma de entretenimento e se tornaram uma ferramenta importante para o trabalho e serviços cotidianos. Esses dispositivos permitem uma interação rápida e eficiente com a WWW (rede mundial de internet).
+
+
+A computação é uma área da ciência que tem a capacidade de integrar e colaborar com outras áreas, como biologia e engenharia civil, que, por si só, possuem características diferentes da computação. No entanto, por meio do uso de computadores, essas áreas podem aproveitar recursos e automatizar processos, melhorando sua eficiência e produtividade.
+
+A evolução e ampliação da computação também levaram ao surgimento de vários nichos, incluindo o eHealth - saúde eletrônica. A fusão das áreas de saúde e tecnologia foi gradualmente incorporada à sociedade, e agora temos vários dispositivos que registram e armazenam dados de saúde, permitindo a criação de um histórico que pode ser útil tanto para o próprio usuário quanto para profissionais de saúde na compreensão das características de uma doença ou necessidades de um paciente.
+
+*Muda de slide*
+
+A informatização e registro de dados de vacinação em unidades básicas de saúde, hospitais e clínicas podem proporcionar um melhor gerenciamento das informações, permitindo que os pacientes controlem melhor sua saúde e fornecendo ao governo estatísticas sobre doenças em todo o país e sua relação com a vacinação.
+
+
+
+
+
+
+
+
+
+
+
+
