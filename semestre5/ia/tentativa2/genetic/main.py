@@ -122,7 +122,7 @@ class Bebidas:
 
 class Individuo:
     def __init__(self, proteina, carboidrato, bebida):
-        print("Criando individuo", proteina, carboidrato, bebida)
+        print("Criando individuo:", proteina, carboidrato, bebida)
         self.proteina = proteina
         self.carboidrato = carboidrato
         self.bebida = bebida
@@ -136,12 +136,12 @@ class Individuo:
         
     def mutacao(self):
         gene = random.randint(1, 3)
-        # if gene == 1:
-        #     self.proteina = random.choice(proteinas)
-        # elif gene == 2:
-        #     self.carboidrato = random.choice(carboidratos)
-        # else:
-        #     self.bebida = random.choice(bebidas)
+        if gene == 1:
+            self.proteina = proteinas.get_random()
+        elif gene == 2:
+            self.carboidrato = carboidratos.get_random()
+        else:
+            self.bebida = bebidas.get_random()
         self.calcula_fitness()
 
 proteinas = Proteinas()
@@ -177,3 +177,7 @@ pop.cria_populacao()
 pop.avalia_populacao()
 
 print("Melhor individuo:", pop.melhor_individuo)
+
+pop.melhor_individuo.mutacao()
+
+print("Melhor individuo mutação:", pop.melhor_individuo)
