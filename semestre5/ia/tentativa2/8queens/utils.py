@@ -63,3 +63,62 @@ def checkIfDiagonalIsSafe(row, column):
             howManyQueens += 1
 
     return howManyQueens
+
+def printTable(currentRow=-1, currentCol=-1):
+    for i in range(TABLE_SIZE):
+        for j in range(TABLE_SIZE):
+            # Se a posição atual tiver peso 0, ela é da cor verde
+            text = bColors.GREEN + '0' + bColors.ENDC
+
+            # Se a posição atual tiver peso maior que 0, ela é da cor vermelha
+            if WEIGHTS[i][j] > 0:
+                # Se foi a ultima rainha a ser apagada, ela é um X
+                if WEIGHTS[i][j] == float('inf'):
+                    text = bColors.FAIL + bColors.UNDERLINE + bColors.BOLD + \
+                    "X" + bColors.ENDC
+                else:
+                    text = bColors.FAIL + \
+                    str(WEIGHTS[i][j]) + bColors.ENDC
+
+            # Se a posição atual estiver sendo analisada, ela é da cor azul
+            if currentRow == i and currentCol == j:
+                if WEIGHTS[i][j] == float('inf'):
+                    text = bColors.BLUE + bColors.UNDERLINE + bColors.BOLD + \
+                    "X" + bColors.ENDC
+                else:
+                    text = bColors.BLUE + \
+                    str(WEIGHTS[i][j]) + bColors.ENDC
+
+            # Se a posição atual tiver uma rainha, ela é da cor amarela
+            if TABLE[i][j] == 'Q':
+                text = bColors.WARNING + bColors.BOLD + \
+                    'Q' + bColors.ENDC
+
+            print(text, end=' ')
+
+        print()
+
+
+def cleanWeights(lastQueenPositionX, lastQueenPositionY):
+    for i in range(TABLE_SIZE):
+        for j in range(TABLE_SIZE):
+            # Se a posição atual for a posição da ultima rainha colocada, ela tem um peso maior
+            if i == lastQueenPositionX and j == lastQueenPositionY:
+                WEIGHTS[i][j] = float('inf')
+            else:
+                WEIGHTS[i][j] = 0
+
+
+def checkWeight(lastQueenPositionX, lastQueenPositionY):
+    cleanWeights(lastQueenPositionX, lastQueenPositionY)
+
+    # Verifica todas as posições da tabela, e atribui um peso para cada uma
+    # de acordo com a quantidade de rainhas que atacam aquela posição
+    for i in range(TABLE_SIZE):
+        for j in range(TABLE_SIZE):
+            if TABLE[i][j] != 'Q':
+                WEIGHTS[i][j] += checkIfColumnIsSafe(j)
+
+                WEIGHTS[i][j] += checkIfRowIsSafe(i)
+
+                WEIGHTS[i][j] += checkIfDiagonalIsSafe(i, j)
