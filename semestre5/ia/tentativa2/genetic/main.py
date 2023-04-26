@@ -129,7 +129,7 @@ class Individuo:
         self.fitness = proteina.calorias + carboidrato.calorias + bebida.calorias + ((proteina.preco + carboidrato.preco + bebida.preco) * 10)
         
     def __str__(self):
-        return str(self.proteina) + ' ' + str(self.carboidrato) + ' ' + str(self.bebida) + ' ' + str(self.fitness)
+        return str(self.proteina) + ' + ' + str(self.carboidrato) + ' + ' + str(self.bebida) + ' = ' + str(self.fitness)
     
     def calcula_fitness(self):
         self.fitness = self.proteina.calorias + self.carboidrato.calorias + self.bebida.calorias + ((self.proteina.preco + self.carboidrato.preco + self.bebida.preco) * 10)
@@ -166,6 +166,14 @@ class Populacao:
             bebida = bebidas.get_random()
             individuo = Individuo(proteina, carboidrato, bebida)
             self.individuos.append(individuo)
+            
+    def avalia_populacao(self):
+        for individuo in self.individuos:
+            if self.melhor_individuo == None or individuo.fitness < self.melhor_individuo.fitness:
+                self.melhor_individuo = individuo
 
 pop = Populacao(32)
 pop.cria_populacao()
+pop.avalia_populacao()
+
+print("Melhor individuo:", pop.melhor_individuo)
