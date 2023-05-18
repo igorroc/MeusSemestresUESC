@@ -5,14 +5,14 @@ from utils.gene import Gene
 class Carbohydrate:
     def __init__(self):
         self.lista = []
-        self.lista.append(Gene("arroz", 124, 4, 1))
-        self.lista.append(Gene("macarrão", 81, 3, 2))
-        self.lista.append(Gene("ovo", 146, 8, 3))
-        self.lista.append(Gene("batata", 52, 5, 4))
-        self.lista.append(Gene("banana", 98, 2, 5))
-        self.lista.append(Gene("iogurte", 51, 3, 6))
-        self.lista.append(Gene("pão", 232, 2, 7))
-        self.lista.append(Gene("abacate", 96, 3, 8))
+        self.lista.append(Gene("arroz", 124, 4, "000"))
+        self.lista.append(Gene("macarrão", 81, 3, "001"))
+        self.lista.append(Gene("ovo", 146, 8, "010"))
+        self.lista.append(Gene("batata", 52, 5, "011"))
+        self.lista.append(Gene("banana", 98, 2, "100"))
+        self.lista.append(Gene("iogurte", 51, 3, "101"))
+        self.lista.append(Gene("pão", 232, 2, "110"))
+        self.lista.append(Gene("abacate", 96, 3, "111"))
 
     def __str__(self):
         return str(self.lista)

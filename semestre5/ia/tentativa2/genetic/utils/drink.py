@@ -5,10 +5,10 @@ from utils.gene import Gene
 class Drink:
     def __init__(self):
         self.lista = []
-        self.lista.append(Gene("suco laranja", 14, 10, 1))
-        self.lista.append(Gene("suco limão", 21, 5, 2))
-        self.lista.append(Gene("água de coco", 20, 4, 3))
-        self.lista.append(Gene("suco caju", 80, 7, 4))
+        self.lista.append(Gene("suco laranja", 14, 10, "00"))
+        self.lista.append(Gene("suco limão", 21, 5, "01"))
+        self.lista.append(Gene("água de coco", 20, 4, "10"))
+        self.lista.append(Gene("suco caju", 80, 7, "11"))
 
     def __str__(self):
         return str(self.lista)
