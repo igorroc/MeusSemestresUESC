@@ -20,6 +20,11 @@ class Individual:
             + drink.calories
             + ((protein.price + carbohydrate.price + drink.price) * 10)
         )
+        self.gene_size = 3
+        self.code_size = (
+            self.protein.code_size + self.carbohydrate.code_size + self.drink.code_size
+        )
+        self.code = self.protein.cod + self.carbohydrate.cod + self.drink.cod
 
     def __str__(self):
         return (
@@ -41,7 +46,7 @@ class Individual:
         )
 
     def mutate(self):
-        gene = random.randint(1, 3)
+        gene = random.randint(1, self.gene_size)
         if gene == 1:
             self.protein = proteins.get_random()
         elif gene == 2:

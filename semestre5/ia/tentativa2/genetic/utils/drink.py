@@ -9,6 +9,7 @@ class Drink:
         self.lista.append(Gene("suco limão", 21, 5, "01"))
         self.lista.append(Gene("água de coco", 20, 4, "10"))
         self.lista.append(Gene("suco caju", 80, 7, "11"))
+        self.code_size = 2
 
     def __str__(self):
         return str(self.lista)

@@ -9,6 +9,7 @@ class Protein:
         self.lista.append(Gene("carne", 140, 35, "01"))
         self.lista.append(Gene("peixe", 83, 27, "10"))
         self.lista.append(Gene("almondega", 120, 20, "11"))
+        self.code_size = 2
 
     def __str__(self):
         return str(self.lista)

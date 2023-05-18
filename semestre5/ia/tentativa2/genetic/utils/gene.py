@@ -4,6 +4,7 @@ class Gene:
         self.calories = calories
         self.price = price
         self.cod = cod
+        self.code_size = len(cod)
 
     def __str__(self):
         return self.name
