@@ -130,13 +130,13 @@ class Population:
             filho1_code = codigo_pai1 + codigo_mae1
             filho2_code = codigo_pai2 + codigo_mae2
 
-            filho1_protein = filho1_code[:2]
-            filho1_carbohydrate = filho1_code[2:5]
-            filho1_drink = filho1_code[5:]
+            filho1_protein = filho1_code[:proteins.code_size]
+            filho1_carbohydrate = filho1_code[proteins.code_size:proteins.code_size + carbohydrates.code_size]
+            filho1_drink = filho1_code[proteins.code_size + carbohydrates.code_size:]
 
-            filho2_protein = filho2_code[:2]
-            filho2_carbohydrate = filho2_code[2:5]
-            filho2_drink = filho2_code[5:]
+            filho2_protein = filho2_code[:proteins.code_size]
+            filho2_carbohydrate = filho2_code[proteins.code_size:proteins.code_size + carbohydrates.code_size]
+            filho2_drink = filho2_code[proteins.code_size + carbohydrates.code_size:]
 
             protein1 = proteins.get(filho1_protein)
             carbohydrate1 = carbohydrates.get(filho1_carbohydrate)
