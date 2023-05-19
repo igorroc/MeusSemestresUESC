@@ -27,6 +27,8 @@ class Individual:
         self.code = self.protein.cod + self.carbohydrate.cod + self.drink.cod
 
     def __str__(self):
+        # return self.code + " = " + str(self.fitness)
+
         return (
             str(self.protein)
             + " + "
@@ -48,9 +50,21 @@ class Individual:
     def mutate(self):
         gene = random.randint(1, self.gene_size)
         if gene == 1:
-            self.protein = proteins.get_random()
+            random_protein = proteins.get_random()
+            while self.protein == random_protein:
+                random_protein = proteins.get_random()
+            self.protein = random_protein
         elif gene == 2:
-            self.carbohydrate = carbohydrates.get_random()
+            random_carbohydrate = carbohydrates.get_random()
+            while self.carbohydrate == random_carbohydrate:
+                random_carbohydrate = carbohydrates.get_random()
+            self.carbohydrate = random_carbohydrate
         else:
-            self.drink = drinks.get_random()
+            random_drink = drinks.get_random()
+            while self.drink == random_drink:
+                random_drink = drinks.get_random()
+            self.drink = random_drink
         self.calcula_fitness()
+
+    def clone(self):
+        return Individual(self.protein, self.carbohydrate, self.drink)
