@@ -32,6 +32,8 @@ class Population:
         self.tamanho = tamanho
 
     def clone_individuals(self, individuals):
+        if len(individuals) == 0:
+            return []
         self.individuals = []
         self.tamanho = len(individuals)
         self.code_size = individuals[0].code_size
@@ -48,6 +50,7 @@ class Population:
             self.code_size = individuo.code_size
 
     def eval_population(self):
+        ultrapassagens = 0
         for individuo in self.individuals:
             if (
                 self.best_subject == None
@@ -55,6 +58,8 @@ class Population:
             ):
                 self.best_subject = individuo
                 self.best_generation = self.generation
+                ultrapassagens += 1
+        return ultrapassagens
 
     def order_by_fitness(self):
         self.individuals.sort(key=lambda x: x.fitness)
@@ -62,16 +67,16 @@ class Population:
     def new_generation(self):
         self.generation += 1
 
-    def elitism(self):
+    def elitism(self, size):
         self.order_by_fitness()
-        elite = self.individuals[: int(self.tamanho / 8)]
+        elite = self.individuals[:size]
         return elite
 
-    def roulette(self):
+    def roulette(self, size):
         self.order_by_fitness()
         # sorteia aleatoriamente, com peso maior para quem tem menor fitness
         list = []
-        max_individuals = int(self.tamanho * 7 / 8)
+        max_individuals = size
 
         # soma todos os fitness
         total_fitness = 0
@@ -96,20 +101,19 @@ class Population:
         return list
 
     def cross_over(self):
-        # sorteia um ponto de corte
-        ponto_corte = random.randint(0, self.individuals[0].code_size)
-
         children = []
         # percorre a lista de indivíduos de 2 em 2
-        for i in range(0, len(self.individuals), 2):
+        for i in range(0, self.tamanho, 2):
             # verifica se existe um próximo individuo
-            if i + 1 >= len(self.individuals):
+            if i + 1 >= self.tamanho:
                 break
-            # pega o código do primeiro individuo até o ponto de corte
+
+            # sorteia um ponto de corte
+            ponto_corte = random.randint(0, self.code_size)
+
             codigo_pai1 = self.individuals[i].code[:ponto_corte]
-            # pega o código do segundo individuo após o ponto de corte
             codigo_mae1 = self.individuals[i + 1].code[ponto_corte:]
-            # faz o mesmo para o segundo individuo
+
             codigo_pai2 = self.individuals[i + 1].code[:ponto_corte]
             codigo_mae2 = self.individuals[i].code[ponto_corte:]
 
@@ -133,7 +137,7 @@ class Population:
             carbohydrate2 = carbohydrates.get(filho2_carbohydrate)
             drink2 = drinks.get(filho2_drink)
 
-            # cria os novos individuos
+            # cria os novos indivíduos
             filho1 = Individual(protein1, carbohydrate1, drink1)
             filho2 = Individual(protein2, carbohydrate2, drink2)
 

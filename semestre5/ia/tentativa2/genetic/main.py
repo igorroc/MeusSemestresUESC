@@ -3,9 +3,13 @@ from utils.individual import Individual
 from utils.population import Population
 
 QTD_MUTATIONS = 0
-MUTATION_CHANCE = 5
-POPULATION_SIZE = 16
-GENERATION_SIZE = 20
+QTD_ULTRAPASSAGENS = 0
+MUTATION_CHANCE = 15
+POPULATION_SIZE = 10
+GENERATION_SIZE = 10000
+ELITE_SIZE = 1
+ROULETTE_SIZE = POPULATION_SIZE - ELITE_SIZE
+MAX_GENERATION_WITHOUT_CHANGE = GENERATION_SIZE
 
 pop = Population()
 pop.define_size(POPULATION_SIZE)
@@ -24,10 +28,10 @@ while pop.generation < GENERATION_SIZE:
     pop.new_generation()
 
     elite = Population()
-    elite.clone_individuals(pop.elitism())
+    elite.clone_individuals(pop.elitism(ELITE_SIZE))
 
     roulette = Population()
-    roulette.clone_individuals(pop.roulette())
+    roulette.clone_individuals(pop.roulette(ROULETTE_SIZE))
 
     pop.individuals = elite.individuals + roulette.cross_over()
 
@@ -39,10 +43,12 @@ while pop.generation < GENERATION_SIZE:
         print("• Mutação: ", old, "->", pop.individuals[random_index])
         QTD_MUTATIONS += 1
 
-    pop.eval_population()
+    QTD_ULTRAPASSAGENS += pop.eval_population()
 
-    if pop.best_generation - 10 > pop.generation:
-        print("• O melhor individuo não muda há 10 gerações")
+    if pop.generation - pop.best_generation > MAX_GENERATION_WITHOUT_CHANGE:
+        print(
+            f"• O melhor individuo não muda há {MAX_GENERATION_WITHOUT_CHANGE} gerações"
+        )
         break
 
     print("G", pop.generation, "\t Best:", pop.best_subject)
@@ -51,4 +57,5 @@ while pop.generation < GENERATION_SIZE:
 print("\n")
 print("• Relatórios")
 print("Mutations:", QTD_MUTATIONS)
+print("Ultrapassagens:", QTD_ULTRAPASSAGENS)
 print("\n\n")
