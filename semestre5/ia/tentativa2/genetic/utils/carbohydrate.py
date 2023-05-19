@@ -1,6 +1,7 @@
 import random
 from utils.gene import Gene
 
+        # self.lista.append(Gene("teste", 30, 2, "110"))
 
 class Carbohydrate:
     def __init__(self):

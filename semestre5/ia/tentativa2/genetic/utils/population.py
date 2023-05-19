@@ -51,7 +51,8 @@ class Population:
             self.code_size = individuo.code_size
 
     def eval_population(self):
-        overtaking = 0
+        overtaking_grow = 0
+        overtaking_loss = 0
         for individuo in self.individuals:
             if (
                 self.best_subject == None
@@ -59,13 +60,15 @@ class Population:
             ):
                 self.best_subject = individuo
                 self.best_generation = self.generation
-                overtaking += 1
+                overtaking_grow += 1
             if (
                 self.worst_subject == None
                 or individuo.fitness > self.worst_subject.fitness
             ):
                 self.worst_subject = individuo
-        return overtaking
+                overtaking_loss += 1
+    
+        return overtaking_grow, overtaking_loss
 
     def order_by_fitness(self):
         self.individuals.sort(key=lambda x: x.fitness)
