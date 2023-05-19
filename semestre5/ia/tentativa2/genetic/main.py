@@ -7,7 +7,8 @@ MUTATION_CHANCE = 5
 POPULATION_SIZE = 16
 GENERATION_SIZE = 20
 
-pop = Population(POPULATION_SIZE)
+pop = Population()
+pop.define_size(POPULATION_SIZE)
 pop.create_population()
 pop.eval_population()
 
@@ -18,20 +19,24 @@ print("• Iniciando algoritmo genético")
 
 print("G", pop.generation, "\t Best:", pop.best_subject)
 
+
 while pop.generation < GENERATION_SIZE:
     pop.new_generation()
 
-    elite = pop.elitism()
-    roulette = pop.roulette()
+    elite = Population()
+    elite.clone_individuals(pop.elitism())
 
-    new_population = Population(pop.tamanho * 7 / 8)
-    new_population.individuals = roulette
-    pop.individuals = elite + new_population.cross_over()
+    roulette = Population()
+    roulette.clone_individuals(pop.roulette())
+
+    pop.individuals = elite.individuals + roulette.cross_over()
 
     # ! Mutation
     if random.randint(1, 100) <= MUTATION_CHANCE:
         random_index = random.randint(0, len(pop.individuals) - 1)
+        old = pop.individuals[random_index].clone()
         pop.individuals[random_index].mutate()
+        print("• Mutação: ", old, "->", pop.individuals[random_index])
         QTD_MUTATIONS += 1
 
     pop.eval_population()

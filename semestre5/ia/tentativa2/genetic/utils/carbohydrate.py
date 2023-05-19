@@ -13,6 +13,7 @@ class Carbohydrate:
         self.lista.append(Gene("iogurte", 51, 3, "101"))
         self.lista.append(Gene("pão", 232, 2, "110"))
         self.lista.append(Gene("abacate", 96, 3, "111"))
+
         self.code_size = 3
 
     def __str__(self):
