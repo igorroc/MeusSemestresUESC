@@ -1,6 +1,12 @@
 import random
 from utils.population import Population
 
+# Trabalho de Inteligência Artificial
+# Algoritmo Genético
+# Alunos: Igor, Beatriz, Jefferson e Thalles
+
+# ! Configurações
+
 QTD_MUTATIONS = 0
 QTD_OVERTAKING = 0
 MUTATION_CHANCE = 15
@@ -11,6 +17,8 @@ ROULETTE_SIZE = POPULATION_SIZE - ELITE_SIZE
 MAX_GENERATION_WITHOUT_CHANGE = GENERATION_SIZE
 FIRST_BEST_SUBJECT = None
 FIRST_WORST_SUBJECT = None
+
+# ! Inicialização
 
 pop = Population()
 pop.define_size(POPULATION_SIZE)
@@ -27,6 +35,7 @@ print("• Iniciando algoritmo genético")
 
 print("G", pop.generation, "\t Best:", pop.best_subject)
 
+# ! Algoritmo Genético
 
 while pop.generation < GENERATION_SIZE:
     pop.new_generation()
@@ -57,6 +66,7 @@ while pop.generation < GENERATION_SIZE:
 
     print("G", pop.generation, "\t Best:", pop.best_subject.fitness)
 
+# ! Resultados
 
 print("\n")
 print("• Relatórios")
