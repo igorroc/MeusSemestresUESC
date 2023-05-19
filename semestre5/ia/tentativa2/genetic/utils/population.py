@@ -12,15 +12,31 @@ drinks = Drink()
 
 
 class Population:
-    def __init__(self, tamanho):
-        self.tamanho = tamanho
+    def __init__(self):
+        self.tamanho = 0
         self.individuals = []
         self.best_subject = None
         self.generation = 0
         self.best_generation = 0
+        self.code_size = 0
 
     def __str__(self):
-        return str(self.individuals)
+        msg = ""
+
+        for individuo in self.individuals:
+            msg += str(individuo) + "\n"
+
+        return msg
+
+    def define_size(self, tamanho):
+        self.tamanho = tamanho
+
+    def clone_individuals(self, individuals):
+        self.individuals = []
+        self.tamanho = len(individuals)
+        self.code_size = individuals[0].code_size
+        for individuo in individuals:
+            self.individuals.append(individuo.clone())
 
     def create_population(self):
         for i in range(self.tamanho):
@@ -29,6 +45,7 @@ class Population:
             drink = drinks.get_random()
             individuo = Individual(protein, carbohydrate, drink)
             self.individuals.append(individuo)
+            self.code_size = individuo.code_size
 
     def eval_population(self):
         for individuo in self.individuals:
