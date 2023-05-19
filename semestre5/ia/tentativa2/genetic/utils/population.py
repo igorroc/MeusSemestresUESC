@@ -39,19 +39,19 @@ class Population:
                 self.best_subject = individuo
                 self.best_generation = self.generation
 
-    def order(self):
+    def order_by_fitness(self):
         self.individuals.sort(key=lambda x: x.fitness)
 
     def new_generation(self):
         self.generation += 1
 
     def elitism(self):
-        self.order()
+        self.order_by_fitness()
         elite = self.individuals[: int(self.tamanho / 8)]
         return elite
 
     def roulette(self):
-        self.order()
+        self.order_by_fitness()
         # sorteia aleatoriamente, com peso maior para quem tem menor fitness
         list = []
         max_individuals = int(self.tamanho * 7 / 8)
