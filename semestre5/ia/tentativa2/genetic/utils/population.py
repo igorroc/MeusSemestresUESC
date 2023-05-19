@@ -16,6 +16,7 @@ class Population:
         self.tamanho = 0
         self.individuals = []
         self.best_subject = None
+        self.worst_subject = None
         self.generation = 0
         self.best_generation = 0
         self.code_size = 0
@@ -50,7 +51,7 @@ class Population:
             self.code_size = individuo.code_size
 
     def eval_population(self):
-        ultrapassagens = 0
+        overtaking = 0
         for individuo in self.individuals:
             if (
                 self.best_subject == None
@@ -58,8 +59,13 @@ class Population:
             ):
                 self.best_subject = individuo
                 self.best_generation = self.generation
-                ultrapassagens += 1
-        return ultrapassagens
+                overtaking += 1
+            if (
+                self.worst_subject == None
+                or individuo.fitness > self.worst_subject.fitness
+            ):
+                self.worst_subject = individuo
+        return overtaking
 
     def order_by_fitness(self):
         self.individuals.sort(key=lambda x: x.fitness)

@@ -1,20 +1,24 @@
 import random
-from utils.individual import Individual
 from utils.population import Population
 
 QTD_MUTATIONS = 0
-QTD_ULTRAPASSAGENS = 0
+QTD_OVERTAKING = 0
 MUTATION_CHANCE = 15
 POPULATION_SIZE = 10
 GENERATION_SIZE = 10000
 ELITE_SIZE = 1
 ROULETTE_SIZE = POPULATION_SIZE - ELITE_SIZE
 MAX_GENERATION_WITHOUT_CHANGE = GENERATION_SIZE
+FIRST_BEST_SUBJECT = None
+FIRST_WORST_SUBJECT = None
 
 pop = Population()
 pop.define_size(POPULATION_SIZE)
 pop.create_population()
 pop.eval_population()
+
+FIRST_BEST_SUBJECT = pop.best_subject.clone()
+FIRST_WORST_SUBJECT = pop.worst_subject.clone()
 
 print("\n\n")
 
@@ -40,10 +44,10 @@ while pop.generation < GENERATION_SIZE:
         random_index = random.randint(0, len(pop.individuals) - 1)
         old = pop.individuals[random_index].clone()
         pop.individuals[random_index].mutate()
-        print("• Mutação: ", old, "->", pop.individuals[random_index])
+        print("• Mutação: ", old, "→", pop.individuals[random_index])
         QTD_MUTATIONS += 1
 
-    QTD_ULTRAPASSAGENS += pop.eval_population()
+    QTD_OVERTAKING += pop.eval_population()
 
     if pop.generation - pop.best_generation > MAX_GENERATION_WITHOUT_CHANGE:
         print(
@@ -51,11 +55,21 @@ while pop.generation < GENERATION_SIZE:
         )
         break
 
-    print("G", pop.generation, "\t Best:", pop.best_subject)
+    print("G", pop.generation, "\t Best:", pop.best_subject.fitness)
 
 
 print("\n")
 print("• Relatórios")
+print("Generations:", pop.generation)
+print("PopulationSize:", POPULATION_SIZE)
+print("MutationChance:", MUTATION_CHANCE)
+print("EliteSize:", ELITE_SIZE)
+print("----------------")
 print("Mutations:", QTD_MUTATIONS)
-print("Ultrapassagens:", QTD_ULTRAPASSAGENS)
+print("Overtaking:", QTD_OVERTAKING)
+print("----------------")
+print("FirstBest:", FIRST_BEST_SUBJECT)
+print("Best:", pop.best_subject)
+print("FirstWorst:", FIRST_WORST_SUBJECT)
+print("Worst:", pop.worst_subject)
 print("\n\n")
