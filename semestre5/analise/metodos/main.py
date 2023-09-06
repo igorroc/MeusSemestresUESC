@@ -1,8 +1,10 @@
 import pandas as pd
 from utils.methods import Method, calculateByBisseccao
 from utils.outputs import outputBisseccao
+from utils.graph import plotHistory
 
 method = Method.Bisseccao
+showGraph = True
 
 # Ler o arquivo CSV
 df = pd.read_csv(f"entrada_{method.value}.csv")
@@ -16,7 +18,7 @@ for index, row in df.iterrows():
         zero, history = calculateByBisseccao(
             equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
         )
-        outputBisseccao(index, history)
+        
 
     if zero is None:
         print(
@@ -24,3 +26,8 @@ for index, row in df.iterrows():
         )
     else:
         print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
+        
+    
+    outputBisseccao(index, history)
+    if showGraph:
+        plotHistory(equation, float(row["a"]), float(row["b"]), history, zero)

@@ -1,6 +1,5 @@
 from enum import Enum
 from utils.equation import Equation
-from utils.graph import plotHistory
 
 
 class Method(Enum):
@@ -15,8 +14,6 @@ def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
     b = float(b)
     epsilon = float(epsilon)
     zero = None
-    left = a
-    right = b
 
     history = []
 
@@ -44,9 +41,6 @@ def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
         if f_a * f_c < 0:
             b = c
         else:
-            a = c
-
-    plotHistory(equation, left, right, history, zero)
-    
+            a = c    
 
     return zero, history
