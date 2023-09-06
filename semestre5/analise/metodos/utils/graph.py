@@ -10,13 +10,9 @@ def plotHistory(equation: Equation, a: float, b: float, history: list, zero: flo
     plt.plot(x, y, label=f"{equation}")
 
     for i in range(len(history)):
-        plt.plot(
-            history[i][6],
-            history[i][7],
-            "ro",
-        )
+        plt.plot(history[i][6], history[i][7], "x", color="lightblue")
 
-    plt.plot(0, zero, "x", label=f"Zero: {zero}")
+    plt.plot(zero, 0, "o", label=f"Zero: {zero}", color="red")
     plt.title("Gráfico da Equação")
     plt.xlabel("x")
     plt.ylabel("y")
