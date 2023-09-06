@@ -1,0 +1,2 @@
+equation,a,b,tolerance,max_iterations
+x**3 + cos(x),-5,10,0.000000000001,100
