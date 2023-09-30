@@ -199,8 +199,8 @@ def calculateBySecante(equation, a, b, epsilon, max_iterations):
 
 
 def calculateByEliminaçãoGauss(index, X, y):
-    X = np.array(X)
-    y = np.array(y)
+    X = np.array(X, dtype=float)
+    y = np.array(y, dtype=float)
 
     # Criar um DataFrame com os valores antes do cálculo
     data = {f"X_{i+1}": X[:, i] for i in range(len(X[0]))}
@@ -213,12 +213,17 @@ def calculateByEliminaçãoGauss(index, X, y):
 
     n = len(y)
 
+    # Montar a matriz aumentada [X|y]
     augmented_matrix = np.column_stack((X, y))
 
     # Aplica o método de eliminação de Gauss
     for pivot_row in range(n):
         # Encontra o pivô
         pivot = augmented_matrix[pivot_row, pivot_row]
+
+        if pivot == 0:
+            print("Pivô zero encontrado, o sistema não está preparado para isso.")
+            return None
 
         # Normaliza a linha do pivô
         augmented_matrix[pivot_row, :] /= pivot
@@ -246,8 +251,10 @@ def calculateByEliminaçãoGauss(index, X, y):
 def calculateByLU(index, A, b):
     X_only_show = np.array(A)
     y_only_show = np.array(b)
-    L, U = LU_decomposition(A)
+    L, U = LU_factorization(A)
+    
     n = len(A)
+    
     y = np.zeros(n)
     x = np.zeros(n)
 
@@ -280,7 +287,7 @@ def calculateByLU(index, A, b):
     return x
 
 
-def LU_decomposition(A):
+def LU_factorization(A):
     n = len(A)
     L = np.zeros((n, n))
     U = np.zeros((n, n))
