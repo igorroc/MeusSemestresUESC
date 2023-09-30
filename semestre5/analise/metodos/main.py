@@ -1,7 +1,7 @@
 import pandas as pd
 from utils.methods import *
 from utils.outputs import *
-from utils.graph import plotHistory
+import utils.graph as graph
 from utils.questions import *
 
 print("\n" * 10)
@@ -24,36 +24,64 @@ except:
 
 print(f"----------- Execução por {method.name} -----------")
 
-# Iterar pelas linhas do DataFrame
-for index, row in df.iterrows():
-    zero = None
-    history = 0
-    equation = row["equation"]
-    if method == Method.Bisseccao:
-        zero, history = calculateByBisseccao(
-            equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
-        )
-    elif method == Method.PosicaoFalsa:
-        zero, history = calculateByPosicaoFalsa(
-            equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
-        )
-    elif method == Method.NewtonRaphson:
-        zero, history = calculateByNewtonRaphson(
-            equation, row["a"], row["tolerance"], row["max_iterations"]
-        )
-    elif method == Method.Secante:
-        zero, history = calculateBySecante(
-            equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
-        )
+if method in [
+    Method.Bisseção,
+    Method.PosiçãoFalsa,
+    Method.NewtonRaphson,
+    Method.Secante,
+]:
+    # Iterar pelas linhas do DataFrame
+    for index, row in df.iterrows():
+        zero = None
+        history = [0]
+        equation = None
 
-    if method == Method.Bisseccao:
-        outputBisseccao(index, history)
-    elif method == Method.PosicaoFalsa:
-        outputPosicaoFalsa(index, history)
-    elif method == Method.NewtonRaphson:
-        outputNewtonRaphson(index, history)
-    elif method == Method.Secante:
-        outputSecante(index, history)
+        if method == Method.Bisseção:
+            equation = row["equation"]
+            zero, history = calculateByBisseccao(
+                equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
+            )
+            outputBisseccao(index, history)
+            if showGraph:
+                graph.plotHistory(
+                    equation, float(row["a"]), float(row["b"]), history, zero
+                )
+        elif method == Method.PosiçãoFalsa:
+            equation = row["equation"]
+            zero, history = calculateByPosiçãoFalsa(
+                equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
+            )
+            outputPosicaoFalsa(index, history)
+            if showGraph:
+                graph.plotHistory(
+                    equation, float(row["a"]), float(row["b"]), history, zero
+                )
+        elif method == Method.NewtonRaphson:
+            equation = row["equation"]
+            zero, history = calculateByNewtonRaphson(
+                equation, row["a"], row["tolerance"], row["max_iterations"]
+            )
+            outputNewtonRaphson(index, history)
+            if showGraph:
+                graph.plotHistoryStep(equation, float(row["a"]), history, zero)
+        elif method == Method.Secante:
+            equation = row["equation"]
+            zero, history = calculateBySecante(
+                equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
+            )
+            outputSecante(index, history)
+            if showGraph:
+                graph.plotHistoryStep(equation, float(row["a"]), history, zero)
+
+
+else:
+    zeros = None
+    a = df.iloc[:, :-1].values.astype(float).tolist()
+    b = df.iloc[:, -1].values.astype(float).tolist()
+
+    if method == Method.EliminaçãoGauss:
+        zeros = calculateByEliminaçãoGauss(a, b)
+        outputEliminaçãoGauss(zeros)
 
     if showGraph:
-        plotHistory(equation, float(row["a"]), float(row["b"]), history, zero)
+        graph.plotLines(a, b)

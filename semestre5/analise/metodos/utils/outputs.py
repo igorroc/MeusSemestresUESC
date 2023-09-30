@@ -55,3 +55,16 @@ def outputSecante(index: float, history: list):
         # Escreva os dados de 'history' no CSV
         for row in history:
             writer.writerow(row)
+
+
+def outputEliminaçãoGauss(x: any):
+    csv_filename = f"saidas/eliminacao_gauss/equation.csv"
+
+    with open(csv_filename, mode="w", newline="") as file:
+        writer = csv.writer(file)
+
+        # Escreva o cabeçalho do CSV
+        writer.writerow(["X"])
+
+        # Escreva os dados de 'x' no CSV
+        writer.writerow([x])

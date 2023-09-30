@@ -1,12 +1,14 @@
 from enum import Enum
 from utils.equation import Equation
+import numpy as np
 
 
 class Method(Enum):
-    Bisseccao = "bisseccao"
-    PosicaoFalsa = "posicao_falsa"
+    Bisseção = "bisseccao"
+    PosiçãoFalsa = "posicao_falsa"
     NewtonRaphson = "newton_raphson"
     Secante = "secante"
+    EliminaçãoGauss = "eliminacao_gauss"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -64,7 +66,7 @@ def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
     return zero, history
 
 
-def calculateByPosicaoFalsa(equation, a, b, epsilon, max_iterations):
+def calculateByPosiçãoFalsa(equation, a, b, epsilon, max_iterations):
     zero = None
     history = []
 
@@ -180,10 +182,6 @@ def calculateBySecante(equation, a, b, epsilon, max_iterations):
             zero = step
             break
 
-        if abs(f_step_next) <= epsilon:
-            zero = step_next
-            break
-
         aux = step_next
         step_next = (f_step_next * step - f_step * step_next) / (f_step_next - f_step)
         step = aux
@@ -196,3 +194,36 @@ def calculateBySecante(equation, a, b, epsilon, max_iterations):
         print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
 
     return zero, history
+
+
+def calculateByEliminaçãoGauss(A, b):
+    A = np.array(A)
+    b = np.array(b)
+
+    n = len(b)
+
+    augmented_matrix = np.column_stack((A, b))
+
+    # Aplica o método de eliminação de Gauss
+    for pivot_row in range(n):
+        # Encontra o pivô
+        pivot = augmented_matrix[pivot_row, pivot_row]
+
+        # Normaliza a linha do pivô
+        augmented_matrix[pivot_row, :] /= pivot
+
+        # Elimina os elementos abaixo do pivô
+        for i in range(pivot_row + 1, n):
+            factor = augmented_matrix[i, pivot_row]
+            augmented_matrix[i, :] -= factor * augmented_matrix[pivot_row, :]
+
+    # Resolve as equações a partir da parte triangular superior da matriz
+    x = np.zeros(n)
+    for i in range(n - 1, -1, -1):
+        x[i] = augmented_matrix[i, -1] - np.sum(
+            augmented_matrix[i, i + 1 : n] * x[i + 1 :]
+        )
+
+    print(f"Os valores de X são: {x}\n")
+    
+    return x
