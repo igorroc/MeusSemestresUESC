@@ -12,7 +12,9 @@ METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
 
 
 def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
-    print(f"Calculando por Bisseccao: {equation}")
+    print(f"Equação: {equation}")
+    print(f"Intervalo: ({a}, {b})")
+    print(f"Tolerância: {epsilon}")
     equation = Equation(equation)
     a = float(a)
     b = float(b)
@@ -24,11 +26,13 @@ def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
     history = []
 
     for k in range(max_iterations):
-        c = (a + b) / 2
-        f_c = equation.calculate(c)
         f_a = equation.calculate(a)
         f_b = equation.calculate(b)
+
         b_a = b - a
+
+        c = (a + b) / 2
+        f_c = equation.calculate(c)
 
         history.append([k, a, b, f_a, f_b, b_a, c, f_c])
 
@@ -73,12 +77,11 @@ def calculateByPosicaoFalsa(equation, a, b, epsilon, max_iterations):
     for k in range(max_iterations):
         f_a = equation.calculate(a)
         f_b = equation.calculate(b)
+
         b_a = b - a
 
         c = (a * f_b - b * f_a) / (f_b - f_a)
         f_c = equation.calculate(c)
-
-        print(f"c: {c}, f_c: {f_c} ")
 
         history.append([k, a, b, f_a, f_b, b_a, c, f_c])
 
@@ -110,14 +113,36 @@ def calculateByPosicaoFalsa(equation, a, b, epsilon, max_iterations):
 
 
 def calculateByNewtonRaphson(equation, a, epsilon, max_iterations):
-    print(f"Calculando por Posição Falsa: {equation}")
+    print(f"Equação: {equation}")
+    print(f"Ponto inicial: ({a})")
     equation = Equation(equation)
-    derivative = Equation(equation.derivative())
-    a = float(a)
-    start = a
+    step = float(a)
+    start = step
     epsilon = float(epsilon)
     zero = None
 
     history = []
 
-    print(f"Derivada de {equation} = {derivative}")
+    for k in range(max_iterations):
+        f_step = equation.calculate(step)
+        derivative = Equation(equation.derivative()).calculate(step)
+
+        history.append([k, step, f_step, derivative])
+
+        if abs(f_step) <= epsilon:
+            zero = step
+            break
+
+        if abs(derivative) == 0:  # Verifique se a derivada é muito próxima de zero
+            step += 5
+        else:
+            step = step - (f_step / derivative)
+
+    if zero is None:
+        print(
+            f"Nenhum zero encontrado para a equação {equation} começando no ponto ({start})\n"
+        )
+    else:
+        print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
+
+    return zero, history

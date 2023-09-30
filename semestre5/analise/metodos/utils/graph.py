@@ -12,7 +12,7 @@ def plotHistory(equation: str, a: float, b: float, history: list, zero: float):
     plt.plot(x, y, label=f"{equation}")
 
     for i in range(len(history)):
-        plt.plot(history[i][6], history[i][7], "x", color="lightblue")
+        plt.plot(history[i][6], history[i][7], "x", color="blue")
 
     if zero is not None:
         plt.plot(zero, 0, "o", label=f"Zero: {zero}", color="red")

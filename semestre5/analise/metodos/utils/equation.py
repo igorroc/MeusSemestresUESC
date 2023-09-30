@@ -7,6 +7,9 @@ class Equation:
         if type(expression_str) == str:
             self.expression_str = expression_str
             self.expression = sp.sympify(expression_str)
+        else:
+            self.expression = expression_str
+            self.expression_str = str(expression_str)
 
     def calculate(self, x_value: float) -> float:
         result = self.expression.subs("x", x_value)
@@ -17,7 +20,7 @@ class Equation:
         for x_value in x_values:
             result.append(self.calculate(x_value))
         return result
-    
+
     def derivative(self):
         self.diff = sp.diff(self.expression, x)
         return self.diff
