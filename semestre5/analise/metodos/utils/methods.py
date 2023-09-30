@@ -6,6 +6,7 @@ class Method(Enum):
     Bisseccao = "bisseccao"
     PosicaoFalsa = "posicao_falsa"
     NewtonRaphson = "newton_raphson"
+    Secante = "secante"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -141,6 +142,47 @@ def calculateByNewtonRaphson(equation, a, epsilon, max_iterations):
     if zero is None:
         print(
             f"Nenhum zero encontrado para a equação {equation} começando no ponto ({start})\n"
+        )
+    else:
+        print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
+
+    return zero, history
+
+
+def calculateBySecante(equation, a, b, epsilon, max_iterations):
+    print(f"Equação: {equation}")
+    print(f"Pontos iniciais: ({a}, {b})")
+    equation = Equation(equation)
+    epsilon = float(epsilon)
+    zero = None
+    history = []
+
+    step = float(a)
+    step_next = float(b)
+    left = step
+    right = step_next
+
+    for k in range(max_iterations):
+        f_step = equation.calculate(step)
+        f_step_next = equation.calculate(step_next)
+
+        history.append([k, step, f_step, step_next, f_step_next])
+
+        if abs(f_step) <= epsilon:
+            zero = step
+            break
+
+        if abs(f_step_next) <= epsilon:
+            zero = step_next
+            break
+
+        aux = step_next
+        step_next = (f_step_next * step - f_step * step_next) / (f_step_next - f_step)
+        step = aux
+
+    if zero is None:
+        print(
+            f"Nenhum zero encontrado para a equação {equation} começando nos pontos ({left}, {right})\n"
         )
     else:
         print(f"Zero encontrado: {zero} em {len(history)} iterações\n")

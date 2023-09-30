@@ -1,8 +1,8 @@
 import pandas as pd
 from utils.methods import *
-from utils.outputs import outputBisseccao, outputPosicaoFalsa, outputNewtonRaphson
+from utils.outputs import *
 from utils.graph import plotHistory
-from utils.questions import question_select_method, question_show_graph
+from utils.questions import *
 
 print("\n" * 10)
 print("Métodos Numéricos - Igor Rocha")
@@ -41,6 +41,10 @@ for index, row in df.iterrows():
         zero, history = calculateByNewtonRaphson(
             equation, row["a"], row["tolerance"], row["max_iterations"]
         )
+    elif method == Method.Secante:
+        zero, history = calculateBySecante(
+            equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
+        )
 
     if method == Method.Bisseccao:
         outputBisseccao(index, history)
@@ -48,6 +52,8 @@ for index, row in df.iterrows():
         outputPosicaoFalsa(index, history)
     elif method == Method.NewtonRaphson:
         outputNewtonRaphson(index, history)
+    elif method == Method.Secante:
+        outputSecante(index, history)
 
     if showGraph:
         plotHistory(equation, float(row["a"]), float(row["b"]), history, zero)
