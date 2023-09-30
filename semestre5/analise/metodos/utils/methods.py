@@ -13,18 +13,19 @@ METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
 
 
 def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
-    print(f"Equação: {equation}")
-    print(f"Intervalo: ({a}, {b})")
-    print(f"Tolerância: {epsilon}")
+    zero = None
+    history = []
+
     equation = Equation(equation)
     a = float(a)
     b = float(b)
     left = a
     right = b
     epsilon = float(epsilon)
-    zero = None
 
-    history = []
+    print(f"Equação: {equation}")
+    print(f"Intervalo: ({a}, {b})")
+    print(f"Tolerância: {epsilon}")
 
     for k in range(max_iterations):
         f_a = equation.calculate(a)
@@ -64,16 +65,19 @@ def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
 
 
 def calculateByPosicaoFalsa(equation, a, b, epsilon, max_iterations):
-    print(f"Calculando por Posição Falsa: {equation}")
+    zero = None
+    history = []
+
     equation = Equation(equation)
     a = float(a)
     b = float(b)
     left = a
     right = b
     epsilon = float(epsilon)
-    zero = None
 
-    history = []
+    print(f"Equação: {equation}")
+    print(f"Intervalo: ({a}, {b})")
+    print(f"Tolerância: {epsilon}")
 
     for k in range(max_iterations):
         f_a = equation.calculate(a)
@@ -114,15 +118,17 @@ def calculateByPosicaoFalsa(equation, a, b, epsilon, max_iterations):
 
 
 def calculateByNewtonRaphson(equation, a, epsilon, max_iterations):
-    print(f"Equação: {equation}")
-    print(f"Ponto inicial: ({a})")
+    zero = None
+    history = []
+
     equation = Equation(equation)
     step = float(a)
     start = step
     epsilon = float(epsilon)
-    zero = None
 
-    history = []
+    print(f"Equação: {equation}")
+    print(f"Ponto inicial: ({a})")
+    print(f"Tolerância: {epsilon}")
 
     for k in range(max_iterations):
         f_step = equation.calculate(step)
@@ -150,17 +156,19 @@ def calculateByNewtonRaphson(equation, a, epsilon, max_iterations):
 
 
 def calculateBySecante(equation, a, b, epsilon, max_iterations):
-    print(f"Equação: {equation}")
-    print(f"Pontos iniciais: ({a}, {b})")
-    equation = Equation(equation)
-    epsilon = float(epsilon)
     zero = None
     history = []
 
+    equation = Equation(equation)
     step = float(a)
     step_next = float(b)
     left = step
     right = step_next
+    epsilon = float(epsilon)
+
+    print(f"Equação: {equation}")
+    print(f"Pontos iniciais: ({a}, {b})")
+    print(f"Tolerância: {epsilon}")
 
     for k in range(max_iterations):
         f_step = equation.calculate(step)
