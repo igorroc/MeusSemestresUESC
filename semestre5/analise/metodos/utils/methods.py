@@ -1,6 +1,7 @@
 from enum import Enum
 from utils.equation import Equation
 import numpy as np
+import pandas as pd
 
 
 class Method(Enum):
@@ -9,6 +10,7 @@ class Method(Enum):
     NewtonRaphson = "newton_raphson"
     Secante = "secante"
     EliminaçãoGauss = "eliminacao_gauss"
+    LU = "lu"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -196,13 +198,22 @@ def calculateBySecante(equation, a, b, epsilon, max_iterations):
     return zero, history
 
 
-def calculateByEliminaçãoGauss(A, b):
-    A = np.array(A)
-    b = np.array(b)
+def calculateByEliminaçãoGauss(index, X, y):
+    X = np.array(X)
+    y = np.array(y)
 
-    n = len(b)
+    # Criar um DataFrame com os valores antes do cálculo
+    data = {f"X_{i+1}": X[:, i] for i in range(len(X[0]))}
+    data["b"] = y
+    df = pd.DataFrame(data)
 
-    augmented_matrix = np.column_stack((A, b))
+    # Imprimir os valores antes do cálculo
+    print(f"Sistema de equações ({index}):")
+    print(df)
+
+    n = len(y)
+
+    augmented_matrix = np.column_stack((X, y))
 
     # Aplica o método de eliminação de Gauss
     for pivot_row in range(n):
@@ -220,10 +231,72 @@ def calculateByEliminaçãoGauss(A, b):
     # Resolve as equações a partir da parte triangular superior da matriz
     x = np.zeros(n)
     for i in range(n - 1, -1, -1):
-        x[i] = augmented_matrix[i, -1] - np.sum(
-            augmented_matrix[i, i + 1 : n] * x[i + 1 :]
+        x[i] = float(
+            augmented_matrix[i, -1]
+            - np.sum(augmented_matrix[i, i + 1 : n] * x[i + 1 :])
         )
 
-    print(f"Os valores de X são: {x}\n")
-    
+    print(
+        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}\n"
+    )
+
     return x
+
+
+def calculateByLU(index, A, b):
+    X_only_show = np.array(A)
+    y_only_show = np.array(b)
+    L, U = LU_decomposition(A)
+    n = len(A)
+    y = np.zeros(n)
+    x = np.zeros(n)
+
+    # Criar um DataFrame com os valores antes do cálculo
+    data = {f"X_{i+1}": X_only_show[:, i] for i in range(len(X_only_show[0]))}
+    data["b"] = y_only_show
+    df = pd.DataFrame(data)
+
+    # Imprimir os valores antes do cálculo
+    print(f"Sistema de equações ({index}):")
+    print(df)
+
+    # Solve Ly = b
+    for i in range(n):
+        y[i] = b[i]
+        for j in range(i):
+            y[i] -= L[i][j] * y[j]
+
+    # Solve Ux = y
+    for i in range(n - 1, -1, -1):
+        x[i] = y[i]
+        for j in range(i + 1, n):
+            x[i] -= U[i][j] * x[j]
+        x[i] /= U[i][i]
+
+    print(
+        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}\n"
+    )
+
+    return x
+
+
+def LU_decomposition(A):
+    n = len(A)
+    L = np.zeros((n, n))
+    U = np.zeros((n, n))
+
+    for i in range(n):
+        L[i][i] = 1
+
+    for k in range(n):
+        U[k][k] = A[k][k]
+
+        for i in range(k + 1, n):
+            L[i][k] = A[i][k] / U[k][k]
+            U[k][i] = A[k][i]
+
+        for i in range(k + 1, n):
+            for j in range(k + 1, n):
+                A[i][j] -= L[i][k] * U[k][j]
+
+    return L, U
