@@ -10,7 +10,7 @@ print("----------- Configurações -----------")
 
 method = question_select_method()
 print("\n")
-showGraph = question_show_graph()
+showGraph = question_show_graph(method)
 
 print("\n" * 10)
 

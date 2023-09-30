@@ -25,11 +25,17 @@ def question_select_method():
         return selected_method
 
 
-def question_show_graph():
+def question_show_graph(method: Method):
     showGraph = False
 
-    print("Quer mostrar o gráfico? (s/n)")
-    if input().lower() == "s":
-        showGraph = True
+    if method in [
+        Method.Bisseção,
+        Method.PosiçãoFalsa,
+        Method.NewtonRaphson,
+        Method.Secante,
+    ]:
+        print("Quer mostrar o gráfico? (s/n)")
+        if input().lower() == "s":
+            showGraph = True
 
     return showGraph

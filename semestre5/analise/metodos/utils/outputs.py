@@ -58,7 +58,7 @@ def outputSecante(index: float, history: list):
 
 
 def outputEliminaçãoGauss(x: any):
-    csv_filename = f"saidas/eliminacao_gauss/equation.csv"
+    csv_filename = f"saidas/eliminacao_gauss/result.csv"
 
     with open(csv_filename, mode="w", newline="") as file:
         writer = csv.writer(file)
