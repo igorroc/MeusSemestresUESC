@@ -1,10 +1,19 @@
 import pandas as pd
-from utils.methods import Method, calculateByBisseccao
-from utils.outputs import outputBisseccao
+from utils.methods import *
+from utils.outputs import outputBisseccao, outputPosicaoFalsa
 from utils.graph import plotHistory
+from utils.questions import question_select_method, question_show_graph
 
-method = Method.Bisseccao
-showGraph = True
+print("\n" * 10)
+print("Métodos Numéricos - Igor Rocha")
+print("----------- Configurações -----------")
+
+method = question_select_method()
+print("\n")
+showGraph = question_show_graph()
+
+print("\n" * 10)
+print("----------- Execução -----------")
 
 # Ler o arquivo CSV
 df = pd.read_csv(f"entrada_{method.value}.csv")
@@ -14,20 +23,23 @@ for index, row in df.iterrows():
     zero = None
     history = 0
     equation = row["equation"]
-    if method == Method.Bisseccao:
+    if method == Method.Bisseccao or method == Method.Todas:
         zero, history = calculateByBisseccao(
             equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
         )
-        
-
-    if zero is None:
-        print(
-            f"Nenhum zero encontrado para a equação {equation} no intervalo ({row['a']}, {row['b']})\n"
+    elif method == Method.PosicaoFalsa or method == Method.Todas:
+        zero, history = calculateByPosicaoFalsa(
+            equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
         )
-    else:
-        print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
-        
-    
-    outputBisseccao(index, history)
+    elif method == Method.NewtonRaphson or method == Method.Todas:
+        calculateByNewtonRaphson(
+            equation, row["a"], row["tolerance"], row["max_iterations"]
+        )
+
+    if method == Method.Bisseccao:
+        outputBisseccao(index, history)
+    elif method == Method.PosicaoFalsa:
+        outputPosicaoFalsa(index, history)
+
     if showGraph:
         plotHistory(equation, float(row["a"]), float(row["b"]), history, zero)

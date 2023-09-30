@@ -1,0 +1,2 @@
+equation,a,tolerance,max_iterations
+0.25*(x-2)+0.1*sin(x),1,0.001,100
