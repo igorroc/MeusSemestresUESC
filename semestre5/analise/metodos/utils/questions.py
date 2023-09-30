@@ -2,10 +2,11 @@ from utils.methods import METHOD_MAPPING, Method
 
 
 def question_select_method():
-    print("Qual método você quer usar? Digite o número correspondente:")
+    print("Qual método você quer usar?")
+    print("Digite o número correspondente:")
     while True:
         for i, method in METHOD_MAPPING.items():
-            print(f"{i} - {method.value}")
+            print(f"\t{i} - {method.value}")
 
         user_input = input()
 

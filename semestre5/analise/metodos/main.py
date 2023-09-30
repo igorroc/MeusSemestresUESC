@@ -1,3 +1,4 @@
+import time
 import pandas as pd
 from utils.methods import *
 from utils.outputs import *
@@ -7,7 +8,7 @@ import os
 
 print("\n" * 10)
 print("Métodos Numéricos - Igor Rocha")
-print("----------- Configurações -----------")
+print("\n----------- Configurações -----------\n")
 
 method = question_select_method()
 print("\n")
@@ -39,11 +40,13 @@ if method in [
         history = [0]
         equation = None
 
+        start_time = time.time()  # Registra o tempo de término
         if method == Method.Bisseção:
             equation = row["equation"]
             zero, history = calculateByBisseccao(
                 equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
             )
+            end_time = time.time()  # Registra o tempo de término
             outputEquations(
                 index,
                 history,
@@ -59,6 +62,7 @@ if method in [
             zero, history = calculateByPosiçãoFalsa(
                 equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
             )
+            end_time = time.time()  # Registra o tempo de término
             outputEquations(
                 index,
                 history,
@@ -74,6 +78,7 @@ if method in [
             zero, history = calculateByNewtonRaphson(
                 equation, row["a"], row["tolerance"], row["max_iterations"]
             )
+            end_time = time.time()  # Registra o tempo de término
             outputEquations(
                 index,
                 history,
@@ -87,12 +92,14 @@ if method in [
             zero, history = calculateBySecante(
                 equation, row["a"], row["b"], row["tolerance"], row["max_iterations"]
             )
+            end_time = time.time()  # Registra o tempo de término
             outputEquations(
                 index, history, ["Iteration", "a", "f(a)", "b", "f(b)"], method.value
             )
             if showGraph:
                 graph.plotHistoryStep(equation, float(row["a"]), history, zero)
 
+        print(f"Tempo decorrido: {end_time - start_time} segundos\n")
 
 else:
     # Ler o arquivo CSV
@@ -111,13 +118,17 @@ else:
                     a = df.iloc[:, :-1].values.astype(float).tolist()
                     b = df.iloc[:, -1].values.astype(float).tolist()
 
+                    start_time = time.time()  # Registra o tempo de início
                     if method == Method.EliminaçãoGauss:
                         zeros = calculateByEliminaçãoGauss(index, a, b)
+                        end_time = time.time()  # Registra o tempo de término
                         outputSystem(index, zeros, method.value)
                     elif method == Method.LU:
                         zeros = calculateByLU(index, a, b)
+                        end_time = time.time()  # Registra o tempo de término
                         outputSystem(index, zeros, method.value)
 
+                    print(f"Tempo decorrido: {end_time - start_time} segundos\n")
                     index += 1
                 except:
                     print(f"Arquivo '{full_path}' não encontrado")

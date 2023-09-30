@@ -61,10 +61,10 @@ def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
 
     if zero is None:
         print(
-            f"Nenhum zero encontrado para a equação {equation} no intervalo ({left}, {right})\n"
+            f"Nenhum zero encontrado para a equação {equation} no intervalo ({left}, {right})"
         )
     else:
-        print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
+        print(f"Zero encontrado: {zero} em {len(history)} iterações")
     return zero, history
 
 
@@ -113,10 +113,10 @@ def calculateByPosiçãoFalsa(equation, a, b, epsilon, max_iterations):
 
     if zero is None:
         print(
-            f"Nenhum zero encontrado para a equação {equation} no intervalo ({left}, {right})\n"
+            f"Nenhum zero encontrado para a equação {equation} no intervalo ({left}, {right})"
         )
     else:
-        print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
+        print(f"Zero encontrado: {zero} em {len(history)} iterações")
 
     return zero, history
 
@@ -151,10 +151,10 @@ def calculateByNewtonRaphson(equation, a, epsilon, max_iterations):
 
     if zero is None:
         print(
-            f"Nenhum zero encontrado para a equação {equation} começando no ponto ({start})\n"
+            f"Nenhum zero encontrado para a equação {equation} começando no ponto ({start})"
         )
     else:
-        print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
+        print(f"Zero encontrado: {zero} em {len(history)} iterações")
 
     return zero, history
 
@@ -190,10 +190,10 @@ def calculateBySecante(equation, a, b, epsilon, max_iterations):
 
     if zero is None:
         print(
-            f"Nenhum zero encontrado para a equação {equation} começando nos pontos ({left}, {right})\n"
+            f"Nenhum zero encontrado para a equação {equation} começando nos pontos ({left}, {right})"
         )
     else:
-        print(f"Zero encontrado: {zero} em {len(history)} iterações\n")
+        print(f"Zero encontrado: {zero} em {len(history)} iterações")
 
     return zero, history
 
@@ -237,7 +237,7 @@ def calculateByEliminaçãoGauss(index, X, y):
         )
 
     print(
-        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}\n"
+        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}"
     )
 
     return x
@@ -274,7 +274,7 @@ def calculateByLU(index, A, b):
         x[i] /= U[i][i]
 
     print(
-        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}\n"
+        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}"
     )
 
     return x
