@@ -104,36 +104,47 @@ if method in [
 else:
     # Ler o arquivo CSV
     diretorio = f"./entradas/{method.value}"
+    arquivos = []
     try:
         arquivos = os.listdir(diretorio)
-        index = 1
-        for arquivo in arquivos:
-            full_path = os.path.join(diretorio, arquivo)
-            # Verifique se é um arquivo (não é um diretório)
-            if os.path.isfile(full_path):
-                try:
-                    df = None
-                    df = pd.read_csv(full_path)
-                    zeros = None
-                    a = df.iloc[:, :-1].values.astype(float).tolist()
-                    b = df.iloc[:, -1].values.astype(float).tolist()
-
-                    start_time = time.time()  # Registra o tempo de início
-                    if method == Method.EliminaçãoGauss:
-                        zeros = calculateByEliminaçãoGauss(index, a, b)
-                        end_time = time.time()  # Registra o tempo de término
-                        outputSystem(index, zeros, method.value)
-                    elif method == Method.LU:
-                        zeros = calculateByLU(index, a, b)
-                        end_time = time.time()  # Registra o tempo de término
-                        outputSystem(index, zeros, method.value)
-
-                    print(f"Tempo decorrido: {end_time - start_time} segundos\n")
-                    index += 1
-                except:
-                    print(f"Arquivo '{full_path}' não encontrado")
-                    exit()
-
     except:
         print(f"Diretório '{diretorio}' não encontrado")
         exit()
+
+    index = 1
+    for arquivo in arquivos:
+        full_path = os.path.join(diretorio, arquivo)
+        # Verifique se é um arquivo (não é um diretório)
+        if os.path.isfile(full_path):
+            df = None
+            try:
+                df = pd.read_csv(full_path)
+            except:
+                print(f"Arquivo '{full_path}' não encontrado")
+                exit()
+
+            zeros = None
+
+            a = df.iloc[:, :-1].values.astype(float).tolist()
+            b = df.iloc[:, -1].values.astype(float).tolist()
+
+            start_time = time.time()  # Registra o tempo de início
+            if method == Method.EliminaçãoGauss:
+                zeros = calculateByEliminaçãoGauss(index, a, b)
+                end_time = time.time()  # Registra o tempo de término
+                outputSystem(index, zeros, method.value)
+            elif method == Method.LU:
+                zeros = calculateByLU(index, a, b)
+                end_time = time.time()  # Registra o tempo de término
+                outputSystem(index, zeros, method.value)
+            elif method == Method.Jacobi:
+                zeros = calculateByJacobi(index, a, b)
+                end_time = time.time()
+                outputSystem(index, zeros, method.value)
+            elif method == Method.GaussSeidel:
+                zeros = calculateByGaussSeidel(index, a, b)
+                end_time = time.time()
+                outputSystem(index, zeros, method.value)
+
+            print(f"Tempo decorrido: {end_time - start_time} segundos\n")
+            index += 1

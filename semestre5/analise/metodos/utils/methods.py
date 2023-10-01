@@ -11,6 +11,8 @@ class Method(Enum):
     Secante = "secante"
     EliminaçãoGauss = "eliminacao_gauss"
     LU = "lu"
+    Jacobi = "jacobi"
+    GaussSeidel = "gauss_seidel"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -252,9 +254,9 @@ def calculateByLU(index, A, b):
     X_only_show = np.array(A)
     y_only_show = np.array(b)
     L, U = LU_factorization(A)
-    
+
     n = len(A)
-    
+
     y = np.zeros(n)
     x = np.zeros(n)
 
@@ -307,3 +309,106 @@ def LU_factorization(A):
                 A[i][j] -= L[i][k] * U[k][j]
 
     return L, U
+
+
+def calculateByJacobi(index, A, b):
+    epsilon = 1e-10
+    max_iterations = 1000
+
+    A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float)
+
+    X_only_show = A
+    y_only_show = b
+
+    # Criar um DataFrame com os valores antes do cálculo
+    data = {f"X_{i+1}": X_only_show[:, i] for i in range(len(X_only_show[0]))}
+    data["b"] = y_only_show
+    df = pd.DataFrame(data)
+
+    # Imprimir os valores antes do cálculo
+    print(f"Sistema de equações ({index}):")
+    print(df)
+
+    n = A.shape[0]
+
+    # Inicialização do vetor solução
+    x = np.zeros(A.shape[0])
+
+    # Loop principal para as iterações do método
+    for k in range(max_iterations):
+        # Vetor para armazenar os novos valores de x
+        x_new = np.zeros(n)
+
+        # Loop para calcular cada componente de x
+        for i in range(n):
+            # Calcula a soma dos termos a_ij * x_j para j != i
+            s = np.sum(A[i, :i] * x[:i]) + np.sum(A[i, i + 1 :] * x[i + 1 :])
+
+            # Atualiza o valor de x_i usando a fórmula de Jacobi
+            x_new[i] = (b[i] - s) / A[i, i]
+
+        # Verifica o critério de parada
+        if np.linalg.norm(x_new - x, np.inf) < epsilon:
+            x = x_new
+            break
+
+        # Atualiza o vetor x para a próxima iteração
+        x = x_new
+
+    print(
+        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}"
+    )
+    return x
+
+
+def calculateByGaussSeidel(index, A, b):
+    epsilon = 1e-10
+    max_iterations = 1000
+
+    A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float)
+
+    X_only_show = A
+    y_only_show = b
+
+    # Criar um DataFrame com os valores antes do cálculo
+    data = {f"X_{i+1}": X_only_show[:, i] for i in range(len(X_only_show[0]))}
+    data["b"] = y_only_show
+    df = pd.DataFrame(data)
+
+    # Imprimir os valores antes do cálculo
+    print(f"Sistema de equações ({index}):")
+    print(df)
+
+    n = A.shape[0]
+
+    # Inicialização do vetor solução
+    x = np.zeros(A.shape[0])
+
+    # Loop principal para as iterações do método
+    for k in range(max_iterations):
+        # Vetor para armazenar os novos valores de x
+        x_new = np.zeros(n)
+
+        # Loop para calcular cada componente de x
+        for i in range(n):
+            # Calcula a soma dos termos a_ij * x_j para j != i
+            # ! Já usa o X_new
+            s = np.sum(A[i, :i] * x_new[:i]) + np.sum(A[i, i + 1 :] * x[i + 1 :])
+
+            # Atualiza o valor de x_i usando a fórmula de Jacobi
+            x_new[i] = (b[i] - s) / A[i, i]
+
+        # Verifica o critério de parada
+        if np.linalg.norm(x_new - x, np.inf) < epsilon:
+            x = x_new
+            break
+
+        # Atualiza o vetor x para a próxima iteração
+        x = x_new
+
+    print(
+        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}"
+    )
+    return x
