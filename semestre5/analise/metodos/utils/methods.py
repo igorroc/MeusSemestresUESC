@@ -3,6 +3,8 @@ from utils.equation import Equation
 import numpy as np
 import pandas as pd
 
+import utils.outputs as outputs
+
 
 class Method(Enum):
     Bisseção = "bisseccao"
@@ -204,14 +206,7 @@ def calculateByEliminaçãoGauss(index, X, y):
     X = np.array(X, dtype=float)
     y = np.array(y, dtype=float)
 
-    # Criar um DataFrame com os valores antes do cálculo
-    data = {f"X_{i+1}": X[:, i] for i in range(len(X[0]))}
-    data["b"] = y
-    df = pd.DataFrame(data)
-
-    # Imprimir os valores antes do cálculo
-    print(f"Sistema de equações ({index}):")
-    print(df)
+    outputs.printTable(index, X, y)
 
     n = len(y)
 
@@ -251,8 +246,6 @@ def calculateByEliminaçãoGauss(index, X, y):
 
 
 def calculateByLU(index, A, b):
-    X_only_show = np.array(A)
-    y_only_show = np.array(b)
     L, U = LU_factorization(A)
 
     n = len(A)
@@ -260,14 +253,7 @@ def calculateByLU(index, A, b):
     y = np.zeros(n)
     x = np.zeros(n)
 
-    # Criar um DataFrame com os valores antes do cálculo
-    data = {f"X_{i+1}": X_only_show[:, i] for i in range(len(X_only_show[0]))}
-    data["b"] = y_only_show
-    df = pd.DataFrame(data)
-
-    # Imprimir os valores antes do cálculo
-    print(f"Sistema de equações ({index}):")
-    print(df)
+    outputs.printTable(index, np.array(A), np.array(b))
 
     # Solve Ly = b
     for i in range(n):
@@ -318,17 +304,7 @@ def calculateByJacobi(index, A, b):
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float)
 
-    X_only_show = A
-    y_only_show = b
-
-    # Criar um DataFrame com os valores antes do cálculo
-    data = {f"X_{i+1}": X_only_show[:, i] for i in range(len(X_only_show[0]))}
-    data["b"] = y_only_show
-    df = pd.DataFrame(data)
-
-    # Imprimir os valores antes do cálculo
-    print(f"Sistema de equações ({index}):")
-    print(df)
+    outputs.printTable(index, A, b)
 
     n = A.shape[0]
 

@@ -1,5 +1,5 @@
 import csv
-import numpy as np
+import pandas as pd
 
 
 def outputEquations(index: float, history: list, header: list, method: str):
@@ -27,3 +27,14 @@ def outputSystem(index: float, x: any, method: str):
 
         # Escreva os dados de 'x' no CSV
         writer.writerow(x)
+
+
+def printTable(index, a, b):
+    # Criar um DataFrame com os valores antes do cálculo
+    data = {f"X_{i+1}": a[:, i] for i in range(len(a[0]))}
+    data["b"] = b
+    df = pd.DataFrame(data)
+
+    # Imprimir os valores antes do cálculo
+    print(f"Sistema de equações ({index}):")
+    print(df)
