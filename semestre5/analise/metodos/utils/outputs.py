@@ -49,7 +49,9 @@ def outputSystem(index: float, zeros: any, method: str):
 def printTable(index, a, b):
     # Criar um DataFrame com os valores antes do cálculo
     data = {f"X_{i+1}": a[:, i] for i in range(len(a[0]))}
-    data["b"] = b
+    if b is not None:
+        data["b"] = b
+    
     df = pd.DataFrame(data)
 
     # Imprimir os valores antes do cálculo

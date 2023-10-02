@@ -409,11 +409,10 @@ def calculateByInversion(index, A, b):
     return x
 
 
-def calculateByNumberCondition(index, A, b):
+def calculateByNumberCondition(index, A):
     A = np.array(A, dtype=float)
-    b = np.array(b, dtype=float)
 
-    outputs.printTable(index, A, b)
+    outputs.printTable(index, A, None)
 
     # Verificar se a matriz A é quadrada
     if A.shape[0] != A.shape[1]:
@@ -434,6 +433,6 @@ def calculateByNumberCondition(index, A, b):
     else:
         condition_number = largest_singular_value / smallest_singular_value
 
-    print(f"O número de condição da matriz é : {condition_number:.8f} ")
+    print(f"O número de condição da matriz é: {condition_number:.8f} ")
 
     return condition_number

@@ -132,33 +132,41 @@ while True:
                         df = pd.read_csv(full_path)
                         zeros = None
 
-                        a = df.iloc[:, :-1].values.astype(float).tolist()
-                        b = df.iloc[:, -1].values.astype(float).tolist()
-
                         start_time = time.time()  # Registra o tempo de início
 
                         if method == Method.EliminaçãoGauss:
+                            a = df.iloc[:, :-1].values.astype(float).tolist()
+                            b = df.iloc[:, -1].values.astype(float).tolist()
                             zeros = calculateByEliminaçãoGauss(index, a, b)
                             end_time = time.time()
                             outputSystem(index, zeros, method.value)
                         elif method == Method.LU:
+                            a = df.iloc[:, :-1].values.astype(float).tolist()
+                            b = df.iloc[:, -1].values.astype(float).tolist()
                             zeros = calculateByLU(index, a, b)
                             end_time = time.time()
                             outputSystem(index, zeros, method.value)
                         elif method == Method.Jacobi:
+                            a = df.iloc[:, :-1].values.astype(float).tolist()
+                            b = df.iloc[:, -1].values.astype(float).tolist()
                             zeros = calculateByJacobi(index, a, b)
                             end_time = time.time()
                             outputSystem(index, zeros, method.value)
                         elif method == Method.GaussSeidel:
+                            a = df.iloc[:, :-1].values.astype(float).tolist()
+                            b = df.iloc[:, -1].values.astype(float).tolist()
                             zeros = calculateByGaussSeidel(index, a, b)
                             end_time = time.time()
                             outputSystem(index, zeros, method.value)
                         elif method == Method.Inversao:
+                            a = df.iloc[:, :-1].values.astype(float).tolist()
+                            b = df.iloc[:, -1].values.astype(float).tolist()
                             zeros = calculateByInversion(index, a, b)
                             end_time = time.time()
                             outputSystem(index, zeros, method.value)
                         elif method == Method.Condicao:
-                            condition = calculateByNumberCondition(index, a, b)
+                            a = df.iloc[:, :].values.astype(float).tolist()
+                            condition = calculateByNumberCondition(index, a)
                             end_time = time.time()
                             outputSystem(index, condition, method.value)
 
