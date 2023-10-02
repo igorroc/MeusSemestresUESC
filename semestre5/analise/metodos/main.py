@@ -6,7 +6,7 @@ import utils.graph as graph
 from utils.questions import *
 import os
 
-clearConsole()
+clear_console()
 
 welcome()
 
@@ -16,7 +16,7 @@ while True:
     method = question_select_method()
     showGraph = question_show_graph(method)
 
-    clearConsole()
+    clear_console()
 
     print(f"----------- Execução por {method.name} -----------\n")
 
@@ -44,7 +44,7 @@ while True:
             start_time = time.time()
             if method == Method.Bisseção:
                 equation = row["equation"]
-                zero, history = calculateByBisseccao(
+                zero, history = solve_by_bisseccao(
                     equation,
                     row["a"],
                     row["b"],
@@ -52,19 +52,19 @@ while True:
                     row["max_iterations"],
                 )
                 end_time = time.time()
-                outputEquations(
+                output_equations(
                     index,
                     history,
                     ["Iteration", "a", "b", "f(a)", "f(b)", "b - a", "c", "f(c)"],
                     method.value,
                 )
                 if showGraph:
-                    graph.plotHistory(
+                    graph.plot_history(
                         equation, float(row["a"]), float(row["b"]), history, zero
                     )
             elif method == Method.PosiçãoFalsa:
                 equation = row["equation"]
-                zero, history = calculateByPosiçãoFalsa(
+                zero, history = solve_by_posicao_falsa(
                     equation,
                     row["a"],
                     row["b"],
@@ -72,33 +72,33 @@ while True:
                     row["max_iterations"],
                 )
                 end_time = time.time()
-                outputEquations(
+                output_equations(
                     index,
                     history,
                     ["Iteration", "a", "b", "f(a)", "f(b)", "b - a", "c", "f(c)"],
                     method.value,
                 )
                 if showGraph:
-                    graph.plotHistory(
+                    graph.plot_history(
                         equation, float(row["a"]), float(row["b"]), history, zero
                     )
             elif method == Method.NewtonRaphson:
                 equation = row["equation"]
-                zero, history = calculateByNewtonRaphson(
+                zero, history = solve_by_newton_raphson(
                     equation, row["a"], row["tolerance"], row["max_iterations"]
                 )
                 end_time = time.time()
-                outputEquations(
+                output_equations(
                     index,
                     history,
                     ["Iteration", "step", "f(step)", "f'(step)"],
                     method.value,
                 )
                 if showGraph:
-                    graph.plotHistoryStep(equation, float(row["a"]), history, zero)
+                    graph.plot_history_step(equation, float(row["a"]), history, zero)
             elif method == Method.Secante:
                 equation = row["equation"]
-                zero, history = calculateBySecante(
+                zero, history = solve_by_secante(
                     equation,
                     row["a"],
                     row["b"],
@@ -106,14 +106,14 @@ while True:
                     row["max_iterations"],
                 )
                 end_time = time.time()
-                outputEquations(
+                output_equations(
                     index,
                     history,
                     ["Iteration", "a", "f(a)", "b", "f(b)"],
                     method.value,
                 )
                 if showGraph:
-                    graph.plotHistoryStep(equation, float(row["a"]), history, zero)
+                    graph.plot_history_step(equation, float(row["a"]), history, zero)
 
             print(f"Tempo decorrido: {end_time - start_time} segundos\n")
 
@@ -137,38 +137,38 @@ while True:
                         if method == Method.EliminaçãoGauss:
                             a = df.iloc[:, :-1].values.astype(float).tolist()
                             b = df.iloc[:, -1].values.astype(float).tolist()
-                            zeros = calculateByEliminaçãoGauss(index, a, b)
+                            zeros = solve_by_eliminacao_gauss(index, a, b)
                             end_time = time.time()
-                            outputSystem(index, zeros, method.value)
+                            output_system(index, zeros, method.value)
                         elif method == Method.LU:
                             a = df.iloc[:, :-1].values.astype(float).tolist()
                             b = df.iloc[:, -1].values.astype(float).tolist()
-                            zeros = calculateByLU(index, a, b)
+                            zeros = solve_by_lu(index, a, b)
                             end_time = time.time()
-                            outputSystem(index, zeros, method.value)
+                            output_system(index, zeros, method.value)
                         elif method == Method.Jacobi:
                             a = df.iloc[:, :-1].values.astype(float).tolist()
                             b = df.iloc[:, -1].values.astype(float).tolist()
-                            zeros = calculateByJacobi(index, a, b)
+                            zeros = solve_by_jacobi(index, a, b)
                             end_time = time.time()
-                            outputSystem(index, zeros, method.value)
+                            output_system(index, zeros, method.value)
                         elif method == Method.GaussSeidel:
                             a = df.iloc[:, :-1].values.astype(float).tolist()
                             b = df.iloc[:, -1].values.astype(float).tolist()
-                            zeros = calculateByGaussSeidel(index, a, b)
+                            zeros = solve_by_gauss_seidel(index, a, b)
                             end_time = time.time()
-                            outputSystem(index, zeros, method.value)
+                            output_system(index, zeros, method.value)
                         elif method == Method.Inversao:
                             a = df.iloc[:, :-1].values.astype(float).tolist()
                             b = df.iloc[:, -1].values.astype(float).tolist()
-                            zeros = calculateByInversion(index, a, b)
+                            zeros = solve_by_invercao(index, a, b)
                             end_time = time.time()
-                            outputSystem(index, zeros, method.value)
+                            output_system(index, zeros, method.value)
                         elif method == Method.Condicao:
                             a = df.iloc[:, :].values.astype(float).tolist()
-                            condition = calculateByNumberCondition(index, a)
+                            condition = solve_by_numero_condicao(index, a)
                             end_time = time.time()
-                            outputSystem(index, condition, method.value)
+                            output_system(index, condition, method.value)
 
                         print(f"Tempo decorrido: {end_time - start_time} segundos\n")
                         index += 1
@@ -184,4 +184,4 @@ while True:
 
     print("Pressione enter para continuar...")
     input()
-    clearConsole()
+    clear_console()

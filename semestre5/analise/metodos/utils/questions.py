@@ -10,13 +10,13 @@ def question_select_method():
             print(f"\t{i+1} - {method.value}")
         print("\n\ts - Sair")
 
-        outputs.spaceConsole()
+        outputs.clear_console(5)
 
         print("→ ", end="", flush=True)
         user_input = input()
 
         if user_input == "s":
-            outputs.clearConsole()
+            outputs.clear_console()
             print("Obrigado por usar o programa!")
             print("Saindo...")
             exit()

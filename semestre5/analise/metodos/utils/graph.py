@@ -3,7 +3,7 @@ import numpy as np
 from utils.equation import Equation
 
 
-def plotHistory(equation: str, a: float, b: float, history: list, zero: float):
+def plot_history(equation: str, a: float, b: float, history: list, zero: float):
     equation = Equation(equation)
 
     x = np.linspace(a, b, 100)
@@ -30,7 +30,7 @@ def plotHistory(equation: str, a: float, b: float, history: list, zero: float):
     plt.show()
 
 
-def plotHistoryStep(equation: str, a: float, history: list, zero: float):
+def plot_history_step(equation: str, a: float, history: list, zero: float):
     equation = Equation(equation)
 
     b = 1.5 * a
@@ -56,7 +56,7 @@ def plotHistoryStep(equation: str, a: float, history: list, zero: float):
     plt.show()
 
 
-def plotLines(A, b):
+def plot_lines(A, b):
     A = np.array(A)
     b = np.array(b)
 

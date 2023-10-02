@@ -21,7 +21,7 @@ class Method(Enum):
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
 
 
-def solve_by_bisseccao(equation, a, b, epsilon, max_iterations):
+def calculateByBisseccao(equation, a, b, epsilon, max_iterations):
     zero = None
     history = []
 
@@ -73,7 +73,7 @@ def solve_by_bisseccao(equation, a, b, epsilon, max_iterations):
     return zero, history
 
 
-def solve_by_posicao_falsa(equation, a, b, epsilon, max_iterations):
+def calculateByPosiçãoFalsa(equation, a, b, epsilon, max_iterations):
     zero = None
     history = []
 
@@ -126,7 +126,7 @@ def solve_by_posicao_falsa(equation, a, b, epsilon, max_iterations):
     return zero, history
 
 
-def solve_by_newton_raphson(equation, a, epsilon, max_iterations):
+def calculateByNewtonRaphson(equation, a, epsilon, max_iterations):
     zero = None
     history = []
 
@@ -164,7 +164,7 @@ def solve_by_newton_raphson(equation, a, epsilon, max_iterations):
     return zero, history
 
 
-def solve_by_secante(equation, a, b, epsilon, max_iterations):
+def calculateBySecante(equation, a, b, epsilon, max_iterations):
     zero = None
     history = []
 
@@ -203,7 +203,7 @@ def solve_by_secante(equation, a, b, epsilon, max_iterations):
     return zero, history
 
 
-def solve_by_eliminacao_gauss(index, X, y):
+def calculateByEliminaçãoGauss(index, X, y):
     X = np.array(X, dtype=float)
     y = np.array(y, dtype=float)
 
@@ -246,8 +246,8 @@ def solve_by_eliminacao_gauss(index, X, y):
     return x
 
 
-def solve_by_lu(index, A, b):
-    L, U = lu_factorization(A)
+def calculateByLU(index, A, b):
+    L, U = LU_factorization(A)
 
     n = len(A)
 
@@ -276,7 +276,7 @@ def solve_by_lu(index, A, b):
     return x
 
 
-def lu_factorization(A):
+def LU_factorization(A):
     n = len(A)
     L = np.zeros((n, n))
     U = np.zeros((n, n))
@@ -298,7 +298,7 @@ def lu_factorization(A):
     return L, U
 
 
-def solve_by_jacobi(index, A, b):
+def calculateByJacobi(index, A, b):
     epsilon = 1e-10
     max_iterations = 1000
 
@@ -339,7 +339,7 @@ def solve_by_jacobi(index, A, b):
     return x
 
 
-def solve_by_gauss_seidel(index, A, b):
+def calculateByGaussSeidel(index, A, b):
     epsilon = 1e-10
     max_iterations = 1000
 
@@ -381,7 +381,7 @@ def solve_by_gauss_seidel(index, A, b):
     return x
 
 
-def solve_by_invercao(index, A, b):
+def calculateByInversion(index, A, b):
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float)
 
@@ -409,10 +409,11 @@ def solve_by_invercao(index, A, b):
     return x
 
 
-def solve_by_numero_condicao(index, A):
+def calculateByNumberCondition(index, A):
     A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float)
 
-    outputs.print_table(index, A, None)
+    outputs.print_table(index, A, b)
 
     # Verificar se a matriz A é quadrada
     if A.shape[0] != A.shape[1]:
@@ -433,6 +434,6 @@ def solve_by_numero_condicao(index, A):
     else:
         condition_number = largest_singular_value / smallest_singular_value
 
-    print(f"O número de condição da matriz é: {condition_number:.8f} ")
+    print(f"O número de condição da matriz é : {condition_number:.8f} ")
 
     return condition_number
