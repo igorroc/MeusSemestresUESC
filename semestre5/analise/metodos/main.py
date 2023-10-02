@@ -20,7 +20,7 @@ while True:
 
     print(f"----------- Execução por {method.name} -----------\n")
 
-    if method in [
+    if method in [  # Métodos que não são de sistemas
         Method.Bisseção,
         Method.PosiçãoFalsa,
         Method.NewtonRaphson,
@@ -41,7 +41,7 @@ while True:
             history = [0]
             equation = None
 
-            start_time = time.time()  # Registra o tempo de término
+            start_time = time.time()
             if method == Method.Bisseção:
                 equation = row["equation"]
                 zero, history = calculateByBisseccao(
@@ -51,7 +51,7 @@ while True:
                     row["tolerance"],
                     row["max_iterations"],
                 )
-                end_time = time.time()  # Registra o tempo de término
+                end_time = time.time()
                 outputEquations(
                     index,
                     history,
@@ -71,7 +71,7 @@ while True:
                     row["tolerance"],
                     row["max_iterations"],
                 )
-                end_time = time.time()  # Registra o tempo de término
+                end_time = time.time()
                 outputEquations(
                     index,
                     history,
@@ -87,7 +87,7 @@ while True:
                 zero, history = calculateByNewtonRaphson(
                     equation, row["a"], row["tolerance"], row["max_iterations"]
                 )
-                end_time = time.time()  # Registra o tempo de término
+                end_time = time.time()
                 outputEquations(
                     index,
                     history,
@@ -105,7 +105,7 @@ while True:
                     row["tolerance"],
                     row["max_iterations"],
                 )
-                end_time = time.time()  # Registra o tempo de término
+                end_time = time.time()
                 outputEquations(
                     index,
                     history,
@@ -117,54 +117,63 @@ while True:
 
             print(f"Tempo decorrido: {end_time - start_time} segundos\n")
 
-    else:
+    else:  # Métodos que são de sistemas
         # Ler o arquivo CSV
         diretorio = f"./entradas/{method.value}"
-        arquivos = []
         try:
             arquivos = os.listdir(diretorio)
+            index = 1
+            for arquivo in arquivos:
+                full_path = os.path.join(diretorio, arquivo)
+                # Verifique se é um arquivo (não é um diretório)
+                if os.path.isfile(full_path):
+                    df = None
+                    try:
+                        df = pd.read_csv(full_path)
+                        zeros = None
+
+                        a = df.iloc[:, :-1].values.astype(float).tolist()
+                        b = df.iloc[:, -1].values.astype(float).tolist()
+
+                        start_time = time.time()  # Registra o tempo de início
+
+                        if method == Method.EliminaçãoGauss:
+                            zeros = calculateByEliminaçãoGauss(index, a, b)
+                            end_time = time.time()
+                            outputSystem(index, zeros, method.value)
+                        elif method == Method.LU:
+                            zeros = calculateByLU(index, a, b)
+                            end_time = time.time()
+                            outputSystem(index, zeros, method.value)
+                        elif method == Method.Jacobi:
+                            zeros = calculateByJacobi(index, a, b)
+                            end_time = time.time()
+                            outputSystem(index, zeros, method.value)
+                        elif method == Method.GaussSeidel:
+                            zeros = calculateByGaussSeidel(index, a, b)
+                            end_time = time.time()
+                            outputSystem(index, zeros, method.value)
+                        elif method == Method.Inversao:
+                            zeros = calculateByInversion(index, a, b)
+                            end_time = time.time()
+                            outputSystem(index, zeros, method.value)
+                        elif method == Method.Condicao:
+                            condition = calculateByNumberCondition(index, a, b)
+                            end_time = time.time()
+                            outputSystem(index, condition, method.value)
+
+                        print(f"Tempo decorrido: {end_time - start_time} segundos\n")
+                        index += 1
+                    except:
+                        print(f"Arquivo '{full_path}' não encontrado")
+
         except:
+            os.makedirs(diretorio)
             print(f"Diretório '{diretorio}' não encontrado")
-            exit()
+            print(
+                "Acabei de criar-lo para você, coloque os arquivos de entrada lá e tente novamente\n\n"
+            )
 
-        index = 1
-        for arquivo in arquivos:
-            full_path = os.path.join(diretorio, arquivo)
-            # Verifique se é um arquivo (não é um diretório)
-            if os.path.isfile(full_path):
-                df = None
-                try:
-                    df = pd.read_csv(full_path)
-                except:
-                    print(f"Arquivo '{full_path}' não encontrado")
-                    exit()
-
-                zeros = None
-
-                a = df.iloc[:, :-1].values.astype(float).tolist()
-                b = df.iloc[:, -1].values.astype(float).tolist()
-
-                start_time = time.time()  # Registra o tempo de início
-                if method == Method.EliminaçãoGauss:
-                    zeros = calculateByEliminaçãoGauss(index, a, b)
-                    end_time = time.time()  # Registra o tempo de término
-                    outputSystem(index, zeros, method.value)
-                elif method == Method.LU:
-                    zeros = calculateByLU(index, a, b)
-                    end_time = time.time()  # Registra o tempo de término
-                    outputSystem(index, zeros, method.value)
-                elif method == Method.Jacobi:
-                    zeros = calculateByJacobi(index, a, b)
-                    end_time = time.time()
-                    outputSystem(index, zeros, method.value)
-                elif method == Method.GaussSeidel:
-                    zeros = calculateByGaussSeidel(index, a, b)
-                    end_time = time.time()
-                    outputSystem(index, zeros, method.value)
-
-                print(f"Tempo decorrido: {end_time - start_time} segundos\n")
-                index += 1
-
-    print("Pressione qualquer tecla para continuar...")
+    print("Pressione enter para continuar...")
     input()
     clearConsole()

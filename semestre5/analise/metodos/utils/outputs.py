@@ -22,7 +22,7 @@ def outputEquations(index: float, history: list, header: list, method: str):
             writer.writerow(row)
 
 
-def outputSystem(index: float, x: any, method: str):
+def outputSystem(index: float, zeros: any, method: str):
     directory = f"saidas/{method}"
     csv_filename = f"{directory}/result_{index}.csv"
 
@@ -34,10 +34,16 @@ def outputSystem(index: float, x: any, method: str):
         writer = csv.writer(file)
 
         # Escreva o cabeçalho do CSV
-        writer.writerow([f"X_{i}" for i in range(1, len(x) + 1)])
+        if type(zeros) == list:
+            writer.writerow([f"X_{i}" for i in range(1, len(zeros) + 1)])
+        else:
+            writer.writerow(["X"])
 
         # Escreva os dados de 'x' no CSV
-        writer.writerow(x)
+        if type(zeros) == list:
+            writer.writerow(zeros)
+        else:
+            writer.writerow([zeros])
 
 
 def printTable(index, a, b):

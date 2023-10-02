@@ -1,7 +1,6 @@
 from enum import Enum
 from utils.equation import Equation
 import numpy as np
-import pandas as pd
 
 import utils.outputs as outputs
 
@@ -15,6 +14,8 @@ class Method(Enum):
     LU = "lu"
     Jacobi = "jacobi"
     GaussSeidel = "gauss_seidel"
+    Inversao = "inversao"
+    Condicao = "condicao"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -345,17 +346,7 @@ def calculateByGaussSeidel(index, A, b):
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float)
 
-    X_only_show = A
-    y_only_show = b
-
-    # Criar um DataFrame com os valores antes do cálculo
-    data = {f"X_{i+1}": X_only_show[:, i] for i in range(len(X_only_show[0]))}
-    data["b"] = y_only_show
-    df = pd.DataFrame(data)
-
-    # Imprimir os valores antes do cálculo
-    print(f"Sistema de equações ({index}):")
-    print(df)
+    outputs.printTable(index, A, b)
 
     n = A.shape[0]
 
@@ -388,3 +379,61 @@ def calculateByGaussSeidel(index, A, b):
         f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}"
     )
     return x
+
+
+def calculateByInversion(index, A, b):
+    A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float)
+
+    outputs.printTable(index, A, b)
+
+    # Verificar se a matriz A é quadrada
+    if A.shape[0] != A.shape[1]:
+        print(f"A matriz ({index}) deve ser quadrada")
+        return None
+
+    # Calcular a matriz inversa de A
+    try:
+        A_inv = np.linalg.inv(A)
+    except np.linalg.LinAlgError:
+        print(f"A matriz ({index}) é singular e não pode ser invertida")
+        return None
+
+    # Calcular a solução x = A_inv * b
+    x = np.dot(A_inv, b)
+
+    print(
+        f"Os valores de X são: {np.array2string(x, separator=', ', formatter={'all': lambda x: f'{x:.8f}'})}"
+    )
+
+    return x
+
+
+def calculateByNumberCondition(index, A, b):
+    A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float)
+
+    outputs.printTable(index, A, b)
+
+    # Verificar se a matriz A é quadrada
+    if A.shape[0] != A.shape[1]:
+        print(f"A matriz ({index}) deve ser quadrada")
+        return None
+
+    # Calcular os valores singulares da matriz A
+    U, S, Vt = np.linalg.svd(A)
+
+    # Encontrar o maior e o menor valor singular não-zero
+    largest_singular_value = np.max(S)
+    smallest_singular_value = np.min(S[S > np.finfo(float).eps])
+
+    # Calcular o número de condição
+    if smallest_singular_value == 0:
+        print("A matriz é singular, o número de condição é infinito")
+        return None
+    else:
+        condition_number = largest_singular_value / smallest_singular_value
+
+    print(f"O número de condição da matriz é : {condition_number:.8f} ")
+
+    return condition_number
