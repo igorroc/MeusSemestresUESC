@@ -7,8 +7,8 @@ def question_select_method():
     print("Digite o número correspondente:")
     while True:
         for i, method in METHOD_MAPPING.items():
-            print(f"\t{i} - {method.value}")
-        print("\ts - Sair")
+            print(f"\t{i+1} - {method.value}")
+        print("\n\ts - Sair")
 
         outputs.spaceConsole()
 
@@ -26,7 +26,7 @@ def question_select_method():
             print("Método inválido, tente novamente.")
             continue
 
-        method_index = int(user_input)
+        method_index = int(user_input) - 1
 
         if method_index not in METHOD_MAPPING:
             print("Método inválido, tente novamente.")
