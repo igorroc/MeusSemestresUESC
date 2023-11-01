@@ -86,7 +86,9 @@ while True:
             exit()
     elif method in [
         Method.TrapezioSimples,
-        Method.TrapezioMultiplo
+        Method.TrapezioMultiplo,
+        Method.DerivadaPrimeira,
+        Method.DerivadaSegunda
     ]:
         # Ler o arquivo CSV
         df = None
@@ -130,7 +132,31 @@ while True:
                 end_time = time.time()
                 
                 print(f"Integral da equação '{equation}' de ({a},{b}) com passo {step}: {integer}")
-        
+            elif method == Method.DerivadaPrimeira:
+                equation = row["equation"]
+                x = row["x"]
+                step = row["step"]
+                derivative = solve_by_derivada_primeira(
+                    equation,
+                    x,
+                    step
+                )
+                end_time = time.time()
+                
+                print(f"Derivada da equação '{equation}' em ({x}) com passo {step}: {derivative}")
+            elif method == Method.DerivadaSegunda:
+                equation = row["equation"]
+                x = row["x"]
+                step = row["step"]
+                derivative = solve_by_derivada_segunda(
+                    equation,
+                    x,
+                    step
+                )
+                end_time = time.time()
+                
+                print(f"Derivada da equação '{equation}' em ({x}) com passo {step}: {derivative}")
+                        
             print(f"Tempo decorrido: {end_time - start_time} segundos\n")
 
     print("Pressione enter para continuar...")

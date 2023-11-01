@@ -11,6 +11,8 @@ class Method(Enum):
     InterpolacaoLagrange = "interpolacao_lagrange"
     TrapezioSimples = "trapezio_simples"
     TrapezioMultiplo = "trapezio_multiplo"
+    DerivadaPrimeira = "derivada_primeira"
+    DerivadaSegunda = "derivada_segunda"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -121,7 +123,6 @@ def solve_by_lagrange_interpolation(x_values, y_values):
         print("Erro ao calcular a interpolação de Lagrange")
         return None, None, None
 
-
 def solve_by_trapezio_simples(equation_str, a, b):
     x = symbols('x') 
     f = sympify(equation_str)
@@ -139,3 +140,14 @@ def solve_by_trapezio_multiplo(equation_str, a, b, n):
 
     integral *= h / 2
     return integral.evalf()
+
+def solve_by_derivada_primeira(eq: str, xi: float, h: float) -> float:
+    eq = Equation(eq)
+    
+    return (eq.calculate(xi + h) - eq.calculate(xi - h)) / (2 * h)
+
+def solve_by_derivada_segunda(eq: str, xi: float, h: float) -> float:
+    eq = Equation(eq)
+    
+    return (eq.calculate(xi + h) - 2 * eq.calculate(xi) + eq.calculate(xi - h)) / (h ** 2)
+
