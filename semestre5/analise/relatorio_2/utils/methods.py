@@ -1,13 +1,16 @@
 from enum import Enum
 from utils.equation import Equation
 import numpy as np
+from sympy import symbols, solve, tan, cos
+from sympy import sympify, symbols
 
 import utils.outputs as outputs
-
-
 class Method(Enum):
     RegressaoLinear = "regressao_linear"
     RegressaoQuadratica = "regressao_quadratica"
+    InterpolacaoLagrange = "interpolacao_lagrange"
+    TrapezioSimples = "trapezio_simples"
+    TrapezioMultiplo = "trapezio_multiplo"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -66,3 +69,73 @@ def solve_by_quadratic_regression(x, y):
     print(f"Erro Quadrático Médio: {EQM}")
 
     return a, b, c, EQM
+
+def solve_by_lagrange_interpolation(x_values, y_values):
+    try:
+        x = symbols('x')
+        n = len(x_values)
+        if len(y_values) != n:
+            raise ValueError("x_values and y_values should have the same length")
+
+        # Initialize the polynomial as 0
+        polynomial = 0
+
+        # Calculate each term of the Lagrange polynomial
+        for i in range(n):
+            term = y_values[i]
+            for j in range(n):
+                if i != j:
+                    term *= (x - x_values[j]) / (x_values[i] - x_values[j])
+            polynomial += term
+
+        print("1")
+        # Simplify the polynomial
+        polynomial = polynomial.simplify()
+
+        # Constants for projectile motion
+        g = 9.81  # acceleration due to gravity (m/s^2)
+        psi, v0 = symbols('psi v0')
+
+        print("2")
+        # Extract coefficients from the polynomial
+        coef_x2 = polynomial.coeff(x, 2)
+        coef_x = polynomial.coeff(x, 1)
+        print("3")
+
+        # Equation for tan(psi)
+        eq1 = tan(psi) - coef_x
+
+        # Equation for (g / 2v0^2cos^2(psi))
+        eq2 = (g / (2 * v0 ** 2 * cos(psi) ** 2)) - abs(coef_x2)
+        print("4")
+
+        # Solve for psi and v0
+        solutions = solve((eq1, eq2), (psi, v0))
+        print(solutions)
+        
+        psi_value, v0_value = solutions[0]
+        print("6")
+
+        return polynomial, psi_value, v0_value
+    except:
+        print("Erro ao calcular a interpolação de Lagrange")
+        return None, None, None
+
+
+def solve_by_trapezio_simples(equation_str, a, b):
+    x = symbols('x') 
+    f = sympify(equation_str)
+    integral = (b - a) * (f.subs(x, a) + f.subs(x, b)) / 2
+    return integral.evalf()
+
+def solve_by_trapezio_multiplo(equation_str, a, b, n):
+    x = symbols('x') 
+    f = sympify(equation_str)
+    h = (b - a) / n
+    integral = f.subs(x, a) + f.subs(x, b)
+    
+    for i in range(1, n):
+        integral += 2 * f.subs(x, a + i * h)
+
+    integral *= h / 2
+    return integral.evalf()
