@@ -7,61 +7,30 @@ import utils.outputs as outputs
 
 class Method(Enum):
     RegressaoLinear = "regressao_linear"
+    RegressaoQuadratica = "regressao_quadratica"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
 
+def normalize_data(X, Y):
+    X_min, X_max = np.min(X), np.max(X)
+    Y_min, Y_max = np.min(Y), np.max(Y)
 
-def solve_by_bisseccao(equation, a, b, epsilon, max_iterations):
-    zero = None
-    history = []
+    X_norm = (X - X_min) / (X_max - X_min)
+    Y_norm = (Y - Y_min) / (Y_max - Y_min)
 
-    equation = Equation(equation)
-    a = float(a)
-    b = float(b)
-    left = a
-    right = b
-    epsilon = float(epsilon)
+    return X_norm, Y_norm
 
-    print(f"Equação: {equation}")
-    print(f"Intervalo: ({a}, {b})")
-    print(f"Tolerância: {epsilon}")
+def normalize_single_value(value, column_data):
+    min_value = np.min(column_data)
+    max_value = np.max(column_data)
+    return (value - min_value) / (max_value - min_value)
 
-    for k in range(max_iterations):
-        f_a = equation.calculate(a)
-        f_b = equation.calculate(b)
+def denormalize_single_value(normalized_value, column_data):
+    min_value = np.min(column_data)
+    max_value = np.max(column_data)
+    return normalized_value * (max_value - min_value) + min_value
 
-        b_a = b - a
-
-        c = (a + b) / 2
-        f_c = equation.calculate(c)
-
-        history.append([k, a, b, f_a, f_b, b_a, c, f_c])
-
-        if abs(f_a) <= epsilon:
-            zero = a
-            break
-
-        if abs(f_b) <= epsilon:
-            zero = b
-            break
-
-        if abs(f_c) <= epsilon:
-            zero = c
-            break
-
-        if f_a * f_c < 0:
-            b = c
-        else:
-            a = c
-
-    if zero is None:
-        print(
-            f"Nenhum zero encontrado para a equação {equation} no intervalo ({left}, {right})"
-        )
-    else:
-        print(f"Zero encontrado: {zero} em {len(history)} iterações")
-    return zero, history
 
 def solve_by_linear_regression(x,y):
     # Calcular a média de x e y
@@ -79,3 +48,21 @@ def solve_by_linear_regression(x,y):
     print(f"Erro Quadrático Médio: {EQM}")
 
     return a, b, EQM
+
+def solve_by_quadratic_regression(x, y):
+    x, y = normalize_data(x, y)
+    # Construir a matriz X para equações normais
+    X = np.column_stack((x**2, x, np.ones(x.shape)))
+
+    # Resolver as equações normais
+    params = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
+
+    a, b, c = params
+
+    # Calcular o Erro Quadrático Médio (EQM)
+    EQM = np.mean((y - (a * x**2 + b * x + c))**2)
+
+    print(f"Parâmetros encontrados: a = {a}, b = {b}, c = {c}")
+    print(f"Erro Quadrático Médio: {EQM}")
+
+    return a, b, c, EQM
