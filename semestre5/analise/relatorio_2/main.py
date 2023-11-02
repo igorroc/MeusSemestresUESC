@@ -23,7 +23,8 @@ while True:
     if method in [
         Method.RegressaoLinear,
         Method.RegressaoQuadratica,
-        Method.InterpolacaoLagrange
+        Method.InterpolacaoLagrange,
+        Method.MMQ
     ]:
         diretorio = f"./entradas/{method.value}"
         
@@ -49,11 +50,14 @@ while True:
                             )
                             end_time = time.time()
                             
-                            # Previsão para o ano 2000
-                            ano_previsao = 2000
-                            previsao_acidentes = a * ano_previsao + b
+                            try:
+                                predict = float(input("Digite o valor para previsão: "))
+                                normalized_predict = normalize_single_value(predict, df["x"])
+                                predicted_value = a * normalized_predict + b
 
-                            print(f"Previsão de acidentes para o ano 2000: {previsao_acidentes} milhares")
+                                print(f"Previsão para ({predict}): {denormalize_single_value(predicted_value, df['y'])}")
+                            except:
+                                print("Erro ao prever valor")
                         elif method == Method.RegressaoQuadratica:
                             a,b,c,eqm = solve_by_quadratic_regression(
                                 df["x"],
@@ -77,6 +81,20 @@ while True:
                             end_time = time.time()
                             
                             print(f"Polinômio: {polynomial}")
+                        elif method == Method.MMQ:
+                            a, b = solve_by_mmq(
+                                df["x"],
+                                df["y"],
+                            )
+                            end_time = time.time()
+                            
+                            try:
+                                predict = float(input("Digite o valor para previsão: "))
+                                predicted_value = a * predict + b
+
+                                print(f"Previsão para ({predict}): {predicted_value}")
+                            except:
+                                print("Erro ao prever valor")
                             
                         print(f"Tempo decorrido: {end_time - start_time} segundos\n")
                     except:

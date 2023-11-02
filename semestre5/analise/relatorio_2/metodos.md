@@ -12,7 +12,7 @@
 
 # Exercícios para testar as implementações:
 
-[ ] Exercício 8.1, da página 268;
+[x] Exercício 8.1, da página 268;
 [ ] Exercício 8.5, da página 269;
 [ ] Exercício 8.11, da página 273;
 

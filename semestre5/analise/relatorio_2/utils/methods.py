@@ -8,6 +8,7 @@ import utils.outputs as outputs
 class Method(Enum):
     RegressaoLinear = "regressao_linear"
     RegressaoQuadratica = "regressao_quadratica"
+    MMQ = "mmq"
     InterpolacaoLagrange = "interpolacao_lagrange"
     TrapezioSimples = "trapezio_simples"
     TrapezioMultiplo = "trapezio_multiplo"
@@ -38,6 +39,8 @@ def denormalize_single_value(normalized_value, column_data):
 
 
 def solve_by_linear_regression(x,y):
+    x, y = normalize_data(x, y)
+    
     # Calcular a média de x e y
     mean_x = np.mean(x)
     mean_y = np.mean(y)
@@ -71,6 +74,20 @@ def solve_by_quadratic_regression(x, y):
     print(f"Erro Quadrático Médio: {EQM}")
 
     return a, b, c, EQM
+
+def solve_by_mmq(x, y):
+    n = len(x)
+    sum_x = np.sum(x)
+    sum_y = np.sum(y)
+    sum_x_squared = np.sum(x**2)
+    sum_xy = np.sum(x * y)
+    
+    a = (n * sum_xy - sum_x * sum_y) / (n * sum_x_squared - sum_x**2)
+    b = (sum_y - a * sum_x) / n
+    
+    print(f"Parâmetros encontrados: a = {a}, b = {b}")
+    
+    return a, b
 
 def solve_by_lagrange_interpolation(x_values, y_values):
     try:
@@ -150,4 +167,3 @@ def solve_by_derivada_segunda(eq: str, xi: float, h: float) -> float:
     eq = Equation(eq)
     
     return (eq.calculate(xi + h) - 2 * eq.calculate(xi) + eq.calculate(xi - h)) / (h ** 2)
-
