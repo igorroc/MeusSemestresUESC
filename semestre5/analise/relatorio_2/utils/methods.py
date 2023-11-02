@@ -11,6 +11,7 @@ class Method(Enum):
     RegressaoQuadratica = "regressao_quadratica"
     MMQ = "mmq"
     InterpolacaoLagrange = "interpolacao_lagrange"
+    DiferencaNewton = "diferenca_newton"
     TrapezioSimples = "trapezio_simples"
     TrapezioMultiplo = "trapezio_multiplo"
     DerivadaPrimeira = "derivada_primeira"
@@ -120,6 +121,26 @@ def solve_by_lagrange_interpolation(X, FX):
     p = np.sum(FX*np.array(L))
     
     return p, symbolX
+
+def solve_by_diferenca_newton(X, FX, x_lido):
+    n = len(X)
+    div_diff = np.zeros((n, n))
+    div_diff[:,0] = FX
+
+    # Calcula a tabela de diferenças divididas
+    for j in range(1, n):
+        for i in range(n-j):
+            div_diff[i][j] = (div_diff[i+1][j-1] - div_diff[i][j-1]) / (X[i+j] - X[i])
+    
+    # Calcula o polinômio interpolador usando as diferenças divididas
+    p_interpolador = div_diff[0][0]
+    for j in range(1, n):
+        termo = div_diff[0][j]
+        for i in range(j):
+            termo *= (x_lido - X[i])
+        p_interpolador += termo
+    
+    return p_interpolador
 
 def solve_by_trapezio_simples(equation_str, a, b):
     x = symbols('x') 

@@ -24,7 +24,8 @@ while True:
         Method.RegressaoLinear,
         Method.RegressaoQuadratica,
         Method.InterpolacaoLagrange,
-        Method.MMQ
+        Method.MMQ,
+        Method.DiferencaNewton
     ]:
         diretorio = f"./entradas/{method.value}"
         
@@ -88,7 +89,6 @@ while True:
                                 print(f"Previsão para ({predict}): {predicted_value}")
                             except:
                                 print("Erro ao prever valor")
-                                
                         elif method == Method.MMQ:
                             a, b = solve_by_mmq(
                                 df["x"],
@@ -103,8 +103,24 @@ while True:
                                 print(f"Previsão para ({predict}): {predicted_value}")
                             except:
                                 print("Erro ao prever valor")
-                            
-                        print(f"Tempo decorrido: {end_time - start_time} segundos\n")
+                        elif method == Method.DiferencaNewton:
+                            try:
+                                x_lido = float(input("Digite o valor lido: "))
+                                
+                                start_time = time.time()
+                                value = solve_by_diferenca_newton(
+                                    df["x"],
+                                    df["y"],
+                                    x_lido
+                                )
+                                end_time = time.time()
+                                
+                                print(f"Valor encontrado: {value}")
+                            except:
+                                print("Erro ao prever valor")
+
+                        if(end_time > start_time):
+                            print(f"Tempo decorrido: {end_time - start_time} segundos\n")
                     except:
                         print(f"Arquivo '{full_path}' não encontrado")
         except:
