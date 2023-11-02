@@ -16,6 +16,7 @@ class Method(Enum):
     DerivadaPrimeira = "derivada_primeira"
     DerivadaSegunda = "derivada_segunda"
     Simpson1_3 = "simpson_1_3"
+    Simpson3_8 = "simpson_3_8"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -176,3 +177,10 @@ def solve_by_simpson_1_3(eq, a, b):
     soma = func.calculate(a) + 4 * func.calculate((a + b) / 2) + func.calculate(b)
     
     return h * soma / 3
+
+def solve_by_simpson_3_8(eq, a, b):
+    func = Equation(eq)
+    
+    h = (b - a) / 3
+    integral = (3 * h / 8) * (func(a) + 3 * func(a + h) + 3 * func(a + 2 * h) + func(b))
+    return integral
