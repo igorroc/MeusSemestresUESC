@@ -18,6 +18,7 @@ class Method(Enum):
     Simpson1_3 = "simpson_1_3"
     Simpson3_8 = "simpson_3_8"
     Richard = "richard"
+    Gauss = "gauss"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -187,3 +188,22 @@ def solve_by_richard(x, y, x_extrap):
     y_extrap = [sum(a[j] * (xe - x[-1])**(j+1) for j in range(n)) for xe in x_extrap]
 
     return y_extrap
+
+def solve_by_gauss(eq, a, b):
+    x = Symbol('x')
+    func = sympify(eq)
+
+    # Coeficientes de Gauss
+    coefficients = [-0.5773502692, 0.5773502692]
+
+    # Pesos de Gauss
+    weights = [1.0, 1.0]
+
+    # Transformação dos limites a e b para [-1, 1]
+    t = lambda u: ((b - a) * u + (b + a)) / 2.0
+
+    # Fórmula de quadratura de Gauss
+    integral = sum(weights[i] * func.subs(x, t(coefficients[i])) for i in range(len(coefficients)))
+    integral *= (b - a) / 2.0
+
+    return integral
