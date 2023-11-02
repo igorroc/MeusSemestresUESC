@@ -6,8 +6,8 @@
 [x] Derivadas Numéricas de primeira e segunda ordem
 [x] Integração por trapézio (simples e múltiplo)
 [x] Simpson de 1/3 (simples e múltiplo)
-[ ] Simpson de 3/8
-[ ] Extrapolação de Richards
+[x] Simpson de 3/8
+[x] Extrapolação de Richards
 [ ] Quadratura de Gauss.
 
 # Exercícios para testar as implementações:

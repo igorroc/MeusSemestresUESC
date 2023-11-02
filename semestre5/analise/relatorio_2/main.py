@@ -25,7 +25,8 @@ while True:
         Method.RegressaoQuadratica,
         Method.InterpolacaoLagrange,
         Method.MMQ,
-        Method.DiferencaNewton
+        Method.DiferencaNewton,
+        Method.Richard
     ]:
         diretorio = f"./entradas/{method.value}"
         
@@ -118,6 +119,20 @@ while True:
                                 print(f"Valor encontrado: {value}")
                             except:
                                 print("Erro ao prever valor")
+                        elif method == Method.Richard:
+                            try:
+                                extrap = input("Digite os valores para extrapolar, separados por virgula: ")
+                                extrap = [float(x) for x in extrap.split(",")]
+                                start_time = time.time()
+                                value = solve_by_richard(
+                                    df["x"],
+                                    df["y"],
+                                    extrap
+                                )
+                                end_time = time.time()
+                                print(f"Valor encontrado: {value}")
+                            except:
+                                print("Erro ao calcular")
 
                         if(end_time > start_time):
                             print(f"Tempo decorrido: {end_time - start_time} segundos\n")

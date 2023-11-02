@@ -17,6 +17,7 @@ class Method(Enum):
     DerivadaSegunda = "derivada_segunda"
     Simpson1_3 = "simpson_1_3"
     Simpson3_8 = "simpson_3_8"
+    Richard = "richard"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -44,15 +45,12 @@ def denormalize_single_value(normalized_value, column_data):
 def solve_by_linear_regression(x,y):
     x, y = normalize_data(x, y)
     
-    # Calcular a média de x e y
     mean_x = np.mean(x)
     mean_y = np.mean(y)
 
-    # Calcular os parâmetros a e b
     a = np.sum((x - mean_x) * (y - mean_y)) / np.sum((x - mean_x)**2)
     b = mean_y - a * mean_x
 
-    # Calcular o Erro Quadrático Médio (EQM)
     EQM = np.mean((y - (a * x + b))**2)
 
     print(f"Parâmetros encontrados: a = {a}, b = {b}")
@@ -62,15 +60,12 @@ def solve_by_linear_regression(x,y):
 
 def solve_by_quadratic_regression(x, y):
     x, y = normalize_data(x, y)
-    # Construir a matriz X para equações normais
     X = np.column_stack((x**2, x, np.ones(x.shape)))
 
-    # Resolver as equações normais
     params = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
 
     a, b, c = params
 
-    # Calcular o Erro Quadrático Médio (EQM)
     EQM = np.mean((y - (a * x**2 + b * x + c))**2)
 
     print(f"Parâmetros encontrados: a = {a}, b = {b}, c = {c}")
@@ -93,16 +88,12 @@ def solve_by_mmq(x, y):
     return a, b
 
 def solve_by_lagrange_interpolation(X, FX):
-    # Número de pontos dados
     tamanho = len(X)
     
-    # Inicializa o símbolo x para cálculos simbólicos
     symbolX = Symbol('x')
     
-    # Inicializa a lista de polinômios Li(x)
     L = []
     
-    # Loop para calcular cada Li(x)
     for i in range(tamanho):
         aux = np.arange(tamanho)
         aux = list(aux)
@@ -118,7 +109,6 @@ def solve_by_lagrange_interpolation(X, FX):
 
         L.append(sp.expand(Li))
     
-    # Calcula o polinômio interpolador P(x)
     p = np.sum(FX*np.array(L))
     
     return p, symbolX
@@ -128,12 +118,10 @@ def solve_by_diferenca_newton(X, FX, x_lido):
     div_diff = np.zeros((n, n))
     div_diff[:,0] = FX
 
-    # Calcula a tabela de diferenças divididas
     for j in range(1, n):
         for i in range(n-j):
             div_diff[i][j] = (div_diff[i+1][j-1] - div_diff[i][j-1]) / (X[i+j] - X[i])
     
-    # Calcula o polinômio interpolador usando as diferenças divididas
     p_interpolador = div_diff[0][0]
     for j in range(1, n):
         termo = div_diff[0][j]
@@ -184,3 +172,18 @@ def solve_by_simpson_3_8(eq, a, b):
     h = (b - a) / 3
     integral = (3 * h / 8) * (func(a) + 3 * func(a + h) + 3 * func(a + 2 * h) + func(b))
     return integral
+
+def solve_by_richard(x, y, x_extrap):
+    n = len(x)
+    A = np.zeros((n, n))
+
+    for i in range(n):
+        A[i, 0] = 1
+        for j in range(1, n):
+            A[i, j] = A[i, j-1] * (x[i] - x[j-1])
+
+    a = np.linalg.solve(A, y)
+
+    y_extrap = [sum(a[j] * (xe - x[-1])**(j+1) for j in range(n)) for xe in x_extrap]
+
+    return y_extrap
