@@ -74,13 +74,21 @@ while True:
                             except:
                                 print("Erro ao prever valor")
                         elif method == Method.InterpolacaoLagrange:
-                            polynomial, psi, v0 = solve_by_lagrange_interpolation(
+                            polynomial, symbolX = solve_by_lagrange_interpolation(
                                 df["x"],
                                 df["y"],
                             )
                             end_time = time.time()
                             
                             print(f"Polinômio: {polynomial}")
+                            try:
+                                predict = float(input("Digite o valor para previsão: "))
+                                predicted_value = polynomial.subs(symbolX, predict)
+
+                                print(f"Previsão para ({predict}): {predicted_value}")
+                            except:
+                                print("Erro ao prever valor")
+                                
                         elif method == Method.MMQ:
                             a, b = solve_by_mmq(
                                 df["x"],

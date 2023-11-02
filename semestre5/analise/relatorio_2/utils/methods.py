@@ -2,7 +2,8 @@ from enum import Enum
 from utils.equation import Equation
 import numpy as np
 from sympy import symbols, solve, tan, cos
-from sympy import sympify, symbols
+from sympy import sympify, symbols, Symbol
+import sympy as sp 
 
 import utils.outputs as outputs
 class Method(Enum):
@@ -89,56 +90,36 @@ def solve_by_mmq(x, y):
     
     return a, b
 
-def solve_by_lagrange_interpolation(x_values, y_values):
-    try:
-        x = symbols('x')
-        n = len(x_values)
-        if len(y_values) != n:
-            raise ValueError("x_values and y_values should have the same length")
+def solve_by_lagrange_interpolation(X, FX):
+    # Número de pontos dados
+    tamanho = len(X)
+    
+    # Inicializa o símbolo x para cálculos simbólicos
+    symbolX = Symbol('x')
+    
+    # Inicializa a lista de polinômios Li(x)
+    L = []
+    
+    # Loop para calcular cada Li(x)
+    for i in range(tamanho):
+        aux = np.arange(tamanho)
+        aux = list(aux)
+        aux.remove(i)
 
-        # Initialize the polynomial as 0
-        polynomial = 0
+        numLi = 1
+        denLi = 1
 
-        # Calculate each term of the Lagrange polynomial
-        for i in range(n):
-            term = y_values[i]
-            for j in range(n):
-                if i != j:
-                    term *= (x - x_values[j]) / (x_values[i] - x_values[j])
-            polynomial += term
+        for j in aux:
+            numLi = numLi * (symbolX - X[j])
+            denLi = denLi * (X[i] - X[j])
+        Li = numLi/denLi
 
-        print("1")
-        # Simplify the polynomial
-        polynomial = polynomial.simplify()
-
-        # Constants for projectile motion
-        g = 9.81  # acceleration due to gravity (m/s^2)
-        psi, v0 = symbols('psi v0')
-
-        print("2")
-        # Extract coefficients from the polynomial
-        coef_x2 = polynomial.coeff(x, 2)
-        coef_x = polynomial.coeff(x, 1)
-        print("3")
-
-        # Equation for tan(psi)
-        eq1 = tan(psi) - coef_x
-
-        # Equation for (g / 2v0^2cos^2(psi))
-        eq2 = (g / (2 * v0 ** 2 * cos(psi) ** 2)) - abs(coef_x2)
-        print("4")
-
-        # Solve for psi and v0
-        solutions = solve((eq1, eq2), (psi, v0))
-        print(solutions)
-        
-        psi_value, v0_value = solutions[0]
-        print("6")
-
-        return polynomial, psi_value, v0_value
-    except:
-        print("Erro ao calcular a interpolação de Lagrange")
-        return None, None, None
+        L.append(sp.expand(Li))
+    
+    # Calcula o polinômio interpolador P(x)
+    p = np.sum(FX*np.array(L))
+    
+    return p, symbolX
 
 def solve_by_trapezio_simples(equation_str, a, b):
     x = symbols('x') 

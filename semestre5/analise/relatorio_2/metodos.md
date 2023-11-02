@@ -1,7 +1,7 @@
 # Implementem os seguintes métodos:
 
-[ ] Regressão Linear, incluindo medidas de dispersão, MMQ (casos discreto e contínuo)
-[ ] Polinômios Interpoladores de Lagrange
+[x] Regressão Linear, incluindo medidas de dispersão, MMQ (casos discreto e contínuo)
+[x] Polinômios Interpoladores de Lagrange
 [ ] Interpolação Polinomial por Diferenças Divididas de Newton
 [x] Derivadas Numéricas de primeira e segunda ordem
 [x] Integração por trapézio (simples e múltiplo)
