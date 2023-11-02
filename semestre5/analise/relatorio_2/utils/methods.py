@@ -1,11 +1,10 @@
 from enum import Enum
 from utils.equation import Equation
 import numpy as np
-from sympy import symbols, solve, tan, cos
+from sympy import symbols
 from sympy import sympify, symbols, Symbol
 import sympy as sp 
 
-import utils.outputs as outputs
 class Method(Enum):
     RegressaoLinear = "regressao_linear"
     RegressaoQuadratica = "regressao_quadratica"
@@ -16,6 +15,7 @@ class Method(Enum):
     TrapezioMultiplo = "trapezio_multiplo"
     DerivadaPrimeira = "derivada_primeira"
     DerivadaSegunda = "derivada_segunda"
+    Simpson1_3 = "simpson_1_3"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -169,3 +169,10 @@ def solve_by_derivada_segunda(eq: str, xi: float, h: float) -> float:
     eq = Equation(eq)
     
     return (eq.calculate(xi + h) - 2 * eq.calculate(xi) + eq.calculate(xi - h)) / (h ** 2)
+
+def solve_by_simpson_1_3(eq, a, b):
+    func = Equation(eq)
+    h = (b - a) / 2
+    soma = func.calculate(a) + 4 * func.calculate((a + b) / 2) + func.calculate(b)
+    
+    return h * soma / 3

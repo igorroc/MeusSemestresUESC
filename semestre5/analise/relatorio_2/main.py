@@ -130,7 +130,8 @@ while True:
         Method.TrapezioSimples,
         Method.TrapezioMultiplo,
         Method.DerivadaPrimeira,
-        Method.DerivadaSegunda
+        Method.DerivadaSegunda,
+        Method.Simpson1_3
     ]:
         # Ler o arquivo CSV
         df = None
@@ -198,7 +199,19 @@ while True:
                 end_time = time.time()
                 
                 print(f"Derivada da equação '{equation}' em ({x}) com passo {step}: {derivative}")
-                        
+            elif method == Method.Simpson1_3:
+                equation = row["equation"]
+                a = row["a"]
+                b = row["b"]
+                integral = solve_by_simpson_1_3(
+                    equation,
+                    a,
+                    b
+                )
+                end_time = time.time()
+                
+                print(f"Integral da equação '{equation}' em ({a}, {b}): {integral}")
+
             print(f"Tempo decorrido: {end_time - start_time} segundos\n")
 
     print("Pressione enter para continuar...")
