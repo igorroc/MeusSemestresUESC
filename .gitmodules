@@ -1,3 +1,7 @@
 [submodule "semestre6/redes1/Socket"] 
   path = semestre6/redes1/Socket 
   url = git://github.com/igorroc/socket
+
+[submodule "semestre7/engenharia/app-caronas"] 
+  path = semestre7/engenharia/app-caronas 
+  url = git://github.com/igorroc/app-caronas
