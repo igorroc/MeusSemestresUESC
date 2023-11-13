@@ -1,16 +1,24 @@
 from enum import Enum
 from utils.equation import Equation
 import numpy as np
-from sympy import symbols, solve, tan, cos
-from sympy import sympify, symbols
+from sympy import symbols
+from sympy import sympify, symbols, Symbol
+import sympy as sp 
 
-import utils.outputs as outputs
 class Method(Enum):
     RegressaoLinear = "regressao_linear"
     RegressaoQuadratica = "regressao_quadratica"
+    MMQ = "mmq"
     InterpolacaoLagrange = "interpolacao_lagrange"
+    DiferencaNewton = "diferenca_newton"
     TrapezioSimples = "trapezio_simples"
     TrapezioMultiplo = "trapezio_multiplo"
+    DerivadaPrimeira = "derivada_primeira"
+    DerivadaSegunda = "derivada_segunda"
+    Simpson1_3 = "simpson_1_3"
+    Simpson3_8 = "simpson_3_8"
+    Richard = "richard"
+    Gauss = "gauss"
 
 
 METHOD_MAPPING = {i: method for i, method in enumerate(Method)}
@@ -36,15 +44,14 @@ def denormalize_single_value(normalized_value, column_data):
 
 
 def solve_by_linear_regression(x,y):
-    # Calcular a média de x e y
+    x, y = normalize_data(x, y)
+    
     mean_x = np.mean(x)
     mean_y = np.mean(y)
 
-    # Calcular os parâmetros a e b
     a = np.sum((x - mean_x) * (y - mean_y)) / np.sum((x - mean_x)**2)
     b = mean_y - a * mean_x
 
-    # Calcular o Erro Quadrático Médio (EQM)
     EQM = np.mean((y - (a * x + b))**2)
 
     print(f"Parâmetros encontrados: a = {a}, b = {b}")
@@ -54,15 +61,12 @@ def solve_by_linear_regression(x,y):
 
 def solve_by_quadratic_regression(x, y):
     x, y = normalize_data(x, y)
-    # Construir a matriz X para equações normais
     X = np.column_stack((x**2, x, np.ones(x.shape)))
 
-    # Resolver as equações normais
     params = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
 
     a, b, c = params
 
-    # Calcular o Erro Quadrático Médio (EQM)
     EQM = np.mean((y - (a * x**2 + b * x + c))**2)
 
     print(f"Parâmetros encontrados: a = {a}, b = {b}, c = {c}")
@@ -70,57 +74,63 @@ def solve_by_quadratic_regression(x, y):
 
     return a, b, c, EQM
 
-def solve_by_lagrange_interpolation(x_values, y_values):
-    try:
-        x = symbols('x')
-        n = len(x_values)
-        if len(y_values) != n:
-            raise ValueError("x_values and y_values should have the same length")
+def solve_by_mmq(x, y):
+    n = len(x)
+    sum_x = np.sum(x)
+    sum_y = np.sum(y)
+    sum_x_squared = np.sum(x**2)
+    sum_xy = np.sum(x * y)
+    
+    a = (n * sum_xy - sum_x * sum_y) / (n * sum_x_squared - sum_x**2)
+    b = (sum_y - a * sum_x) / n
+    
+    print(f"Parâmetros encontrados: a = {a}, b = {b}")
+    
+    return a, b
 
-        # Initialize the polynomial as 0
-        polynomial = 0
+def solve_by_lagrange_interpolation(X, FX):
+    tamanho = len(X)
+    
+    symbolX = Symbol('x')
+    
+    L = []
+    
+    for i in range(tamanho):
+        aux = np.arange(tamanho)
+        aux = list(aux)
+        aux.remove(i)
 
-        # Calculate each term of the Lagrange polynomial
-        for i in range(n):
-            term = y_values[i]
-            for j in range(n):
-                if i != j:
-                    term *= (x - x_values[j]) / (x_values[i] - x_values[j])
-            polynomial += term
+        numLi = 1
+        denLi = 1
 
-        print("1")
-        # Simplify the polynomial
-        polynomial = polynomial.simplify()
+        for j in aux:
+            numLi = numLi * (symbolX - X[j])
+            denLi = denLi * (X[i] - X[j])
+        Li = numLi/denLi
 
-        # Constants for projectile motion
-        g = 9.81  # acceleration due to gravity (m/s^2)
-        psi, v0 = symbols('psi v0')
+        L.append(sp.expand(Li))
+    
+    p = np.sum(FX*np.array(L))
+    
+    return p, symbolX
 
-        print("2")
-        # Extract coefficients from the polynomial
-        coef_x2 = polynomial.coeff(x, 2)
-        coef_x = polynomial.coeff(x, 1)
-        print("3")
+def solve_by_diferenca_newton(X, FX, x_lido):
+    n = len(X)
+    div_diff = np.zeros((n, n))
+    div_diff[:,0] = FX
 
-        # Equation for tan(psi)
-        eq1 = tan(psi) - coef_x
-
-        # Equation for (g / 2v0^2cos^2(psi))
-        eq2 = (g / (2 * v0 ** 2 * cos(psi) ** 2)) - abs(coef_x2)
-        print("4")
-
-        # Solve for psi and v0
-        solutions = solve((eq1, eq2), (psi, v0))
-        print(solutions)
-        
-        psi_value, v0_value = solutions[0]
-        print("6")
-
-        return polynomial, psi_value, v0_value
-    except:
-        print("Erro ao calcular a interpolação de Lagrange")
-        return None, None, None
-
+    for j in range(1, n):
+        for i in range(n-j):
+            div_diff[i][j] = (div_diff[i+1][j-1] - div_diff[i][j-1]) / (X[i+j] - X[i])
+    
+    p_interpolador = div_diff[0][0]
+    for j in range(1, n):
+        termo = div_diff[0][j]
+        for i in range(j):
+            termo *= (x_lido - X[i])
+        p_interpolador += termo
+    
+    return p_interpolador
 
 def solve_by_trapezio_simples(equation_str, a, b):
     x = symbols('x') 
@@ -139,3 +149,61 @@ def solve_by_trapezio_multiplo(equation_str, a, b, n):
 
     integral *= h / 2
     return integral.evalf()
+
+def solve_by_derivada_primeira(eq: str, xi: float, h: float) -> float:
+    eq = Equation(eq)
+    
+    return (eq.calculate(xi + h) - eq.calculate(xi - h)) / (2 * h)
+
+def solve_by_derivada_segunda(eq: str, xi: float, h: float) -> float:
+    eq = Equation(eq)
+    
+    return (eq.calculate(xi + h) - 2 * eq.calculate(xi) + eq.calculate(xi - h)) / (h ** 2)
+
+def solve_by_simpson_1_3(eq, a, b):
+    func = Equation(eq)
+    h = (b - a) / 2
+    soma = func.calculate(a) + 4 * func.calculate((a + b) / 2) + func.calculate(b)
+    
+    return h * soma / 3
+
+def solve_by_simpson_3_8(eq, a, b):
+    func = Equation(eq)
+    
+    h = (b - a) / 3
+    integral = (3 * h / 8) * (func(a) + 3 * func(a + h) + 3 * func(a + 2 * h) + func(b))
+    return integral
+
+def solve_by_richard(x, y, x_extrap):
+    n = len(x)
+    A = np.zeros((n, n))
+
+    for i in range(n):
+        A[i, 0] = 1
+        for j in range(1, n):
+            A[i, j] = A[i, j-1] * (x[i] - x[j-1])
+
+    a = np.linalg.solve(A, y)
+
+    y_extrap = [sum(a[j] * (xe - x[-1])**(j+1) for j in range(n)) for xe in x_extrap]
+
+    return y_extrap
+
+def solve_by_gauss(eq, a, b):
+    x = Symbol('x')
+    func = sympify(eq)
+
+    # Coeficientes de Gauss
+    coefficients = [-0.5773502692, 0.5773502692]
+
+    # Pesos de Gauss
+    weights = [1.0, 1.0]
+
+    # Transformação dos limites a e b para [-1, 1]
+    t = lambda u: ((b - a) * u + (b + a)) / 2.0
+
+    # Fórmula de quadratura de Gauss
+    integral = sum(weights[i] * func.subs(x, t(coefficients[i])) for i in range(len(coefficients)))
+    integral *= (b - a) / 2.0
+
+    return integral

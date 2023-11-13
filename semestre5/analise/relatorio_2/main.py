@@ -23,7 +23,10 @@ while True:
     if method in [
         Method.RegressaoLinear,
         Method.RegressaoQuadratica,
-        Method.InterpolacaoLagrange
+        Method.InterpolacaoLagrange,
+        Method.MMQ,
+        Method.DiferencaNewton,
+        Method.Richard
     ]:
         diretorio = f"./entradas/{method.value}"
         
@@ -49,11 +52,14 @@ while True:
                             )
                             end_time = time.time()
                             
-                            # Previsão para o ano 2000
-                            ano_previsao = 2000
-                            previsao_acidentes = a * ano_previsao + b
+                            try:
+                                predict = float(input("Digite o valor para previsão: "))
+                                normalized_predict = normalize_single_value(predict, df["x"])
+                                predicted_value = a * normalized_predict + b
 
-                            print(f"Previsão de acidentes para o ano 2000: {previsao_acidentes} milhares")
+                                print(f"Previsão para ({predict}): {denormalize_single_value(predicted_value, df['y'])}")
+                            except:
+                                print("Erro ao prever valor")
                         elif method == Method.RegressaoQuadratica:
                             a,b,c,eqm = solve_by_quadratic_regression(
                                 df["x"],
@@ -70,15 +76,66 @@ while True:
                             except:
                                 print("Erro ao prever valor")
                         elif method == Method.InterpolacaoLagrange:
-                            polynomial, psi, v0 = solve_by_lagrange_interpolation(
+                            polynomial, symbolX = solve_by_lagrange_interpolation(
                                 df["x"],
                                 df["y"],
                             )
                             end_time = time.time()
                             
                             print(f"Polinômio: {polynomial}")
+                            try:
+                                predict = float(input("Digite o valor para previsão: "))
+                                predicted_value = polynomial.subs(symbolX, predict)
+
+                                print(f"Previsão para ({predict}): {predicted_value}")
+                            except:
+                                print("Erro ao prever valor")
+                        elif method == Method.MMQ:
+                            a, b = solve_by_mmq(
+                                df["x"],
+                                df["y"],
+                            )
+                            end_time = time.time()
                             
-                        print(f"Tempo decorrido: {end_time - start_time} segundos\n")
+                            try:
+                                predict = float(input("Digite o valor para previsão: "))
+                                predicted_value = a * predict + b
+
+                                print(f"Previsão para ({predict}): {predicted_value}")
+                            except:
+                                print("Erro ao prever valor")
+                        elif method == Method.DiferencaNewton:
+                            try:
+                                x_lido = float(input("Digite o valor lido: "))
+                                
+                                start_time = time.time()
+                                value = solve_by_diferenca_newton(
+                                    df["x"],
+                                    df["y"],
+                                    x_lido
+                                )
+                                end_time = time.time()
+                                
+                                print(f"Valor encontrado: {value}")
+                            except:
+                                print("Erro ao prever valor")
+                        elif method == Method.Richard:
+                            try:
+                                extrap = input("Digite os valores para extrapolar, separados por virgula: ")
+                                extrap = [float(x) for x in extrap.split(",")]
+                                start_time = time.time()
+                                value = solve_by_richard(
+                                    df["x"],
+                                    df["y"],
+                                    extrap
+                                )
+                                end_time = time.time()
+                                print(f"Valor encontrado: {value}")
+                            except:
+                                print("Erro ao calcular")
+
+                        if(end_time > start_time):
+                            print(f"Tempo decorrido: {end_time - start_time} segundos\n")
                     except:
                         print(f"Arquivo '{full_path}' não encontrado")
         except:
@@ -86,7 +143,12 @@ while True:
             exit()
     elif method in [
         Method.TrapezioSimples,
-        Method.TrapezioMultiplo
+        Method.TrapezioMultiplo,
+        Method.DerivadaPrimeira,
+        Method.DerivadaSegunda,
+        Method.Simpson1_3,
+        Method.Simpson3_8,
+        Method.Gauss
     ]:
         # Ler o arquivo CSV
         df = None
@@ -130,7 +192,67 @@ while True:
                 end_time = time.time()
                 
                 print(f"Integral da equação '{equation}' de ({a},{b}) com passo {step}: {integer}")
-        
+            elif method == Method.DerivadaPrimeira:
+                equation = row["equation"]
+                x = row["x"]
+                step = row["step"]
+                derivative = solve_by_derivada_primeira(
+                    equation,
+                    x,
+                    step
+                )
+                end_time = time.time()
+                
+                print(f"Derivada da equação '{equation}' em ({x}) com passo {step}: {derivative}")
+            elif method == Method.DerivadaSegunda:
+                equation = row["equation"]
+                x = row["x"]
+                step = row["step"]
+                derivative = solve_by_derivada_segunda(
+                    equation,
+                    x,
+                    step
+                )
+                end_time = time.time()
+                
+                print(f"Derivada da equação '{equation}' em ({x}) com passo {step}: {derivative}")
+            elif method == Method.Simpson1_3:
+                equation = row["equation"]
+                a = row["a"]
+                b = row["b"]
+                integral = solve_by_simpson_1_3(
+                    equation,
+                    a,
+                    b
+                )
+                end_time = time.time()
+                
+                print(f"Integral da equação '{equation}' em ({a}, {b}): {integral}")
+            elif method == Method.Simpson3_8:
+                equation = row["equation"]
+                a = row["a"]
+                b = row["b"]
+                integral = solve_by_simpson_1_3(
+                    equation,
+                    a,
+                    b
+                )
+                end_time = time.time()
+                
+                print(f"Integral da equação '{equation}' em ({a}, {b}): {integral}")
+            elif method == Method.Gauss:
+                equation = row["equation"]
+                a = row["a"]
+                b = row["b"]
+                integral = solve_by_gauss(
+                    equation,
+                    a,
+                    b
+                )
+                end_time = time.time()
+                
+                print(f"Integral da equação '{equation}' em ({a}, {b}): {integral}")
+
             print(f"Tempo decorrido: {end_time - start_time} segundos\n")
 
     print("Pressione enter para continuar...")
