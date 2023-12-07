@@ -1,37 +1,46 @@
 import math # Para a função eval()
 
-def heun(f, x0, y0, h, interacao):
+def heun_method(f, x0, y0, h, iterations):
    
     x = x0
     y = y0
-    solucao = [(x, y)]
+    solution = [(x, y)]
 
-    for _ in range(interacao):
+    for _ in range(iterations):
         y_euler = y + h * f(x, y)
         y = y + (h / 2) * (f(x, y) + f(x + h, y_euler))
         x += h
-        solucao.append((x, y))
+        solution.append((x, y))
 
-    return solucao
+    return solution
 
 
 def run():
-    with open('entradas/heun2.txt', 'r') as file:
-        equation = file.readline().strip()
-        x0 = float(file.readline())
-        y0 = float(file.readline())
-        h = float(file.readline())
-        interacao = int(file.readline())
+    try:
+        with open('entradas/heun2.txt', 'r') as file:
+            equation = file.readline().strip()
+            x0 = float(file.readline())
+            y0 = float(file.readline())
+            h = float(file.readline())
+            iterations = int(file.readline())
+    except FileNotFoundError:
+        print("O arquivo heun2.txt não foi encontrado.")
+        exit(1)
+    except (ValueError, IndexError):
+        print("O arquivo heun2.txt não está formatado corretamente.")
+        exit(1)
 
     f = lambda x, y: eval(equation)
 
-    solucao = heun(f, x0, y0, h, interacao)
-
+    solution = heun_method(f, x0, y0, h, iterations)
 
     with open('saidas/heun2.txt', 'w') as f:
-        for x, y in solucao:
+        for x, y in solution:
             f.write(f"x = {x:.3f}, y = {y:.3f}\n")
-        print("Solução pelo método de Euler Modificado:")
+        print("Solução pelo método de Heun:")
         print("x\t\ty")
-        for x, y in solucao:
+        for x, y in solution:
             print(f"{x:.3f}\t\t{y:.3f}")
+
+if __name__ == "__main__":
+    run()

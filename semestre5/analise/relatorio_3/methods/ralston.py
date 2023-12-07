@@ -1,11 +1,11 @@
 import math # Para a função eval()
 
-def ralston_method(f, x0, y0, h, n):
+def ralston_method(f, x0, y0, h, iterations):
     points = [(x0, y0)]
     x = x0
     y = y0
 
-    for _ in range(n):
+    for _ in range(iterations):
         slope1 = f(x, y)
         slope2 = f(x + (2 / 3) * h, y + (2 / 3) * h * slope1)
         y = y + (1 / 4) * h * (slope1 + 3 * slope2)
@@ -21,7 +21,7 @@ def run():
             x0 = float(file.readline())
             y0 = float(file.readline())
             h = float(file.readline())
-            n = int(file.readline())
+            iterations = int(file.readline())
     except FileNotFoundError:
         print("O arquivo ralston2.txt não foi encontrado.")
         exit(1)
@@ -31,9 +31,8 @@ def run():
 
     f = lambda x, y: eval(equation)
 
-    ralston_solution = ralston_method(f, x0, y0, h, n)
+    ralston_solution = ralston_method(f, x0, y0, h, iterations)
 
-    # Escrita da saída no arquivo "saidas/ralston2.txt"
     with open("saidas/ralston2.txt", "w") as file:
         for point in ralston_solution:
             file.write(f"x = {point[0]:.3f}, y = {point[1]:.3f}\n")

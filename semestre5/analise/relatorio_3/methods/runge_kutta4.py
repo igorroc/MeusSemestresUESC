@@ -1,11 +1,11 @@
 import math # Para a função eval()
 
-def runge_kutta(f, x0, y0, h, n):
+def runge_kutta_method(f, x0, y0, h, iterations):
     points = [(x0, y0)]
     x = x0
     y = y0
 
-    for _ in range(n):
+    for _ in range(iterations):
         k1 = h * f(x, y)
         k2 = h * f(x + h/2, y + k1/2)
         k3 = h * f(x + h/2, y + k2/2)
@@ -24,7 +24,7 @@ def run():
             x0 = float(file.readline())
             y0 = float(file.readline())
             h = float(file.readline())
-            n = int(file.readline())
+            iterations = int(file.readline())
     except FileNotFoundError:
         print("O arquivo runge_kutta4_2.txt não foi encontrado.")
         exit(1)
@@ -35,7 +35,7 @@ def run():
     f = lambda x, y: eval(equation)
 
     # Chamada da função do método de Runge-Kutta de 4ª ordem
-    final_solution = runge_kutta(f, x0, y0, h, n)
+    final_solution = runge_kutta_method(f, x0, y0, h, iterations)
 
     with open("saidas/runge_kutta4_2.txt", "w") as file:
         for point in final_solution:
