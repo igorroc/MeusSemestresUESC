@@ -18,7 +18,7 @@ def modified_euler_method(f, x0, y0, h, iterations):
 
 def run():
     try:
-        with open("entradas/euler_modificado2.txt", "r") as file:
+        with open("entradas/euler_modificado.txt", "r") as file:
             equation = file.readline().strip()
             x0 = float(file.readline())
             y0 = float(file.readline())
@@ -34,7 +34,7 @@ def run():
     f = lambda x, y: eval(equation)
     solution = modified_euler_method(f, x0, y0, h, iterations)
 
-    with open("saidas/euler_modificado2.txt", "w") as file:
+    with open("saidas/euler_modificado.txt", "w") as file:
         for point in solution:
             file.write(f"x = {point[0]:.3f}, y = {point[1]:.3f}\n")
         print("Solução pelo método de Euler Modificado:")

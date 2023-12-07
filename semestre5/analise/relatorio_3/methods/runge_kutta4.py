@@ -19,17 +19,17 @@ def runge_kutta_method(f, x0, y0, h, iterations):
 
 def run():
     try:
-        with open("entradas/runge_kutta4_2.txt", "r") as file:
+        with open("entradas/runge_kutta4.txt", "r") as file:
             equation = file.readline().strip()
             x0 = float(file.readline())
             y0 = float(file.readline())
             h = float(file.readline())
             iterations = int(file.readline())
     except FileNotFoundError:
-        print("O arquivo runge_kutta4_2.txt não foi encontrado.")
+        print("O arquivo runge_kutta4.txt não foi encontrado.")
         exit(1)
     except (ValueError, IndexError):
-        print("O arquivo runge_kutta4_2.txt não está formatado corretamente.")
+        print("O arquivo runge_kutta4.txt não está formatado corretamente.")
         exit(1)
 
     f = lambda x, y: eval(equation)
@@ -37,7 +37,7 @@ def run():
     # Chamada da função do método de Runge-Kutta de 4ª ordem
     final_solution = runge_kutta_method(f, x0, y0, h, iterations)
 
-    with open("saidas/runge_kutta4_2.txt", "w") as file:
+    with open("saidas/runge_kutta4.txt", "w") as file:
         for point in final_solution:
             file.write(f"x = {point[0]:.3f}, y = {point[1]:.3f}\n")
         print("Solução usando o método de Runge-Kutta de 4ª ordem:")

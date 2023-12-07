@@ -1,7 +1,6 @@
 import math # Para a função eval()
 
 def heun_method(f, x0, y0, h, iterations):
-   
     x = x0
     y = y0
     solution = [(x, y)]
@@ -17,24 +16,24 @@ def heun_method(f, x0, y0, h, iterations):
 
 def run():
     try:
-        with open('entradas/heun2.txt', 'r') as file:
+        with open('entradas/heun.txt', 'r') as file:
             equation = file.readline().strip()
             x0 = float(file.readline())
             y0 = float(file.readline())
             h = float(file.readline())
             iterations = int(file.readline())
     except FileNotFoundError:
-        print("O arquivo heun2.txt não foi encontrado.")
+        print("O arquivo heun.txt não foi encontrado.")
         exit(1)
     except (ValueError, IndexError):
-        print("O arquivo heun2.txt não está formatado corretamente.")
+        print("O arquivo heun.txt não está formatado corretamente.")
         exit(1)
 
     f = lambda x, y: eval(equation)
 
     solution = heun_method(f, x0, y0, h, iterations)
 
-    with open('saidas/heun2.txt', 'w') as f:
+    with open('saidas/heun.txt', 'w') as f:
         for x, y in solution:
             f.write(f"x = {x:.3f}, y = {y:.3f}\n")
         print("Solução pelo método de Heun:")
